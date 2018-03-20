@@ -1,1 +1,1 @@
-web: java -jar build/libs/testBot-1.0-all.jar
+web: java $JAVA_TOOL_OPTIONS -jar build/libs/testBot-1.0-all.jar
