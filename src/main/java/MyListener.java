@@ -1,7 +1,6 @@
 import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
-import org.jetbrains.annotations.Nullable;
 
 import java.sql.*;
 
@@ -147,7 +146,6 @@ public class MyListener extends ListenerAdapter {
         }
     }
 
-    @Nullable
     private BotGuild findGuild(Long guildId) {
         for (BotGuild guild : savedGuilds) {
             if (guild.getId().equals(guildId))

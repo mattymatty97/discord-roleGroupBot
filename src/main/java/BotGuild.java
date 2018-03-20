@@ -2,7 +2,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import net.dv8tion.jda.core.entities.*;
-import org.jetbrains.annotations.NotNull;
 
 public class BotGuild {
     private boolean isOpen;

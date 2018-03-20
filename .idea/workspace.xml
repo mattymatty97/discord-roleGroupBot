@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8fb65ecf-fe0e-49e5-afc1-e181856c2b21" name="Default" comment="" />
+    <list default="true" id="8fb65ecf-fe0e-49e5-afc1-e181856c2b21" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.gradle/4.0/fileHashes/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/4.0/fileHashes/fileHashes.bin" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.0/fileHashes/fileHashes.lock" afterPath="$PROJECT_DIR$/.gradle/4.0/fileHashes/fileHashes.lock" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.0/taskHistory/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/4.0/taskHistory/fileSnapshots.bin" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.0/taskHistory/taskHistory.bin" afterPath="$PROJECT_DIR$/.gradle/4.0/taskHistory/taskHistory.bin" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.0/taskHistory/taskHistory.lock" afterPath="$PROJECT_DIR$/.gradle/4.0/taskHistory/taskHistory.lock" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/Application_main.iml" afterPath="$PROJECT_DIR$/.idea/modules/Application_main.iml" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" afterPath="$PROJECT_DIR$/build.gradle" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" afterPath="$PROJECT_DIR$/settings.gradle" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/BotGuild.java" afterPath="$PROJECT_DIR$/src/main/java/BotGuild.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/MyListener.java" afterPath="$PROJECT_DIR$/src/main/java/MyListener.java" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -53,8 +66,8 @@
       <file leaf-file-name="BOT.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/BOT.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="29" column="68" lean-forward="false" selection-start-line="29" selection-start-column="68" selection-end-line="29" selection-end-column="68" />
+            <state relative-caret-position="126">
+              <caret line="7" column="50" lean-forward="false" selection-start-line="7" selection-start-column="50" selection-end-line="7" selection-end-column="50" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -62,14 +75,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MyListener.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MyListener.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/MyListener.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="402">
-              <caret line="156" column="5" lean-forward="false" selection-start-line="156" selection-start-column="5" selection-end-line="156" selection-end-column="5" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="72">
+              <caret line="4" column="18" lean-forward="false" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -77,35 +88,35 @@
       <file leaf-file-name="BotGuild.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/BotGuild.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+            <state relative-caret-position="171">
+              <caret line="148" column="21" lean-forward="false" selection-start-line="148" selection-start-column="21" selection-end-line="148" selection-end-column="21" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <marker date="1521497873498" expanded="true" signature="846:872" ph="UPDATE Guilds... " />
-                <marker date="1521497873498" expanded="true" signature="846:887" ph="UPDATE Guilds... " />
-                <marker date="1521497873498" expanded="true" signature="846:902" ph="UPDATE Guilds... " />
-                <marker date="1521497873498" expanded="true" signature="846:911" ph="UPDATE Guilds... " />
-                <marker date="1521497873498" expanded="true" signature="1906:1964" ph="DELETE FROM Roles... " />
-                <marker date="1521497873498" expanded="true" signature="1917:1923" ph="INSERT INTO Roles... " />
-                <marker date="1521497873498" expanded="true" signature="1917:1964" ph="INSERT INTO Roles... " />
-                <marker date="1521497873498" expanded="true" signature="2633:2719" ph="INSERT INTO Roles... " />
-                <marker date="1521497873498" expanded="true" signature="3495:3543" ph="SELECT * FRO... Guilds" />
-                <marker date="1521497873498" expanded="true" signature="3495:3554" ph="SELECT Guild... Guilds" />
-                <marker date="1521497873498" expanded="true" signature="3711:3750" ph="SELECT (Role... Roles" />
-                <marker date="1521497873498" expanded="true" signature="3977:4037" ph="UPDATE Roles... " />
-                <marker date="1521497873498" expanded="true" signature="4222:4275" ph="INSERT INTO Guild... " />
-                <marker date="1521497873498" expanded="true" signature="4222:4291" ph="INSERT INTO Guild... " />
-                <marker date="1521497873498" expanded="true" signature="4222:4324" ph="INSERT INTO Guild... " />
+                <marker date="1521571248936" expanded="true" signature="804:830" ph="UPDATE Guilds... " />
+                <marker date="1521571248936" expanded="true" signature="804:845" ph="UPDATE Guilds... " />
+                <marker date="1521571248936" expanded="true" signature="804:860" ph="UPDATE Guilds... " />
+                <marker date="1521571248936" expanded="true" signature="804:869" ph="UPDATE Guilds... " />
+                <marker date="1521571248936" expanded="true" signature="1864:1922" ph="DELETE FROM Roles... " />
+                <marker date="1521571248936" expanded="true" signature="1875:1881" ph="INSERT INTO Roles... " />
+                <marker date="1521571248936" expanded="true" signature="1875:1922" ph="INSERT INTO Roles... " />
+                <marker date="1521571248936" expanded="true" signature="2591:2677" ph="INSERT INTO Roles... " />
+                <marker date="1521571248936" expanded="true" signature="3453:3501" ph="SELECT * FRO... Guilds" />
+                <marker date="1521571248936" expanded="true" signature="3453:3512" ph="SELECT Guild... Guilds" />
+                <marker date="1521571248936" expanded="true" signature="3669:3708" ph="SELECT (Role... Roles" />
+                <marker date="1521571248936" expanded="true" signature="3935:3995" ph="UPDATE Roles... " />
+                <marker date="1521571248936" expanded="true" signature="4180:4233" ph="INSERT INTO Guild... " />
+                <marker date="1521571248936" expanded="true" signature="4180:4249" ph="INSERT INTO Guild... " />
+                <marker date="1521571248936" expanded="true" signature="4180:4282" ph="INSERT INTO Guild... " />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
+      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="25" column="38" lean-forward="false" selection-start-line="25" selection-start-column="38" selection-end-line="25" selection-end-column="38" />
+            <state relative-caret-position="275">
+              <caret line="30" column="28" lean-forward="true" selection-start-line="30" selection-start-column="28" selection-end-line="30" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -120,10 +131,13 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="GradleLocalSettings">
     <option name="myGradleHomes">
       <map>
-        <entry key="$PROJECT_DIR$" value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.0-bin/3p92xsbhik5vmig8i90n16yxc/gradle-4.0" />
+        <entry key="$PROJECT_DIR$" value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.0-all/ac27o8rbd0ic8ih41or9l32mv/gradle-4.0" />
       </map>
     </option>
     <option name="myGradleVersions">
@@ -235,6 +249,10 @@
                 <option name="description" value="Processes test resources." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="processTestResources" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="copyToLib" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Assembles and tests this project and all projects it depends on." />
@@ -352,6 +370,10 @@
                 <option name="name" value="help" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="stage" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
                 <option name="description" value="Assembles and tests this project." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="build" />
@@ -368,8 +390,8 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="4563897033000" />
-        <entry key="$PROJECT_DIR$/build.gradle" value="2730980939" />
+        <entry key="$PROJECT_DIR$" value="4564523320000" />
+        <entry key="$PROJECT_DIR$/build.gradle" value="140534439" />
         <entry key="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" value="566444372" />
         <entry key="$PROJECT_DIR$/settings.gradle" value="1099144630" />
       </map>
@@ -555,11 +577,12 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/main/java/LoadDriver.java" />
-        <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/src/main/java/BOT.java" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/06ddc922-2575-49c2-a0a9-5aa3bfe811d5/console.sql" />
-        <option value="$PROJECT_DIR$/src/main/java/BotGuild.java" />
+        <option value="$PROJECT_DIR$/settings.gradle" />
         <option value="$PROJECT_DIR$/src/main/java/MyListener.java" />
+        <option value="$PROJECT_DIR$/src/main/java/BotGuild.java" />
+        <option value="$PROJECT_DIR$/build.gradle" />
       </list>
     </option>
   </component>
@@ -575,6 +598,7 @@
     <option name="width" value="1215" />
     <option name="height" value="804" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
       <flattenPackages />
@@ -632,7 +656,7 @@
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="SQL Dialects" />
+    <property name="settings.editor.selected.configurable" value="RemoteServers" />
     <property name="com.intellij.database.dataSource.DataSourceTemplate" value="MySQL" />
   </component>
   <component name="RecentsManager">
@@ -777,12 +801,12 @@
       <workItem from="1521454191500" duration="456000" />
       <workItem from="1521495589848" duration="6952000" />
       <workItem from="1521550556339" duration="2159000" />
-      <workItem from="1521569860278" duration="10000" />
+      <workItem from="1521569860278" duration="1503000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="36896000" />
+    <option name="totallyTimeSpent" value="38389000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -795,6 +819,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1215" y="-4" width="1215" height="804" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293944" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -803,12 +828,13 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293944" sideWeight="0.502994" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293944" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293944" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.0829769" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26946107" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3288889" sideWeight="0.497006" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2112917" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24978614" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -821,7 +847,6 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293944" sideWeight="0.497006" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293944" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293944" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -884,31 +909,9 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/main/java/MyListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2484">
-          <caret line="138" column="0" lean-forward="true" selection-start-line="138" selection-start-column="0" selection-end-line="138" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/BOT.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="486">
-          <caret line="34" column="5" lean-forward="false" selection-start-line="34" selection-start-column="5" selection-end-line="34" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/MyListener.java">
-      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="972">
           <caret line="54" column="61" lean-forward="false" selection-start-line="54" selection-start-column="61" selection-end-line="54" selection-end-column="61" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -926,21 +929,21 @@
           <caret line="130" column="55" lean-forward="false" selection-start-line="130" selection-start-column="55" selection-end-line="130" selection-end-column="55" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1521497873498" expanded="true" signature="846:872" ph="UPDATE Guilds... " />
-            <marker date="1521497873498" expanded="true" signature="846:887" ph="UPDATE Guilds... " />
-            <marker date="1521497873498" expanded="true" signature="846:902" ph="UPDATE Guilds... " />
-            <marker date="1521497873498" expanded="true" signature="846:911" ph="UPDATE Guilds... " />
-            <marker date="1521497873498" expanded="true" signature="1906:1964" ph="DELETE FROM Roles... " />
-            <marker date="1521497873498" expanded="true" signature="1917:1923" ph="INSERT INTO Roles... " />
-            <marker date="1521497873498" expanded="true" signature="1917:1964" ph="INSERT INTO Roles... " />
-            <marker date="1521497873498" expanded="true" signature="2633:2719" ph="INSERT INTO Roles... " />
-            <marker date="1521497873498" expanded="true" signature="3495:3543" ph="SELECT * FRO... Guilds" />
-            <marker date="1521497873498" expanded="true" signature="3495:3554" ph="SELECT Guild... Guilds" />
-            <marker date="1521497873498" expanded="true" signature="3711:3750" ph="SELECT (Role... Roles" />
-            <marker date="1521497873498" expanded="true" signature="3977:4037" ph="UPDATE Roles... " />
-            <marker date="1521497873498" expanded="true" signature="4222:4275" ph="INSERT INTO Guild... " />
-            <marker date="1521497873498" expanded="true" signature="4222:4291" ph="INSERT INTO Guild... " />
-            <marker date="1521497873498" expanded="true" signature="4222:4324" ph="INSERT INTO Guild... " />
+            <marker date="1521571248936" expanded="true" signature="804:830" ph="UPDATE Guilds... " />
+            <marker date="1521571248936" expanded="true" signature="804:845" ph="UPDATE Guilds... " />
+            <marker date="1521571248936" expanded="true" signature="804:860" ph="UPDATE Guilds... " />
+            <marker date="1521571248936" expanded="true" signature="804:869" ph="UPDATE Guilds... " />
+            <marker date="1521571248936" expanded="true" signature="1864:1922" ph="DELETE FROM Roles... " />
+            <marker date="1521571248936" expanded="true" signature="1875:1881" ph="INSERT INTO Roles... " />
+            <marker date="1521571248936" expanded="true" signature="1875:1922" ph="INSERT INTO Roles... " />
+            <marker date="1521571248936" expanded="true" signature="2591:2677" ph="INSERT INTO Roles... " />
+            <marker date="1521571248936" expanded="true" signature="3453:3501" ph="SELECT * FRO... Guilds" />
+            <marker date="1521571248936" expanded="true" signature="3453:3512" ph="SELECT Guild... Guilds" />
+            <marker date="1521571248936" expanded="true" signature="3669:3708" ph="SELECT (Role... Roles" />
+            <marker date="1521571248936" expanded="true" signature="3935:3995" ph="UPDATE Roles... " />
+            <marker date="1521571248936" expanded="true" signature="4180:4233" ph="INSERT INTO Guild... " />
+            <marker date="1521571248936" expanded="true" signature="4180:4249" ph="INSERT INTO Guild... " />
+            <marker date="1521571248936" expanded="true" signature="4180:4282" ph="INSERT INTO Guild... " />
           </folding>
         </state>
       </provider>
@@ -967,9 +970,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
           <caret line="20" column="9" lean-forward="true" selection-start-line="20" selection-start-column="9" selection-end-line="20" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -979,21 +980,21 @@
           <caret line="15" column="5" lean-forward="false" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1521497873498" expanded="true" signature="846:872" ph="UPDATE Guilds... " />
-            <marker date="1521497873498" expanded="true" signature="846:887" ph="UPDATE Guilds... " />
-            <marker date="1521497873498" expanded="true" signature="846:902" ph="UPDATE Guilds... " />
-            <marker date="1521497873498" expanded="true" signature="846:911" ph="UPDATE Guilds... " />
-            <marker date="1521497873498" expanded="true" signature="1906:1964" ph="DELETE FROM Roles... " />
-            <marker date="1521497873498" expanded="true" signature="1917:1923" ph="INSERT INTO Roles... " />
-            <marker date="1521497873498" expanded="true" signature="1917:1964" ph="INSERT INTO Roles... " />
-            <marker date="1521497873498" expanded="true" signature="2633:2719" ph="INSERT INTO Roles... " />
-            <marker date="1521497873498" expanded="true" signature="3495:3543" ph="SELECT * FRO... Guilds" />
-            <marker date="1521497873498" expanded="true" signature="3495:3554" ph="SELECT Guild... Guilds" />
-            <marker date="1521497873498" expanded="true" signature="3711:3750" ph="SELECT (Role... Roles" />
-            <marker date="1521497873498" expanded="true" signature="3977:4037" ph="UPDATE Roles... " />
-            <marker date="1521497873498" expanded="true" signature="4222:4275" ph="INSERT INTO Guild... " />
-            <marker date="1521497873498" expanded="true" signature="4222:4291" ph="INSERT INTO Guild... " />
-            <marker date="1521497873498" expanded="true" signature="4222:4324" ph="INSERT INTO Guild... " />
+            <marker date="1521571248936" expanded="true" signature="804:830" ph="UPDATE Guilds... " />
+            <marker date="1521571248936" expanded="true" signature="804:845" ph="UPDATE Guilds... " />
+            <marker date="1521571248936" expanded="true" signature="804:860" ph="UPDATE Guilds... " />
+            <marker date="1521571248936" expanded="true" signature="804:869" ph="UPDATE Guilds... " />
+            <marker date="1521571248936" expanded="true" signature="1864:1922" ph="DELETE FROM Roles... " />
+            <marker date="1521571248936" expanded="true" signature="1875:1881" ph="INSERT INTO Roles... " />
+            <marker date="1521571248936" expanded="true" signature="1875:1922" ph="INSERT INTO Roles... " />
+            <marker date="1521571248936" expanded="true" signature="2591:2677" ph="INSERT INTO Roles... " />
+            <marker date="1521571248936" expanded="true" signature="3453:3501" ph="SELECT * FRO... Guilds" />
+            <marker date="1521571248936" expanded="true" signature="3453:3512" ph="SELECT Guild... Guilds" />
+            <marker date="1521571248936" expanded="true" signature="3669:3708" ph="SELECT (Role... Roles" />
+            <marker date="1521571248936" expanded="true" signature="3935:3995" ph="UPDATE Roles... " />
+            <marker date="1521571248936" expanded="true" signature="4180:4233" ph="INSERT INTO Guild... " />
+            <marker date="1521571248936" expanded="true" signature="4180:4249" ph="INSERT INTO Guild... " />
+            <marker date="1521571248936" expanded="true" signature="4180:4282" ph="INSERT INTO Guild... " />
           </folding>
         </state>
       </provider>
@@ -1022,21 +1023,21 @@
           <caret line="97" column="39" lean-forward="false" selection-start-line="97" selection-start-column="39" selection-end-line="97" selection-end-column="39" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1521497873498" expanded="true" signature="846:872" ph="UPDATE Guilds... " />
-            <marker date="1521497873498" expanded="true" signature="846:887" ph="UPDATE Guilds... " />
-            <marker date="1521497873498" expanded="true" signature="846:902" ph="UPDATE Guilds... " />
-            <marker date="1521497873498" expanded="true" signature="846:911" ph="UPDATE Guilds... " />
-            <marker date="1521497873498" expanded="true" signature="1906:1964" ph="DELETE FROM Roles... " />
-            <marker date="1521497873498" expanded="true" signature="1917:1923" ph="INSERT INTO Roles... " />
-            <marker date="1521497873498" expanded="true" signature="1917:1964" ph="INSERT INTO Roles... " />
-            <marker date="1521497873498" expanded="true" signature="2633:2719" ph="INSERT INTO Roles... " />
-            <marker date="1521497873498" expanded="true" signature="3495:3543" ph="SELECT * FRO... Guilds" />
-            <marker date="1521497873498" expanded="true" signature="3495:3554" ph="SELECT Guild... Guilds" />
-            <marker date="1521497873498" expanded="true" signature="3711:3750" ph="SELECT (Role... Roles" />
-            <marker date="1521497873498" expanded="true" signature="3977:4037" ph="UPDATE Roles... " />
-            <marker date="1521497873498" expanded="true" signature="4222:4275" ph="INSERT INTO Guild... " />
-            <marker date="1521497873498" expanded="true" signature="4222:4291" ph="INSERT INTO Guild... " />
-            <marker date="1521497873498" expanded="true" signature="4222:4324" ph="INSERT INTO Guild... " />
+            <marker date="1521571248936" expanded="true" signature="804:830" ph="UPDATE Guilds... " />
+            <marker date="1521571248936" expanded="true" signature="804:845" ph="UPDATE Guilds... " />
+            <marker date="1521571248936" expanded="true" signature="804:860" ph="UPDATE Guilds... " />
+            <marker date="1521571248936" expanded="true" signature="804:869" ph="UPDATE Guilds... " />
+            <marker date="1521571248936" expanded="true" signature="1864:1922" ph="DELETE FROM Roles... " />
+            <marker date="1521571248936" expanded="true" signature="1875:1881" ph="INSERT INTO Roles... " />
+            <marker date="1521571248936" expanded="true" signature="1875:1922" ph="INSERT INTO Roles... " />
+            <marker date="1521571248936" expanded="true" signature="2591:2677" ph="INSERT INTO Roles... " />
+            <marker date="1521571248936" expanded="true" signature="3453:3501" ph="SELECT * FRO... Guilds" />
+            <marker date="1521571248936" expanded="true" signature="3453:3512" ph="SELECT Guild... Guilds" />
+            <marker date="1521571248936" expanded="true" signature="3669:3708" ph="SELECT (Role... Roles" />
+            <marker date="1521571248936" expanded="true" signature="3935:3995" ph="UPDATE Roles... " />
+            <marker date="1521571248936" expanded="true" signature="4180:4233" ph="INSERT INTO Guild... " />
+            <marker date="1521571248936" expanded="true" signature="4180:4249" ph="INSERT INTO Guild... " />
+            <marker date="1521571248936" expanded="true" signature="4180:4282" ph="INSERT INTO Guild... " />
           </folding>
         </state>
       </provider>
@@ -1045,9 +1046,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
           <caret line="14" column="23" lean-forward="true" selection-start-line="14" selection-start-column="23" selection-end-line="14" selection-end-column="23" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1067,21 +1066,21 @@
           <caret line="97" column="39" lean-forward="false" selection-start-line="97" selection-start-column="39" selection-end-line="97" selection-end-column="39" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1521497873498" expanded="true" signature="846:872" ph="UPDATE Guilds... " />
-            <marker date="1521497873498" expanded="true" signature="846:887" ph="UPDATE Guilds... " />
-            <marker date="1521497873498" expanded="true" signature="846:902" ph="UPDATE Guilds... " />
-            <marker date="1521497873498" expanded="true" signature="846:911" ph="UPDATE Guilds... " />
-            <marker date="1521497873498" expanded="true" signature="1906:1964" ph="DELETE FROM Roles... " />
-            <marker date="1521497873498" expanded="true" signature="1917:1923" ph="INSERT INTO Roles... " />
-            <marker date="1521497873498" expanded="true" signature="1917:1964" ph="INSERT INTO Roles... " />
-            <marker date="1521497873498" expanded="true" signature="2633:2719" ph="INSERT INTO Roles... " />
-            <marker date="1521497873498" expanded="true" signature="3495:3543" ph="SELECT * FRO... Guilds" />
-            <marker date="1521497873498" expanded="true" signature="3495:3554" ph="SELECT Guild... Guilds" />
-            <marker date="1521497873498" expanded="true" signature="3711:3750" ph="SELECT (Role... Roles" />
-            <marker date="1521497873498" expanded="true" signature="3977:4037" ph="UPDATE Roles... " />
-            <marker date="1521497873498" expanded="true" signature="4222:4275" ph="INSERT INTO Guild... " />
-            <marker date="1521497873498" expanded="true" signature="4222:4291" ph="INSERT INTO Guild... " />
-            <marker date="1521497873498" expanded="true" signature="4222:4324" ph="INSERT INTO Guild... " />
+            <marker date="1521571248936" expanded="true" signature="804:830" ph="UPDATE Guilds... " />
+            <marker date="1521571248936" expanded="true" signature="804:845" ph="UPDATE Guilds... " />
+            <marker date="1521571248936" expanded="true" signature="804:860" ph="UPDATE Guilds... " />
+            <marker date="1521571248936" expanded="true" signature="804:869" ph="UPDATE Guilds... " />
+            <marker date="1521571248936" expanded="true" signature="1864:1922" ph="DELETE FROM Roles... " />
+            <marker date="1521571248936" expanded="true" signature="1875:1881" ph="INSERT INTO Roles... " />
+            <marker date="1521571248936" expanded="true" signature="1875:1922" ph="INSERT INTO Roles... " />
+            <marker date="1521571248936" expanded="true" signature="2591:2677" ph="INSERT INTO Roles... " />
+            <marker date="1521571248936" expanded="true" signature="3453:3501" ph="SELECT * FRO... Guilds" />
+            <marker date="1521571248936" expanded="true" signature="3453:3512" ph="SELECT Guild... Guilds" />
+            <marker date="1521571248936" expanded="true" signature="3669:3708" ph="SELECT (Role... Roles" />
+            <marker date="1521571248936" expanded="true" signature="3935:3995" ph="UPDATE Roles... " />
+            <marker date="1521571248936" expanded="true" signature="4180:4233" ph="INSERT INTO Guild... " />
+            <marker date="1521571248936" expanded="true" signature="4180:4249" ph="INSERT INTO Guild... " />
+            <marker date="1521571248936" expanded="true" signature="4180:4282" ph="INSERT INTO Guild... " />
           </folding>
         </state>
       </provider>
@@ -1098,9 +1097,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1980">
           <caret line="110" column="22" lean-forward="true" selection-start-line="110" selection-start-column="22" selection-end-line="110" selection-end-column="22" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1120,21 +1117,21 @@
           <caret line="97" column="39" lean-forward="true" selection-start-line="97" selection-start-column="39" selection-end-line="97" selection-end-column="39" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1521497873498" expanded="true" signature="846:872" ph="UPDATE Guilds... " />
-            <marker date="1521497873498" expanded="true" signature="846:887" ph="UPDATE Guilds... " />
-            <marker date="1521497873498" expanded="true" signature="846:902" ph="UPDATE Guilds... " />
-            <marker date="1521497873498" expanded="true" signature="846:911" ph="UPDATE Guilds... " />
-            <marker date="1521497873498" expanded="true" signature="1906:1964" ph="DELETE FROM Roles... " />
-            <marker date="1521497873498" expanded="true" signature="1917:1923" ph="INSERT INTO Roles... " />
-            <marker date="1521497873498" expanded="true" signature="1917:1964" ph="INSERT INTO Roles... " />
-            <marker date="1521497873498" expanded="true" signature="2633:2719" ph="INSERT INTO Roles... " />
-            <marker date="1521497873498" expanded="true" signature="3495:3543" ph="SELECT * FRO... Guilds" />
-            <marker date="1521497873498" expanded="true" signature="3495:3554" ph="SELECT Guild... Guilds" />
-            <marker date="1521497873498" expanded="true" signature="3711:3750" ph="SELECT (Role... Roles" />
-            <marker date="1521497873498" expanded="true" signature="3977:4037" ph="UPDATE Roles... " />
-            <marker date="1521497873498" expanded="true" signature="4222:4275" ph="INSERT INTO Guild... " />
-            <marker date="1521497873498" expanded="true" signature="4222:4291" ph="INSERT INTO Guild... " />
-            <marker date="1521497873498" expanded="true" signature="4222:4324" ph="INSERT INTO Guild... " />
+            <marker date="1521571248936" expanded="true" signature="804:830" ph="UPDATE Guilds... " />
+            <marker date="1521571248936" expanded="true" signature="804:845" ph="UPDATE Guilds... " />
+            <marker date="1521571248936" expanded="true" signature="804:860" ph="UPDATE Guilds... " />
+            <marker date="1521571248936" expanded="true" signature="804:869" ph="UPDATE Guilds... " />
+            <marker date="1521571248936" expanded="true" signature="1864:1922" ph="DELETE FROM Roles... " />
+            <marker date="1521571248936" expanded="true" signature="1875:1881" ph="INSERT INTO Roles... " />
+            <marker date="1521571248936" expanded="true" signature="1875:1922" ph="INSERT INTO Roles... " />
+            <marker date="1521571248936" expanded="true" signature="2591:2677" ph="INSERT INTO Roles... " />
+            <marker date="1521571248936" expanded="true" signature="3453:3501" ph="SELECT * FRO... Guilds" />
+            <marker date="1521571248936" expanded="true" signature="3453:3512" ph="SELECT Guild... Guilds" />
+            <marker date="1521571248936" expanded="true" signature="3669:3708" ph="SELECT (Role... Roles" />
+            <marker date="1521571248936" expanded="true" signature="3935:3995" ph="UPDATE Roles... " />
+            <marker date="1521571248936" expanded="true" signature="4180:4233" ph="INSERT INTO Guild... " />
+            <marker date="1521571248936" expanded="true" signature="4180:4249" ph="INSERT INTO Guild... " />
+            <marker date="1521571248936" expanded="true" signature="4180:4282" ph="INSERT INTO Guild... " />
           </folding>
         </state>
       </provider>
@@ -1151,9 +1148,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="522">
           <caret line="29" column="55" lean-forward="false" selection-start-line="29" selection-start-column="55" selection-end-line="29" selection-end-column="55" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1171,9 +1166,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="39" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1201,21 +1194,21 @@
           <caret line="35" column="29" lean-forward="false" selection-start-line="35" selection-start-column="29" selection-end-line="35" selection-end-column="29" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1521497873498" expanded="true" signature="846:872" ph="UPDATE Guilds... " />
-            <marker date="1521497873498" expanded="true" signature="846:887" ph="UPDATE Guilds... " />
-            <marker date="1521497873498" expanded="true" signature="846:902" ph="UPDATE Guilds... " />
-            <marker date="1521497873498" expanded="true" signature="846:911" ph="UPDATE Guilds... " />
-            <marker date="1521497873498" expanded="true" signature="1906:1964" ph="DELETE FROM Roles... " />
-            <marker date="1521497873498" expanded="true" signature="1917:1923" ph="INSERT INTO Roles... " />
-            <marker date="1521497873498" expanded="true" signature="1917:1964" ph="INSERT INTO Roles... " />
-            <marker date="1521497873498" expanded="true" signature="2633:2719" ph="INSERT INTO Roles... " />
-            <marker date="1521497873498" expanded="true" signature="3495:3543" ph="SELECT * FRO... Guilds" />
-            <marker date="1521497873498" expanded="true" signature="3495:3554" ph="SELECT Guild... Guilds" />
-            <marker date="1521497873498" expanded="true" signature="3711:3750" ph="SELECT (Role... Roles" />
-            <marker date="1521497873498" expanded="true" signature="3977:4037" ph="UPDATE Roles... " />
-            <marker date="1521497873498" expanded="true" signature="4222:4275" ph="INSERT INTO Guild... " />
-            <marker date="1521497873498" expanded="true" signature="4222:4291" ph="INSERT INTO Guild... " />
-            <marker date="1521497873498" expanded="true" signature="4222:4324" ph="INSERT INTO Guild... " />
+            <marker date="1521571248936" expanded="true" signature="804:830" ph="UPDATE Guilds... " />
+            <marker date="1521571248936" expanded="true" signature="804:845" ph="UPDATE Guilds... " />
+            <marker date="1521571248936" expanded="true" signature="804:860" ph="UPDATE Guilds... " />
+            <marker date="1521571248936" expanded="true" signature="804:869" ph="UPDATE Guilds... " />
+            <marker date="1521571248936" expanded="true" signature="1864:1922" ph="DELETE FROM Roles... " />
+            <marker date="1521571248936" expanded="true" signature="1875:1881" ph="INSERT INTO Roles... " />
+            <marker date="1521571248936" expanded="true" signature="1875:1922" ph="INSERT INTO Roles... " />
+            <marker date="1521571248936" expanded="true" signature="2591:2677" ph="INSERT INTO Roles... " />
+            <marker date="1521571248936" expanded="true" signature="3453:3501" ph="SELECT * FRO... Guilds" />
+            <marker date="1521571248936" expanded="true" signature="3453:3512" ph="SELECT Guild... Guilds" />
+            <marker date="1521571248936" expanded="true" signature="3669:3708" ph="SELECT (Role... Roles" />
+            <marker date="1521571248936" expanded="true" signature="3935:3995" ph="UPDATE Roles... " />
+            <marker date="1521571248936" expanded="true" signature="4180:4233" ph="INSERT INTO Guild... " />
+            <marker date="1521571248936" expanded="true" signature="4180:4249" ph="INSERT INTO Guild... " />
+            <marker date="1521571248936" expanded="true" signature="4180:4282" ph="INSERT INTO Guild... " />
           </folding>
         </state>
       </provider>
@@ -1244,21 +1237,21 @@
           <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1521497873498" expanded="true" signature="846:872" ph="UPDATE Guilds... " />
-            <marker date="1521497873498" expanded="true" signature="846:887" ph="UPDATE Guilds... " />
-            <marker date="1521497873498" expanded="true" signature="846:902" ph="UPDATE Guilds... " />
-            <marker date="1521497873498" expanded="true" signature="846:911" ph="UPDATE Guilds... " />
-            <marker date="1521497873498" expanded="true" signature="1906:1964" ph="DELETE FROM Roles... " />
-            <marker date="1521497873498" expanded="true" signature="1917:1923" ph="INSERT INTO Roles... " />
-            <marker date="1521497873498" expanded="true" signature="1917:1964" ph="INSERT INTO Roles... " />
-            <marker date="1521497873498" expanded="true" signature="2633:2719" ph="INSERT INTO Roles... " />
-            <marker date="1521497873498" expanded="true" signature="3495:3543" ph="SELECT * FRO... Guilds" />
-            <marker date="1521497873498" expanded="true" signature="3495:3554" ph="SELECT Guild... Guilds" />
-            <marker date="1521497873498" expanded="true" signature="3711:3750" ph="SELECT (Role... Roles" />
-            <marker date="1521497873498" expanded="true" signature="3977:4037" ph="UPDATE Roles... " />
-            <marker date="1521497873498" expanded="true" signature="4222:4275" ph="INSERT INTO Guild... " />
-            <marker date="1521497873498" expanded="true" signature="4222:4291" ph="INSERT INTO Guild... " />
-            <marker date="1521497873498" expanded="true" signature="4222:4324" ph="INSERT INTO Guild... " />
+            <marker date="1521571248936" expanded="true" signature="804:830" ph="UPDATE Guilds... " />
+            <marker date="1521571248936" expanded="true" signature="804:845" ph="UPDATE Guilds... " />
+            <marker date="1521571248936" expanded="true" signature="804:860" ph="UPDATE Guilds... " />
+            <marker date="1521571248936" expanded="true" signature="804:869" ph="UPDATE Guilds... " />
+            <marker date="1521571248936" expanded="true" signature="1864:1922" ph="DELETE FROM Roles... " />
+            <marker date="1521571248936" expanded="true" signature="1875:1881" ph="INSERT INTO Roles... " />
+            <marker date="1521571248936" expanded="true" signature="1875:1922" ph="INSERT INTO Roles... " />
+            <marker date="1521571248936" expanded="true" signature="2591:2677" ph="INSERT INTO Roles... " />
+            <marker date="1521571248936" expanded="true" signature="3453:3501" ph="SELECT * FRO... Guilds" />
+            <marker date="1521571248936" expanded="true" signature="3453:3512" ph="SELECT Guild... Guilds" />
+            <marker date="1521571248936" expanded="true" signature="3669:3708" ph="SELECT (Role... Roles" />
+            <marker date="1521571248936" expanded="true" signature="3935:3995" ph="UPDATE Roles... " />
+            <marker date="1521571248936" expanded="true" signature="4180:4233" ph="INSERT INTO Guild... " />
+            <marker date="1521571248936" expanded="true" signature="4180:4249" ph="INSERT INTO Guild... " />
+            <marker date="1521571248936" expanded="true" signature="4180:4282" ph="INSERT INTO Guild... " />
           </folding>
         </state>
       </provider>
@@ -1267,9 +1260,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="324">
           <caret line="22" column="0" lean-forward="true" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1299,16 +1290,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
           <caret line="405" column="0" lean-forward="false" selection-start-line="405" selection-start-column="0" selection-end-line="405" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/BOT.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="29" column="68" lean-forward="false" selection-start-line="29" selection-start-column="68" selection-end-line="29" selection-end-column="68" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1375,14 +1356,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="25" column="38" lean-forward="false" selection-start-line="25" selection-start-column="38" selection-end-line="25" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///usr/lib/jvm/java-1.8.0-openjdk-amd64/src.zip!/java/util/Comparator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="378">
@@ -1418,38 +1391,70 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/BotGuild.java">
+    <entry file="file://$PROJECT_DIR$/gradlew">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <marker date="1521497873498" expanded="true" signature="846:872" ph="UPDATE Guilds... " />
-            <marker date="1521497873498" expanded="true" signature="846:887" ph="UPDATE Guilds... " />
-            <marker date="1521497873498" expanded="true" signature="846:902" ph="UPDATE Guilds... " />
-            <marker date="1521497873498" expanded="true" signature="846:911" ph="UPDATE Guilds... " />
-            <marker date="1521497873498" expanded="true" signature="1906:1964" ph="DELETE FROM Roles... " />
-            <marker date="1521497873498" expanded="true" signature="1917:1923" ph="INSERT INTO Roles... " />
-            <marker date="1521497873498" expanded="true" signature="1917:1964" ph="INSERT INTO Roles... " />
-            <marker date="1521497873498" expanded="true" signature="2633:2719" ph="INSERT INTO Roles... " />
-            <marker date="1521497873498" expanded="true" signature="3495:3543" ph="SELECT * FRO... Guilds" />
-            <marker date="1521497873498" expanded="true" signature="3495:3554" ph="SELECT Guild... Guilds" />
-            <marker date="1521497873498" expanded="true" signature="3711:3750" ph="SELECT (Role... Roles" />
-            <marker date="1521497873498" expanded="true" signature="3977:4037" ph="UPDATE Roles... " />
-            <marker date="1521497873498" expanded="true" signature="4222:4275" ph="INSERT INTO Guild... " />
-            <marker date="1521497873498" expanded="true" signature="4222:4291" ph="INSERT INTO Guild... " />
-            <marker date="1521497873498" expanded="true" signature="4222:4324" ph="INSERT INTO Guild... " />
-          </folding>
+        <state relative-caret-position="-2792">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/MyListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="402">
-          <caret line="156" column="5" lean-forward="false" selection-start-line="156" selection-start-column="5" selection-end-line="156" selection-end-column="5" />
+        <state relative-caret-position="72">
+          <caret line="4" column="18" lean-forward="false" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/BOT.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="7" column="50" lean-forward="false" selection-start-line="7" selection-start-column="50" selection-end-line="7" selection-end-column="50" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/BotGuild.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="148" column="21" lean-forward="false" selection-start-line="148" selection-start-column="21" selection-end-line="148" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <marker date="1521571248936" expanded="true" signature="804:830" ph="UPDATE Guilds... " />
+            <marker date="1521571248936" expanded="true" signature="804:845" ph="UPDATE Guilds... " />
+            <marker date="1521571248936" expanded="true" signature="804:860" ph="UPDATE Guilds... " />
+            <marker date="1521571248936" expanded="true" signature="804:869" ph="UPDATE Guilds... " />
+            <marker date="1521571248936" expanded="true" signature="1864:1922" ph="DELETE FROM Roles... " />
+            <marker date="1521571248936" expanded="true" signature="1875:1881" ph="INSERT INTO Roles... " />
+            <marker date="1521571248936" expanded="true" signature="1875:1922" ph="INSERT INTO Roles... " />
+            <marker date="1521571248936" expanded="true" signature="2591:2677" ph="INSERT INTO Roles... " />
+            <marker date="1521571248936" expanded="true" signature="3453:3501" ph="SELECT * FRO... Guilds" />
+            <marker date="1521571248936" expanded="true" signature="3453:3512" ph="SELECT Guild... Guilds" />
+            <marker date="1521571248936" expanded="true" signature="3669:3708" ph="SELECT (Role... Roles" />
+            <marker date="1521571248936" expanded="true" signature="3935:3995" ph="UPDATE Roles... " />
+            <marker date="1521571248936" expanded="true" signature="4180:4233" ph="INSERT INTO Guild... " />
+            <marker date="1521571248936" expanded="true" signature="4180:4249" ph="INSERT INTO Guild... " />
+            <marker date="1521571248936" expanded="true" signature="4180:4282" ph="INSERT INTO Guild... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="275">
+          <caret line="30" column="28" lean-forward="true" selection-start-line="30" selection-start-column="28" selection-end-line="30" selection-end-column="28" />
+          <folding />
         </state>
       </provider>
     </entry>
