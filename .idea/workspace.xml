@@ -2,16 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8fb65ecf-fe0e-49e5-afc1-e181856c2b21" name="Default" comment="">
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/modules/testBot_test.iml" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.0/fileHashes/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/4.0/fileHashes/fileHashes.bin" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.0/fileHashes/fileHashes.lock" afterPath="$PROJECT_DIR$/.gradle/4.0/fileHashes/fileHashes.lock" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.0/taskHistory/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/4.0/taskHistory/fileSnapshots.bin" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.0/taskHistory/taskHistory.bin" afterPath="$PROJECT_DIR$/.gradle/4.0/taskHistory/taskHistory.bin" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.0/taskHistory/taskHistory.lock" afterPath="$PROJECT_DIR$/.gradle/4.0/taskHistory/taskHistory.lock" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" />
+      <change beforePath="$PROJECT_DIR$/.idea/.name" afterPath="$PROJECT_DIR$/.idea/.name" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/Application.iml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/Application_main.iml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/Application_test.iml" afterPath="" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/gradlew.bat" afterPath="$PROJECT_DIR$/gradlew.bat" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/BotGuild.class" afterPath="$PROJECT_DIR$/out/production/classes/BotGuild.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/MyListener.class" afterPath="$PROJECT_DIR$/out/production/classes/MyListener.class" />
+      <change beforePath="$PROJECT_DIR$/Procfile" afterPath="$PROJECT_DIR$/Procfile" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" afterPath="$PROJECT_DIR$/build.gradle" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/BOT.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/BotGuild.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/MyListener.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/BOT.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/BotGuild.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/MyListener.java" afterPath="" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -81,60 +90,41 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="BOT.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/BOT.java">
+      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="126">
-              <caret line="7" column="50" lean-forward="false" selection-start-line="7" selection-start-column="50" selection-end-line="7" selection-end-column="50" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="144">
+              <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MyListener.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/MyListener.java">
+      <file leaf-file-name="BOT.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/testBot/BOT.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
-              <caret line="4" column="18" lean-forward="false" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
+            <state relative-caret-position="195">
+              <caret line="22" column="15" lean-forward="true" selection-start-line="22" selection-start-column="15" selection-end-line="22" selection-end-column="15" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="BotGuild.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/BotGuild.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/testBot/BotGuild.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2610">
-              <caret line="148" column="21" lean-forward="false" selection-start-line="148" selection-start-column="21" selection-end-line="148" selection-end-column="21" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <marker date="1521571248936" expanded="true" signature="804:830" ph="UPDATE Guilds... " />
-                <marker date="1521571248936" expanded="true" signature="804:845" ph="UPDATE Guilds... " />
-                <marker date="1521571248936" expanded="true" signature="804:860" ph="UPDATE Guilds... " />
-                <marker date="1521571248936" expanded="true" signature="804:869" ph="UPDATE Guilds... " />
-                <marker date="1521571248936" expanded="true" signature="1864:1922" ph="DELETE FROM Roles... " />
-                <marker date="1521571248936" expanded="true" signature="1875:1881" ph="INSERT INTO Roles... " />
-                <marker date="1521571248936" expanded="true" signature="1875:1922" ph="INSERT INTO Roles... " />
-                <marker date="1521571248936" expanded="true" signature="2591:2677" ph="INSERT INTO Roles... " />
-                <marker date="1521571248936" expanded="true" signature="3453:3501" ph="SELECT * FRO... Guilds" />
-                <marker date="1521571248936" expanded="true" signature="3453:3512" ph="SELECT Guild... Guilds" />
-                <marker date="1521571248936" expanded="true" signature="3669:3708" ph="SELECT (Role... Roles" />
-                <marker date="1521571248936" expanded="true" signature="3935:3995" ph="UPDATE Roles... " />
-                <marker date="1521571248936" expanded="true" signature="4180:4233" ph="INSERT INTO Guild... " />
-                <marker date="1521571248936" expanded="true" signature="4180:4249" ph="INSERT INTO Guild... " />
-                <marker date="1521571248936" expanded="true" signature="4180:4282" ph="INSERT INTO Guild... " />
-              </folding>
+            <state relative-caret-position="54">
+              <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/build.gradle">
+      <file leaf-file-name="MyListener.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/testBot/MyListener.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="411">
-              <caret line="30" column="28" lean-forward="false" selection-start-line="30" selection-start-column="28" selection-end-line="30" selection-end-column="28" />
+            <state relative-caret-position="90">
+              <caret line="11" column="13" lean-forward="false" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -168,14 +158,14 @@
         <entry>
           <key>
             <ExternalProjectPojo>
-              <option name="name" value="Application" />
+              <option name="name" value="testBot" />
               <option name="path" value="$PROJECT_DIR$" />
             </ExternalProjectPojo>
           </key>
           <value>
             <list>
               <ExternalProjectPojo>
-                <option name="name" value="Application" />
+                <option name="name" value="testBot" />
                 <option name="path" value="$PROJECT_DIR$" />
               </ExternalProjectPojo>
             </list>
@@ -189,7 +179,7 @@
           <value>
             <list>
               <ExternalTaskPojo>
-                <option name="description" value="Displays the sub-projects of root project 'Application'." />
+                <option name="description" value="Displays the sub-projects of root project 'testBot'." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="projects" />
               </ExternalTaskPojo>
@@ -219,7 +209,7 @@
                 <option name="name" value="jar" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Displays the configuration model of root project 'Application'. [incubating]" />
+                <option name="description" value="Displays the configuration model of root project 'testBot'. [incubating]" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="model" />
               </ExternalTaskPojo>
@@ -229,7 +219,7 @@
                 <option name="name" value="processResources" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Displays the tasks runnable from root project 'Application'." />
+                <option name="description" value="Displays the tasks runnable from root project 'testBot'." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="tasks" />
               </ExternalTaskPojo>
@@ -259,7 +249,7 @@
                 <option name="name" value="check" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Displays all dependencies declared in root project 'Application'." />
+                <option name="description" value="Displays all dependencies declared in root project 'testBot'." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="dependencies" />
               </ExternalTaskPojo>
@@ -298,7 +288,7 @@
                 <option name="name" value="distZip" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Displays the components produced by root project 'Application'. [incubating]" />
+                <option name="description" value="Displays the components produced by root project 'testBot'. [incubating]" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="components" />
               </ExternalTaskPojo>
@@ -313,12 +303,12 @@
                 <option name="name" value="classes" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Displays the dependent components of components in root project 'Application'. [incubating]" />
+                <option name="description" value="Displays the dependent components of components in root project 'testBot'. [incubating]" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="dependentComponents" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Displays all buildscript dependencies declared in root project 'Application'." />
+                <option name="description" value="Displays all buildscript dependencies declared in root project 'testBot'." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="buildEnvironment" />
               </ExternalTaskPojo>
@@ -363,7 +353,7 @@
                 <option name="name" value="knows" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Displays the insight into a specific dependency in root project 'Application'." />
+                <option name="description" value="Displays the insight into a specific dependency in root project 'testBot'." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="dependencyInsight" />
               </ExternalTaskPojo>
@@ -397,7 +387,7 @@
                 <option name="name" value="build" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Displays the properties of root project 'Application'." />
+                <option name="description" value="Displays the properties of root project 'testBot'." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="properties" />
               </ExternalTaskPojo>
@@ -408,10 +398,10 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="4564523320000" />
-        <entry key="$PROJECT_DIR$/build.gradle" value="140534439" />
+        <entry key="$PROJECT_DIR$" value="4564530020000" />
+        <entry key="$PROJECT_DIR$/build.gradle" value="162931265" />
         <entry key="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" value="566444372" />
-        <entry key="$PROJECT_DIR$/settings.gradle" value="1099144630" />
+        <entry key="$PROJECT_DIR$/settings.gradle" value="3168741768" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -438,7 +428,7 @@
                   </entry>
                 </map>
               </option>
-              <option name="name" value="Application" />
+              <option name="name" value="testBot" />
               <option name="projectBuildClasspath">
                 <list>
                   <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-4.0-all/ac27o8rbd0ic8ih41or9l32mv/gradle-4.0/src/ivy" />
@@ -595,11 +585,11 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/main/java/LoadDriver.java" />
-        <option value="$PROJECT_DIR$/src/main/java/BOT.java" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/06ddc922-2575-49c2-a0a9-5aa3bfe811d5/console.sql" />
         <option value="$PROJECT_DIR$/settings.gradle" />
-        <option value="$PROJECT_DIR$/src/main/java/MyListener.java" />
         <option value="$PROJECT_DIR$/src/main/java/BotGuild.java" />
+        <option value="$PROJECT_DIR$/src/main/java/BOT.java" />
+        <option value="$PROJECT_DIR$/src/main/java/MyListener.java" />
         <option value="$PROJECT_DIR$/build.gradle" />
       </list>
     </option>
@@ -617,7 +607,7 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="65" />
+    <option name="x" value="-1215" />
     <option name="y" value="-4" />
     <option name="width" value="1215" />
     <option name="height" value="804" />
@@ -638,46 +628,60 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="Application" type="b2602c69:ProjectViewProjectNode" />
+              <item name="testBot" type="b2602c69:ProjectViewProjectNode" />
               <item name="TestBot" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
             </path>
             <path>
-              <item name="Application" type="b2602c69:ProjectViewProjectNode" />
+              <item name="testBot" type="b2602c69:ProjectViewProjectNode" />
               <item name="TestBot" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Application" type="b2602c69:ProjectViewProjectNode" />
+              <item name="testBot" type="b2602c69:ProjectViewProjectNode" />
               <item name="TestBot" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
             </path>
             <path>
-              <item name="Application" type="b2602c69:ProjectViewProjectNode" />
+              <item name="testBot" type="b2602c69:ProjectViewProjectNode" />
               <item name="TestBot" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="testBot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TestBot" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="testBot" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="testBot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TestBot" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
       <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="RemoteServers" />
@@ -710,16 +714,16 @@
     </configuration>
     <configuration name="BOT" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="MAIN_CLASS_NAME" value="BOT" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="MAIN_CLASS_NAME" value="com.testBot.BOT" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="ENABLE_SWING_INSPECTOR" value="false" />
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="Application_main" />
+      <module name="testBot_main" />
       <envs />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -826,12 +830,13 @@
       <workItem from="1521495589848" duration="6952000" />
       <workItem from="1521550556339" duration="2159000" />
       <workItem from="1521569860278" duration="1982000" />
-      <workItem from="1521572520211" duration="989000" />
+      <workItem from="1521572520211" duration="1293000" />
+      <workItem from="1521574437204" duration="1148000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="39857000" />
+    <option name="totallyTimeSpent" value="41309000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -843,7 +848,8 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="-4" width="1215" height="804" extended-state="6" />
+    <frame x="-1215" y="-4" width="1215" height="804" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293944" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -854,11 +860,11 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293944" sideWeight="0.502994" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934132" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3288889" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3288889" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3288889" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3288889" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27459368" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27972627" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3288889" sideWeight="0.497006" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2112917" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934132" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -935,54 +941,11 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/MyListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="972">
-          <caret line="54" column="61" lean-forward="false" selection-start-line="54" selection-start-column="61" selection-end-line="54" selection-end-column="61" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="14" column="13" lean-forward="false" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/BotGuild.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2286">
-          <caret line="130" column="55" lean-forward="false" selection-start-line="130" selection-start-column="55" selection-end-line="130" selection-end-column="55" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <marker date="1521571248936" expanded="true" signature="804:830" ph="UPDATE Guilds... " />
-            <marker date="1521571248936" expanded="true" signature="804:845" ph="UPDATE Guilds... " />
-            <marker date="1521571248936" expanded="true" signature="804:860" ph="UPDATE Guilds... " />
-            <marker date="1521571248936" expanded="true" signature="804:869" ph="UPDATE Guilds... " />
-            <marker date="1521571248936" expanded="true" signature="1864:1922" ph="DELETE FROM Roles... " />
-            <marker date="1521571248936" expanded="true" signature="1875:1881" ph="INSERT INTO Roles... " />
-            <marker date="1521571248936" expanded="true" signature="1875:1922" ph="INSERT INTO Roles... " />
-            <marker date="1521571248936" expanded="true" signature="2591:2677" ph="INSERT INTO Roles... " />
-            <marker date="1521571248936" expanded="true" signature="3453:3501" ph="SELECT * FRO... Guilds" />
-            <marker date="1521571248936" expanded="true" signature="3453:3512" ph="SELECT Guild... Guilds" />
-            <marker date="1521571248936" expanded="true" signature="3669:3708" ph="SELECT (Role... Roles" />
-            <marker date="1521571248936" expanded="true" signature="3935:3995" ph="UPDATE Roles... " />
-            <marker date="1521571248936" expanded="true" signature="4180:4233" ph="INSERT INTO Guild... " />
-            <marker date="1521571248936" expanded="true" signature="4180:4249" ph="INSERT INTO Guild... " />
-            <marker date="1521571248936" expanded="true" signature="4180:4282" ph="INSERT INTO Guild... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/BOT.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="486">
           <caret line="34" column="5" lean-forward="false" selection-start-line="34" selection-start-column="5" selection-end-line="34" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1006,24 +969,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
           <caret line="15" column="5" lean-forward="false" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <marker date="1521571248936" expanded="true" signature="804:830" ph="UPDATE Guilds... " />
-            <marker date="1521571248936" expanded="true" signature="804:845" ph="UPDATE Guilds... " />
-            <marker date="1521571248936" expanded="true" signature="804:860" ph="UPDATE Guilds... " />
-            <marker date="1521571248936" expanded="true" signature="804:869" ph="UPDATE Guilds... " />
-            <marker date="1521571248936" expanded="true" signature="1864:1922" ph="DELETE FROM Roles... " />
-            <marker date="1521571248936" expanded="true" signature="1875:1881" ph="INSERT INTO Roles... " />
-            <marker date="1521571248936" expanded="true" signature="1875:1922" ph="INSERT INTO Roles... " />
-            <marker date="1521571248936" expanded="true" signature="2591:2677" ph="INSERT INTO Roles... " />
-            <marker date="1521571248936" expanded="true" signature="3453:3501" ph="SELECT * FRO... Guilds" />
-            <marker date="1521571248936" expanded="true" signature="3453:3512" ph="SELECT Guild... Guilds" />
-            <marker date="1521571248936" expanded="true" signature="3669:3708" ph="SELECT (Role... Roles" />
-            <marker date="1521571248936" expanded="true" signature="3935:3995" ph="UPDATE Roles... " />
-            <marker date="1521571248936" expanded="true" signature="4180:4233" ph="INSERT INTO Guild... " />
-            <marker date="1521571248936" expanded="true" signature="4180:4249" ph="INSERT INTO Guild... " />
-            <marker date="1521571248936" expanded="true" signature="4180:4282" ph="INSERT INTO Guild... " />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1031,9 +977,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="486">
           <caret line="34" column="5" lean-forward="false" selection-start-line="34" selection-start-column="5" selection-end-line="34" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1049,24 +993,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1746">
           <caret line="97" column="39" lean-forward="false" selection-start-line="97" selection-start-column="39" selection-end-line="97" selection-end-column="39" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <marker date="1521571248936" expanded="true" signature="804:830" ph="UPDATE Guilds... " />
-            <marker date="1521571248936" expanded="true" signature="804:845" ph="UPDATE Guilds... " />
-            <marker date="1521571248936" expanded="true" signature="804:860" ph="UPDATE Guilds... " />
-            <marker date="1521571248936" expanded="true" signature="804:869" ph="UPDATE Guilds... " />
-            <marker date="1521571248936" expanded="true" signature="1864:1922" ph="DELETE FROM Roles... " />
-            <marker date="1521571248936" expanded="true" signature="1875:1881" ph="INSERT INTO Roles... " />
-            <marker date="1521571248936" expanded="true" signature="1875:1922" ph="INSERT INTO Roles... " />
-            <marker date="1521571248936" expanded="true" signature="2591:2677" ph="INSERT INTO Roles... " />
-            <marker date="1521571248936" expanded="true" signature="3453:3501" ph="SELECT * FRO... Guilds" />
-            <marker date="1521571248936" expanded="true" signature="3453:3512" ph="SELECT Guild... Guilds" />
-            <marker date="1521571248936" expanded="true" signature="3669:3708" ph="SELECT (Role... Roles" />
-            <marker date="1521571248936" expanded="true" signature="3935:3995" ph="UPDATE Roles... " />
-            <marker date="1521571248936" expanded="true" signature="4180:4233" ph="INSERT INTO Guild... " />
-            <marker date="1521571248936" expanded="true" signature="4180:4249" ph="INSERT INTO Guild... " />
-            <marker date="1521571248936" expanded="true" signature="4180:4282" ph="INSERT INTO Guild... " />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1082,9 +1009,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
           <caret line="16" column="19" lean-forward="false" selection-start-line="16" selection-start-column="19" selection-end-line="16" selection-end-column="19" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1092,24 +1017,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1746">
           <caret line="97" column="39" lean-forward="false" selection-start-line="97" selection-start-column="39" selection-end-line="97" selection-end-column="39" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <marker date="1521571248936" expanded="true" signature="804:830" ph="UPDATE Guilds... " />
-            <marker date="1521571248936" expanded="true" signature="804:845" ph="UPDATE Guilds... " />
-            <marker date="1521571248936" expanded="true" signature="804:860" ph="UPDATE Guilds... " />
-            <marker date="1521571248936" expanded="true" signature="804:869" ph="UPDATE Guilds... " />
-            <marker date="1521571248936" expanded="true" signature="1864:1922" ph="DELETE FROM Roles... " />
-            <marker date="1521571248936" expanded="true" signature="1875:1881" ph="INSERT INTO Roles... " />
-            <marker date="1521571248936" expanded="true" signature="1875:1922" ph="INSERT INTO Roles... " />
-            <marker date="1521571248936" expanded="true" signature="2591:2677" ph="INSERT INTO Roles... " />
-            <marker date="1521571248936" expanded="true" signature="3453:3501" ph="SELECT * FRO... Guilds" />
-            <marker date="1521571248936" expanded="true" signature="3453:3512" ph="SELECT Guild... Guilds" />
-            <marker date="1521571248936" expanded="true" signature="3669:3708" ph="SELECT (Role... Roles" />
-            <marker date="1521571248936" expanded="true" signature="3935:3995" ph="UPDATE Roles... " />
-            <marker date="1521571248936" expanded="true" signature="4180:4233" ph="INSERT INTO Guild... " />
-            <marker date="1521571248936" expanded="true" signature="4180:4249" ph="INSERT INTO Guild... " />
-            <marker date="1521571248936" expanded="true" signature="4180:4282" ph="INSERT INTO Guild... " />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1133,9 +1041,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
           <caret line="16" column="19" lean-forward="false" selection-start-line="16" selection-start-column="19" selection-end-line="16" selection-end-column="19" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1143,24 +1049,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1746">
           <caret line="97" column="39" lean-forward="true" selection-start-line="97" selection-start-column="39" selection-end-line="97" selection-end-column="39" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <marker date="1521571248936" expanded="true" signature="804:830" ph="UPDATE Guilds... " />
-            <marker date="1521571248936" expanded="true" signature="804:845" ph="UPDATE Guilds... " />
-            <marker date="1521571248936" expanded="true" signature="804:860" ph="UPDATE Guilds... " />
-            <marker date="1521571248936" expanded="true" signature="804:869" ph="UPDATE Guilds... " />
-            <marker date="1521571248936" expanded="true" signature="1864:1922" ph="DELETE FROM Roles... " />
-            <marker date="1521571248936" expanded="true" signature="1875:1881" ph="INSERT INTO Roles... " />
-            <marker date="1521571248936" expanded="true" signature="1875:1922" ph="INSERT INTO Roles... " />
-            <marker date="1521571248936" expanded="true" signature="2591:2677" ph="INSERT INTO Roles... " />
-            <marker date="1521571248936" expanded="true" signature="3453:3501" ph="SELECT * FRO... Guilds" />
-            <marker date="1521571248936" expanded="true" signature="3453:3512" ph="SELECT Guild... Guilds" />
-            <marker date="1521571248936" expanded="true" signature="3669:3708" ph="SELECT (Role... Roles" />
-            <marker date="1521571248936" expanded="true" signature="3935:3995" ph="UPDATE Roles... " />
-            <marker date="1521571248936" expanded="true" signature="4180:4233" ph="INSERT INTO Guild... " />
-            <marker date="1521571248936" expanded="true" signature="4180:4249" ph="INSERT INTO Guild... " />
-            <marker date="1521571248936" expanded="true" signature="4180:4282" ph="INSERT INTO Guild... " />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1184,9 +1073,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1210,9 +1097,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1220,24 +1105,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="630">
           <caret line="35" column="29" lean-forward="false" selection-start-line="35" selection-start-column="29" selection-end-line="35" selection-end-column="29" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <marker date="1521571248936" expanded="true" signature="804:830" ph="UPDATE Guilds... " />
-            <marker date="1521571248936" expanded="true" signature="804:845" ph="UPDATE Guilds... " />
-            <marker date="1521571248936" expanded="true" signature="804:860" ph="UPDATE Guilds... " />
-            <marker date="1521571248936" expanded="true" signature="804:869" ph="UPDATE Guilds... " />
-            <marker date="1521571248936" expanded="true" signature="1864:1922" ph="DELETE FROM Roles... " />
-            <marker date="1521571248936" expanded="true" signature="1875:1881" ph="INSERT INTO Roles... " />
-            <marker date="1521571248936" expanded="true" signature="1875:1922" ph="INSERT INTO Roles... " />
-            <marker date="1521571248936" expanded="true" signature="2591:2677" ph="INSERT INTO Roles... " />
-            <marker date="1521571248936" expanded="true" signature="3453:3501" ph="SELECT * FRO... Guilds" />
-            <marker date="1521571248936" expanded="true" signature="3453:3512" ph="SELECT Guild... Guilds" />
-            <marker date="1521571248936" expanded="true" signature="3669:3708" ph="SELECT (Role... Roles" />
-            <marker date="1521571248936" expanded="true" signature="3935:3995" ph="UPDATE Roles... " />
-            <marker date="1521571248936" expanded="true" signature="4180:4233" ph="INSERT INTO Guild... " />
-            <marker date="1521571248936" expanded="true" signature="4180:4249" ph="INSERT INTO Guild... " />
-            <marker date="1521571248936" expanded="true" signature="4180:4282" ph="INSERT INTO Guild... " />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1253,9 +1121,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="144">
           <caret line="11" column="5" lean-forward="false" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1263,24 +1129,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="18">
           <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <marker date="1521571248936" expanded="true" signature="804:830" ph="UPDATE Guilds... " />
-            <marker date="1521571248936" expanded="true" signature="804:845" ph="UPDATE Guilds... " />
-            <marker date="1521571248936" expanded="true" signature="804:860" ph="UPDATE Guilds... " />
-            <marker date="1521571248936" expanded="true" signature="804:869" ph="UPDATE Guilds... " />
-            <marker date="1521571248936" expanded="true" signature="1864:1922" ph="DELETE FROM Roles... " />
-            <marker date="1521571248936" expanded="true" signature="1875:1881" ph="INSERT INTO Roles... " />
-            <marker date="1521571248936" expanded="true" signature="1875:1922" ph="INSERT INTO Roles... " />
-            <marker date="1521571248936" expanded="true" signature="2591:2677" ph="INSERT INTO Roles... " />
-            <marker date="1521571248936" expanded="true" signature="3453:3501" ph="SELECT * FRO... Guilds" />
-            <marker date="1521571248936" expanded="true" signature="3453:3512" ph="SELECT Guild... Guilds" />
-            <marker date="1521571248936" expanded="true" signature="3669:3708" ph="SELECT (Role... Roles" />
-            <marker date="1521571248936" expanded="true" signature="3935:3995" ph="UPDATE Roles... " />
-            <marker date="1521571248936" expanded="true" signature="4180:4233" ph="INSERT INTO Guild... " />
-            <marker date="1521571248936" expanded="true" signature="4180:4249" ph="INSERT INTO Guild... " />
-            <marker date="1521571248936" expanded="true" signature="4180:4282" ph="INSERT INTO Guild... " />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1434,53 +1283,58 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/BotGuild.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="20" lean-forward="false" selection-start-line="0" selection-start-column="20" selection-end-line="0" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/MyListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="4" column="18" lean-forward="false" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
+        <state relative-caret-position="144">
+          <caret line="8" column="28" lean-forward="false" selection-start-line="8" selection-start-column="28" selection-end-line="8" selection-end-column="28" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/BOT.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="7" column="50" lean-forward="false" selection-start-line="7" selection-start-column="50" selection-end-line="7" selection-end-column="50" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="144">
+          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="28" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/BotGuild.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/testBot/BotGuild.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2610">
-          <caret line="148" column="21" lean-forward="false" selection-start-line="148" selection-start-column="21" selection-end-line="148" selection-end-column="21" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <marker date="1521571248936" expanded="true" signature="804:830" ph="UPDATE Guilds... " />
-            <marker date="1521571248936" expanded="true" signature="804:845" ph="UPDATE Guilds... " />
-            <marker date="1521571248936" expanded="true" signature="804:860" ph="UPDATE Guilds... " />
-            <marker date="1521571248936" expanded="true" signature="804:869" ph="UPDATE Guilds... " />
-            <marker date="1521571248936" expanded="true" signature="1864:1922" ph="DELETE FROM Roles... " />
-            <marker date="1521571248936" expanded="true" signature="1875:1881" ph="INSERT INTO Roles... " />
-            <marker date="1521571248936" expanded="true" signature="1875:1922" ph="INSERT INTO Roles... " />
-            <marker date="1521571248936" expanded="true" signature="2591:2677" ph="INSERT INTO Roles... " />
-            <marker date="1521571248936" expanded="true" signature="3453:3501" ph="SELECT * FRO... Guilds" />
-            <marker date="1521571248936" expanded="true" signature="3453:3512" ph="SELECT Guild... Guilds" />
-            <marker date="1521571248936" expanded="true" signature="3669:3708" ph="SELECT (Role... Roles" />
-            <marker date="1521571248936" expanded="true" signature="3935:3995" ph="UPDATE Roles... " />
-            <marker date="1521571248936" expanded="true" signature="4180:4233" ph="INSERT INTO Guild... " />
-            <marker date="1521571248936" expanded="true" signature="4180:4249" ph="INSERT INTO Guild... " />
-            <marker date="1521571248936" expanded="true" signature="4180:4282" ph="INSERT INTO Guild... " />
-          </folding>
+        <state relative-caret-position="54">
+          <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/testBot/MyListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="11" column="13" lean-forward="false" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="411">
-          <caret line="30" column="28" lean-forward="false" selection-start-line="30" selection-start-column="28" selection-end-line="30" selection-end-column="28" />
+        <state relative-caret-position="144">
+          <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/testBot/BOT.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="22" column="15" lean-forward="true" selection-start-line="22" selection-start-column="15" selection-end-line="22" selection-end-column="15" />
           <folding />
         </state>
       </provider>
@@ -1537,11 +1391,12 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>Application</last-edited>
+          <last-edited>testBot</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
                 <option value="0.2" />
+                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>

@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT $JAVA_OPTS -jar build/libs/testBot-1.0.jar
+web: java -jar build/libs/testBot-1.0.jar

@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Application.iml" filepath="$PROJECT_DIR$/.idea/modules/Application.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Application_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Application_main.iml" group="Application" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Application_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Application_test.iml" group="Application" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/testBot.iml" filepath="$PROJECT_DIR$/.idea/modules/testBot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/testBot_main.iml" filepath="$PROJECT_DIR$/.idea/modules/testBot_main.iml" group="testBot" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/testBot_test.iml" filepath="$PROJECT_DIR$/.idea/modules/testBot_test.iml" group="testBot" />
     </modules>
   </component>
 </project>

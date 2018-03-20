@@ -4,12 +4,13 @@ plugins {
     id'com.github.johnrengelman.shadow' version '2.0.1'
 }
 
-mainClassName = 'com.example.jda.Bot'
+mainClassName = 'com.testBot.BOT'
 
 version '1.0'
 def jdaVersion = '3.3.1_308'
 
 sourceCompatibility = 1.8
+
 
 repositories {
     jcenter()
@@ -27,6 +28,8 @@ compileJava.options.encoding = 'UTF-8'
 
 task stage(dependsOn: ['build', 'clean'])
 build.mustRunAfter clean
+
+
 
 task copyToLib(type: Copy) {
     into "$buildDir/lib"
