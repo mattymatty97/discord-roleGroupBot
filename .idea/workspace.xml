@@ -4,7 +4,6 @@
     <list default="true" id="8fb65ecf-fe0e-49e5-afc1-e181856c2b21" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/Procfile" afterPath="$PROJECT_DIR$/Procfile" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/testBot/MyListener.class" afterPath="$PROJECT_DIR$/out/production/classes/com/testBot/MyListener.class" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -834,7 +833,7 @@
       <workItem from="1521550556339" duration="2159000" />
       <workItem from="1521569860278" duration="1982000" />
       <workItem from="1521572520211" duration="1293000" />
-      <workItem from="1521574437204" duration="4815000" />
+      <workItem from="1521574437204" duration="5239000" />
     </task>
     <task id="LOCAL-00001" summary="COMMENTED AND ADDED PRINTS">
       <created>1521578483181</created>
@@ -857,11 +856,18 @@
       <option name="project" value="LOCAL" />
       <updated>1521579826150</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="modified proc file">
+      <created>1521580116828</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1521580116828</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="44976000" />
+    <option name="totallyTimeSpent" value="45400000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -954,7 +960,8 @@
     <MESSAGE value="COMMENTED AND ADDED PRINTS" />
     <MESSAGE value="ended print add" />
     <MESSAGE value="hope las modify on prints" />
-    <option name="LAST_COMMIT_MESSAGE" value="hope las modify on prints" />
+    <MESSAGE value="modified proc file" />
+    <option name="LAST_COMMIT_MESSAGE" value="modified proc file" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
