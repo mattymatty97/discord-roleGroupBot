@@ -1,12 +1,16 @@
+
 plugins {
     id'java'
     id'application'
     id'com.github.johnrengelman.shadow' version '2.0.1'
 }
 
+group 'testBot'
+version '1.0'
+
+
 mainClassName = 'com.testBot.BOT'
 
-version '1.0'
 def jdaVersion = '3.3.1_308'
 
 sourceCompatibility = 1.8
@@ -42,7 +46,7 @@ jar {
     manifest {
         attributes(
                 "Manifest-Version": "1.0",
-                "Class-Path": configurations.compile.collect { it.getName() }.join(' ')
+                'Main-Class': 'com.testBot.BOT'
         )
     }
 }
