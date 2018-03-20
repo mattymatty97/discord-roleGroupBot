@@ -83,7 +83,8 @@ public class BotGuild {
                 System.out.println("SQLState: " + ex.getSQLState());
                 System.out.println("VendorError: " + ex.getErrorCode());
             }
-        }
+        }else
+            return null;
         return this;
     }
     public BotGuild addModRole(Long roleId,String roleName)

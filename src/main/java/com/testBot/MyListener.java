@@ -35,16 +35,19 @@ public class MyListener extends ListenerAdapter {
 
                 case "help":
                     channel.sendMessage("help of testbot\n" +
-                            "- ping: answers Pong!\n" +
+                            "- ping: answers Pong!\n\n" +
                             "mod commands:\n" +
                             "- set prefix [prefix]: changes bot prefix for this server\n" +
-                            "- modrole <add/remove/list> [roleMention]").queue();
+                            "- modrole <add/remove/list> [roleMention]: add a role to modroles"+
+                            "- role <add/remove> [rolemention] : add yourself a role"
+                    ).queue();
                     break;
 
 //------------------------------PING---------------------------------------
 
                 case "ping":
                 case "Ping":
+                    System.out.println("Ping executed");
                     channel.sendMessage("Pong!").queue(); // Important to call .queue() on the RestAction returned by sendMessage(...)
                     break;
 
@@ -56,16 +59,22 @@ public class MyListener extends ListenerAdapter {
                             case "prefix":
                                 if (args[2] != null) {
                                     if (args[2].length() > 10) {
+                                        System.out.println("prefix set failed");
                                         channel.sendMessage("Error too long prefix (limit is 10)!").queue();
                                         break;
                                     }
+                                    System.out.println("seting prefix for guild: '"+event.getGuild().getName()+"' to: '"+args[2]+"?");
                                     guild.setPrefix(args[2]);
                                     channel.sendMessage("Prefix set!").queue();
                                 }
                                 break;
+                            default:
+                                channel.sendMessage("Unknown option").queue();
+                                System.out.println("unknown set");
                         }
                     } else {
                         channel.sendMessage("Error you have not permission to do this!").queue();
+                        System.out.println("no permission");
                     }
                     break;
 
@@ -79,19 +88,28 @@ public class MyListener extends ListenerAdapter {
                             switch (args[1]) {
                                 case "add":
                                     if (mentions.size() == 1) {
+                                        System.out.println("adding modrole '"+mentions.get(0).getName()+"' to guild '"+event.getGuild().getName()+"'");
                                         guild.addModRole(mentions.get(0).getIdLong(), mentions.get(0).getName());
                                         channel.sendMessage("Role added!").queue();
-                                    } else
+                                    } else {
+                                        System.out.println("modrole syntax");
                                         channel.sendMessage("wrong syntax!").queue();
+                                    }
                                     break;
                                 case "remove":
                                     if (mentions.size() == 1) {
-                                        guild.removeModRole(mentions.get(0).getIdLong());
-                                        channel.sendMessage("Role removed!").queue();
-                                    } else
+                                        System.out.println("removing modrole '"+mentions.get(0).getName()+"' from guild '"+event.getGuild().getName()+"'");
+                                        if(guild.removeModRole(mentions.get(0).getIdLong())!=null)
+                                            channel.sendMessage("Role removed!").queue();
+                                        else
+                                            channel.sendMessage("Role is not a modrole!").queue();
+                                    } else {
+                                        System.out.println("modrole syntax");
                                         channel.sendMessage("wrong syntax!").queue();
+                                    }
                                     break;
                                 case "list":
+                                    System.out.println("listing modroles in guild: '"+event.getGuild().getName()+"'");
                                     String text = "Active ModRoles:\n";
                                     for (Long id : guild.getModRolesById()) {
                                         for (Role role : event.getGuild().getRoles()) {
@@ -102,12 +120,14 @@ public class MyListener extends ListenerAdapter {
                                     channel.sendMessage(text).queue();
                                     break;
                                 default:
+                                    System.out.println("command syntax");
                                     channel.sendMessage("wrong syntax!").queue();
                             }
 
                         }
                         break;
                     } else {
+                        System.out.println("no permission");
                         channel.sendMessage("Error you have not permission to do this!").queue();
                     }
                     break;
