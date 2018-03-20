@@ -26,9 +26,13 @@ public class MyListener extends ListenerAdapter {
         MessageChannel channel = event.getChannel();
         Message message = event.getMessage();
         String content = message.getContent();
+        System.out.println("Message from '"+ member.getNickname() + "' in guild '"+event.getGuild().getName() +"'");
         if (content.substring(0, guild.getPrefix().length()).equals(guild.getPrefix())) {
             String[] args = content.substring(guild.getPrefix().length()).split(" ");
             switch (args[0]) {
+
+//-------------------------------HELP--------------------------------------
+
                 case "help":
                     channel.sendMessage("help of testbot\n" +
                             "- ping: answers Pong!\n" +
@@ -36,10 +40,16 @@ public class MyListener extends ListenerAdapter {
                             "- set prefix [prefix]: changes bot prefix for this server\n" +
                             "- modrole <add/remove/list> [roleMention]").queue();
                     break;
+
+//------------------------------PING---------------------------------------
+
                 case "ping":
                 case "Ping":
                     channel.sendMessage("Pong!").queue(); // Important to call .queue() on the RestAction returned by sendMessage(...)
                     break;
+
+//------------------------------SET----------------------------------------
+
                 case "set":
                     if (member.isOwner() || guild.memberIsMod(member)) {
                         switch (args[1]) {
@@ -58,6 +68,10 @@ public class MyListener extends ListenerAdapter {
                         channel.sendMessage("Error you have not permission to do this!").queue();
                     }
                     break;
+
+
+//-----------------------------MODROLE-------------------------------------
+
                 case "modrole":
                     if (member.isOwner() || guild.memberIsMod(member)) {
                         if (args[1] != null) {
@@ -97,6 +111,10 @@ public class MyListener extends ListenerAdapter {
                         channel.sendMessage("Error you have not permission to do this!").queue();
                     }
                     break;
+
+
+//---------------------------------ROLE------------------------------------------------
+
                 case "role":
                     if (member.isOwner() || guild.memberIsMod(member)) {
                         if (args[1] != null) {
@@ -145,6 +163,11 @@ public class MyListener extends ListenerAdapter {
                     }
                     break;
             }
+
+//-------------------------------------IGNORED--------------------------------
+
+        }else{
+            System.out.println("Ignored");
         }
     }
 
