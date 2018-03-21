@@ -27,7 +27,7 @@ public class MyListener extends ListenerAdapter {
         MessageChannel channel = event.getChannel();
         Message message = event.getMessage();
         String content = message.getContent();
-        System.out.println("Message from '"+ member.getNickname() + "' in guild '"+guildname +"'");
+        System.out.println("Message from '"+ member.getEffectiveName() + "' in guild '"+guildname +"'");
         if (content.substring(0, guild.getPrefix().length()).equals(guild.getPrefix())) {
             String[] args = content.substring(guild.getPrefix().length()).split(" ");
             switch (args[0]) {
