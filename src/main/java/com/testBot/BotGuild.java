@@ -14,6 +14,7 @@ public class BotGuild {
     private Long id;                /**guild id used to identify guild**/
     private String prefix;          /**prefix for trig a reaction**/
     private List<Long> modRolesById;/**list of roles (stored by id) that are allowed to run mod commands**/
+    private List<RoleGroup> roleGroups;
     private boolean modified;       /**STILL UNUSED**/
 
     /**
@@ -46,6 +47,12 @@ public class BotGuild {
         if(!isOpen)
             return null;
         return modRolesById;
+    }
+
+    public List<RoleGroup> getRoleGroups() {
+        if(!isOpen)
+            return null;
+        return roleGroups;
     }
 
     /**
@@ -151,6 +158,40 @@ public class BotGuild {
         return this;
     }
 
+    public BotGuild addRoleGroup(Long roleId,String groupName)
+    {
+        if(RoleGroup.findGroup(this.roleGroups,groupName)==null)
+        {
+            roleGroups.add(new RoleGroup(conn,this,null,groupName));
+        }else
+            return null;
+        return this;
+    }
+
+    public BotGuild removeRoleGroup(String groupName)
+    {
+        RoleGroup role = RoleGroup.findGroup(this.roleGroups,groupName);
+        if(role!=null)
+        {
+            role.delete();
+            roleGroups.remove(role);
+        }else
+            return null;
+        return this;
+    }
+
+    public BotGuild modifyRoleGroup(String groupName,String[] args,Channel channel)
+    {
+        RoleGroup role = RoleGroup.findGroup(this.roleGroups,groupName);
+        if(role!=null)
+        {
+            String[] ret = role.modify(args,channel);
+        }else
+            return null;
+        return this;
+    }
+
+
     /**
      * constructor of object
      * test the remote database to see if the guild already exist
@@ -164,6 +205,7 @@ public class BotGuild {
     {
         this.conn = actconn;
         this.modRolesById = new ArrayList<Long>();
+        this.roleGroups = new ArrayList<>();
         this.id = guildId;
         Statement stmt;
         ResultSet rs;
@@ -179,6 +221,12 @@ public class BotGuild {
                 this.modRolesById.clear();
                 while (rs.next()) {
                     this.modRolesById.add(rs.getLong(1));
+                }
+                rs.close();
+                rs = stmt.executeQuery("SELECT groupid,groupname FROM groups WHERE guildid=" + guildId);
+
+                while (rs.next()) {
+                    this.roleGroups.add(new RoleGroup(conn,this,rs.getLong(1),rs.getString(2)));
                 }
                 rs.close();
                 stmt.execute("UPDATE guilds SET guildname='"+ guildName +"' WHERE guildid=" + guildId);
@@ -202,6 +250,9 @@ public class BotGuild {
     public void close()
     {
         this.modRolesById.clear();
+        this.roleGroups.clear();
+        this.roleGroups=null;
+        this.modRolesById=null;
         this.prefix=null;
         this.id=null;
         this.modified=false;
