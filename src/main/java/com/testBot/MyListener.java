@@ -39,7 +39,7 @@ public class MyListener extends ListenerAdapter {
                     channel.sendMessage("help of testbot\n" +
                             "- ping: answers Pong!\n\n" +
                             "mod commands:\n" +
-                            "- set prefix [prefix]: changes bot prefix for this server\n" +
+                            "- prefix [prefix]: changes bot prefix for this server\n" +
                             "- modrole <add/remove/list> [roleMention]: add a role to modroles\n"+
                             "- role <add/remove> [rolemention] : add yourself a role"
                     ).queue();
@@ -55,29 +55,24 @@ public class MyListener extends ListenerAdapter {
 
 //------------------------------SET----------------------------------------
 
-                case "set":
+                case "prefix":
                     if (member.isOwner() || guild.memberIsMod(member)) {
-                        switch (args[1]) {
-                            case "prefix":
-                                if (args[2] != null) {
-                                    if (args[2].length() > 10) {
-                                        System.out.println("prefix set failed in guild: '"+guildname+"'");
-                                        channel.sendMessage("Error too long prefix (limit is 10)!").queue();
-                                        break;
-                                    }
-                                    System.out.println("seting prefix for guild: '"+guildname+"' to: '"+args[2]+"?");
-                                    guild.setPrefix(args[2]);
-                                    channel.sendMessage("Prefix set! in guild: '"+guildname+"'").queue();
-                                }
+                        if (args[1] != null) {
+                            if (args[1].length() > 10) {
+                                System.out.println("prefix set failed in guild: '" + guildname + "'");
+                                channel.sendMessage("Error too long prefix (limit is 10)!").queue();
                                 break;
-                            default:
-                                channel.sendMessage("Unknown option").queue();
-                                System.out.println("unknown set in guild: '"+guildname+"'");
+                            }
+                            System.out.println("seting prefix for guild: '" + guildname + "' to: '" + args[1] + "?");
+                            guild.setPrefix(args[1]);
+                            channel.sendMessage("Prefix set! in guild: '" + guildname + "'").queue();
                         }
+                        break;
                     } else {
                         channel.sendMessage("Error you have not permission to do this!").queue();
-                        System.out.println("no permission in guild: '"+guildname+"'");
+                        System.out.println("no permission in guild: '" + guildname + "'");
                     }
+
                     break;
 
 

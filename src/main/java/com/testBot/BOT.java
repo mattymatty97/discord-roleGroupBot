@@ -16,6 +16,7 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 public class BOT
 {
+    static String url;
     public static void main(String[] arguments) throws Exception
     {
         Connection conn=null;
@@ -31,7 +32,7 @@ public class BOT
             return;
         }
         try {
-            String url = "jdbc:postgresql://ec2-54-247-81-88.eu-west-1.compute.amazonaws.com/d5a36f2opkuv4a";
+            url = "jdbc:postgresql://ec2-54-247-81-88.eu-west-1.compute.amazonaws.com/d5a36f2opkuv4a";
             Properties props = new Properties();
             props.setProperty("user","hmefwffiqybapa");
             props.setProperty("password","c054e4e3cbca7e7695c3b87d104e87777ee952fde4891516236f074e0e4fb7ec");
