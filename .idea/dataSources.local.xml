@@ -11,5 +11,14 @@
       <user-name>Bot</user-name>
       <introspection-schemas>*:Bot</introspection-schemas>
     </data-source>
+    <data-source name="postgresql" uuid="a9369699-e2f1-4b5c-a235-64781bd1d6b9">
+      <database-info product="PostgreSQL" version="10.2 (Ubuntu 10.2-1.pgdg14.04+1)" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.2.1">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>hmefwffiqybapa</user-name>
+      <introspection-schemas>d5a36f2opkuv4a:public</introspection-schemas>
+    </data-source>
   </component>
 </project>
