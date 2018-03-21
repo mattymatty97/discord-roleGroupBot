@@ -59,7 +59,7 @@ public class BotGuild {
         Statement stmt;
         try {
             stmt = conn.createStatement();
-            stmt.execute("UPDATE Guilds SET Prefix='"+ n_prefix +"' WHERE GuildId="+this.id);
+            stmt.execute("UPDATE guilds SET prefix='"+ n_prefix +"' WHERE guildId="+this.id);
             stmt.execute("COMMIT");
             this.prefix = n_prefix;
             stmt.close();
@@ -107,7 +107,7 @@ public class BotGuild {
             Statement stmt ;
             try {
                 stmt = conn.createStatement();
-                stmt.execute("DELETE FROM Roles WHERE GuildId="+id+" AND RoleId="+roleId);
+                stmt.execute("DELETE FROM roles WHERE guildid="+id+" AND roleid="+roleId);
                 stmt.execute("COMMIT");
                 this.modRolesById.remove(roleId);
                 stmt.close();
@@ -136,7 +136,7 @@ public class BotGuild {
             Statement stmt;
             try {
                 stmt = conn.createStatement();
-                stmt.execute("INSERT INTO Roles (GuildId,RoleId,RoleName) VALUES ("+id+","+roleId+",'!"+roleName+"')");
+                stmt.execute("INSERT INTO roles (guildid,roleid,rolename) VALUES ("+id+","+roleId+",'"+roleName+"')");
                 stmt.execute("COMMIT");
                 this.modRolesById.add(roleId);
                 stmt.close();
@@ -170,23 +170,23 @@ public class BotGuild {
         modified = false;
         try {
             stmt = conn.createStatement();
-            rs = stmt.executeQuery("SELECT GuildId,Prefix FROM Guilds WHERE GuildId=" + guildId);
+            rs = stmt.executeQuery("SELECT guildid,prefix FROM guilds WHERE guildid=" + guildId);
 
             if (rs.next()) {
                 this.prefix = rs.getString(2).intern();
                 rs.close();
-                rs = stmt.executeQuery("SELECT RoleId FROM Roles WHERE GuildId=" + guildId);
+                rs = stmt.executeQuery("SELECT roleid FROM Roles WHERE guildid=" + guildId);
                 this.modRolesById.clear();
                 while (rs.next()) {
                     this.modRolesById.add(rs.getLong(1));
                 }
                 rs.close();
-                stmt.execute("UPDATE Guilds SET GuildName='"+ guildName +"' WHERE GuildId=" + guildId);
+                stmt.execute("UPDATE guilds SET guildname='"+ guildName +"' WHERE guildid=" + guildId);
                 stmt.execute("COMMIT");
             } else {
                 this.modRolesById.clear();
                 this.prefix = "tb!";
-                stmt.execute("INSERT INTO Guilds(GuildId,Prefix,GuildName) VALUES (" + guildId + ",'" + prefix + "','"+guildName+"')");
+                stmt.execute("INSERT INTO guilds(guildid,prefix,guildname) VALUES (" + guildId + ",'" + prefix + "','"+guildName+"')");
                 stmt.execute("COMMIT");
             }
             stmt.close();
