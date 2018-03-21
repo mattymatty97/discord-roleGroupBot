@@ -37,7 +37,7 @@ public class RoleGroup {
         return groupName;
     }
 
-    public String[] modify(String[] args,Channel channel)
+    public String[] modify(String[] args,MessageChannel channel)
     {
         return null;
     }

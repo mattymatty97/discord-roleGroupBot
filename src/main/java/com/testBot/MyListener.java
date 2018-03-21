@@ -7,6 +7,8 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 import java.sql.*;
 import com.testBot.BotGuild;
+
+import java.util.Arrays;
 import java.util.List;
 
 public class MyListener extends ListenerAdapter {
@@ -197,24 +199,52 @@ public class MyListener extends ListenerAdapter {
 
 //-------MOD--------------------------ROLEGROUP-------------------------------
 
-                case "rolegroup":
+                case "rolegroup": if(false) {//disabled for now
                     if (member.isOwner() || guild.memberIsMod(member)) {
                         switch (args[1]) {
                             case "create":
-
+                                List<Role> list = message.getMentionedRoles();
+                                if (list.size() != 1) {
+                                    if (!args[2].contains(list.get(0).getName()) && args[2] != null) {
+                                        if (guild.addRoleGroup(list.get(0).getIdLong(), args[2]) != null) {
+                                            System.out.println("created rolegroup '" + args[2] + "' in guild: '" + guildname + "'");
+                                            channel.sendMessage("rolegroup created!\ntype: LIST").queue();
+                                        } else {
+                                            System.out.println("found existent rolegroup in guild: '" + guildname + "'");
+                                            channel.sendMessage("this rolegroup already exists").queue();
+                                        }
+                                    }
+                                }
                                 break;
                             case "remove":
-
+                                if (args[2] != null) {
+                                    if (guild.removeRoleGroup(args[2]) != null) {
+                                        System.out.println("removed rolegroup '" + args[2] + "' in guild: '" + guildname + "'");
+                                        channel.sendMessage("rolegroup created!\ntype: LIST").queue();
+                                    } else {
+                                        System.out.println("found unexistent rolegroup in guild: '" + guildname + "'");
+                                        channel.sendMessage("this rolegroup does not exists").queue();
+                                    }
+                                }
                                 break;
                             case "set":
-
+                                if (args[2] != null) {
+                                    if (guild.modifyRoleGroup(args[2], Arrays.copyOfRange(args, 3, args.length), event.getChannel()) != null) {
+                                        /*System.out.println("removed rolegroup '"+args[2]+"' in guild: '" + guildname + "'");
+                                        channel.sendMessage("rolegroup created!\ntype: LIST").queue();
+                                    }else{
+                                        System.out.println("found unexistent rolegroup in guild: '" + guildname + "'");
+                                        channel.sendMessage("this rolegroup does not exists").queue();*/
+                                    }
+                                }
                                 break;
                             default:
-                                channel.sendMessage("Wrong syntax");
+                                channel.sendMessage("Wrong syntax").queue();
 
                         }
                         break;
                     }
+                }
             }
 
 //-------ALL---------------------------IGNORED--------------------------------

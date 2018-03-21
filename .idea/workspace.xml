@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8fb65ecf-fe0e-49e5-afc1-e181856c2b21" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/testBot/BotGuild.class" afterPath="$PROJECT_DIR$/out/production/classes/com/testBot/BotGuild.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/testBot/MyListener.class" afterPath="$PROJECT_DIR$/out/production/classes/com/testBot/MyListener.class" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/testBot/BotGuild.java" afterPath="$PROJECT_DIR$/src/main/java/com/testBot/BotGuild.java" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/testBot/MyListener.java" afterPath="$PROJECT_DIR$/src/main/java/com/testBot/MyListener.java" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/testBot/RoleGroup.java" afterPath="$PROJECT_DIR$/src/main/java/com/testBot/RoleGroup.java" />
@@ -108,8 +106,8 @@
       <file leaf-file-name="MyListener.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/testBot/MyListener.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="393">
-              <caret line="203" column="32" lean-forward="true" selection-start-line="203" selection-start-column="32" selection-end-line="203" selection-end-column="32" />
+            <state relative-caret-position="288">
+              <caret line="201" column="63" lean-forward="false" selection-start-line="201" selection-start-column="63" selection-end-line="201" selection-end-column="63" />
               <folding />
             </state>
           </provider>
@@ -118,18 +116,18 @@
       <file leaf-file-name="BotGuild.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/testBot/BotGuild.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="573">
-              <caret line="187" column="53" lean-forward="true" selection-start-line="187" selection-start-column="53" selection-end-line="187" selection-end-column="53" />
+            <state relative-caret-position="321">
+              <caret line="179" column="20" lean-forward="true" selection-start-line="179" selection-start-column="20" selection-end-line="179" selection-end-column="20" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <marker date="1521670713976" expanded="true" signature="1830:1886" ph="UPDATE Guilds... " />
-                <marker date="1521670713976" expanded="true" signature="3222:3272" ph="DELETE FROM Roles... " />
-                <marker date="1521670713976" expanded="true" signature="4233:4318" ph="INSERT INTO Roles... " />
-                <marker date="1521670713976" expanded="true" signature="6411:6459" ph="SELECT Guild... Guilds" />
-                <marker date="1521670713976" expanded="true" signature="6627:6666" ph="SELECT RoleI... Roles" />
-                <marker date="1521670713976" expanded="true" signature="6903:6954" ph="SELECT guild... guilds" />
-                <marker date="1521670713976" expanded="true" signature="7178:7238" ph="UPDATE Guilds... " />
-                <marker date="1521670713976" expanded="true" signature="7423:7525" ph="INSERT INTO Guilds... " />
+                <marker date="1521674298556" expanded="true" signature="1830:1886" ph="UPDATE Guilds... " />
+                <marker date="1521674298556" expanded="true" signature="3222:3272" ph="DELETE FROM Roles... " />
+                <marker date="1521674298556" expanded="true" signature="4233:4318" ph="INSERT INTO Roles... " />
+                <marker date="1521674298556" expanded="true" signature="6418:6466" ph="SELECT Guild... Guilds" />
+                <marker date="1521674298556" expanded="true" signature="6634:6673" ph="SELECT RoleI... Roles" />
+                <marker date="1521674298556" expanded="true" signature="6910:6961" ph="SELECT guild... guilds" />
+                <marker date="1521674298556" expanded="true" signature="7185:7245" ph="UPDATE Guilds... " />
+                <marker date="1521674298556" expanded="true" signature="7430:7532" ph="INSERT INTO Guilds... " />
               </folding>
             </state>
           </provider>
@@ -138,8 +136,8 @@
       <file leaf-file-name="RoleGroup.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/testBot/RoleGroup.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="551">
-              <caret line="39" column="56" lean-forward="false" selection-start-line="39" selection-start-column="56" selection-end-line="39" selection-end-column="56" />
+            <state relative-caret-position="339">
+              <caret line="37" column="5" lean-forward="true" selection-start-line="37" selection-start-column="5" selection-end-line="37" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#424#425#0" expanded="true" />
@@ -152,15 +150,15 @@
                 <element signature="e#642#643#0" expanded="true" />
                 <element signature="e#678#679#0" expanded="true" />
                 <element signature="e#710#711#0" expanded="true" />
-                <element signature="e#775#776#0" expanded="true" />
-                <element signature="e#802#803#0" expanded="true" />
-                <marker date="1521670714012" expanded="true" signature="1274:1319" ph="SELECT Guild... Guilds" />
-                <marker date="1521670714012" expanded="true" signature="1544:1588" ph="SELECT RoleI... Roles" />
-                <marker date="1521670714012" expanded="true" signature="1997:2078" ph="INSERT INTO groups... " />
-                <marker date="1521670714012" expanded="true" signature="1997:2084" ph="INSERT INTO groups... " />
-                <marker date="1521670714012" expanded="true" signature="2560:2597" ph="DELETE FROM grouproles... " />
-                <marker date="1521670714012" expanded="true" signature="2635:2667" ph="DELETE FROM groups... " />
-                <marker date="1521670714012" expanded="true" signature="2635:2668" ph="DELETE FROM groups... " />
+                <element signature="e#782#783#0" expanded="true" />
+                <element signature="e#809#810#0" expanded="true" />
+                <marker date="1521674298576" expanded="true" signature="1281:1326" ph="SELECT Guild... Guilds" />
+                <marker date="1521674298576" expanded="true" signature="1551:1595" ph="SELECT RoleI... Roles" />
+                <marker date="1521674298576" expanded="true" signature="2004:2085" ph="INSERT INTO groups... " />
+                <marker date="1521674298576" expanded="true" signature="2004:2091" ph="INSERT INTO groups... " />
+                <marker date="1521674298576" expanded="true" signature="2567:2604" ph="DELETE FROM grouproles... " />
+                <marker date="1521674298576" expanded="true" signature="2642:2674" ph="DELETE FROM groups... " />
+                <marker date="1521674298576" expanded="true" signature="2642:2675" ph="DELETE FROM groups... " />
               </folding>
             </state>
           </provider>
@@ -194,6 +192,7 @@
     </replaceStrings>
   </component>
   <component name="Git.Settings">
+    <option name="UPDATE_TYPE" value="MERGE" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GradleLocalSettings">
@@ -648,8 +647,8 @@
         <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/src/main/java/com/testBot/BOT.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/testBot/RoleGroupComparator.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/testBot/RoleGroup.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/testBot/BotGuild.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/testBot/RoleGroup.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/testBot/MyListener.java" />
       </list>
     </option>
@@ -891,7 +890,7 @@
       <workItem from="1521630543662" duration="1820000" />
       <workItem from="1521632719115" duration="2894000" />
       <workItem from="1521657017923" duration="5933000" />
-      <workItem from="1521665738475" duration="5751000" />
+      <workItem from="1521665738475" duration="8592000" />
     </task>
     <task id="LOCAL-00001" summary="COMMENTED AND ADDED PRINTS">
       <created>1521578483181</created>
@@ -963,11 +962,18 @@
       <option name="project" value="LOCAL" />
       <updated>1521665886447</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="-modified help&#10;-added rolegroup entry&#10;-added RoleGroup object to class BotGuild&#10;-added control methods for rolegrup in BotGuild">
+      <created>1521671592886</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1521671592886</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="62609000" />
+    <option name="totallyTimeSpent" value="65450000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -988,15 +994,16 @@
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3288889" sideWeight="0.502994" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3288889" sideWeight="0.5047049" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934132" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3288889" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3288889" sideWeight="0.49529514" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3288889" sideWeight="0.497006" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3288889" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1548332" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2112917" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32848588" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24978614" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24978614" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1011,7 +1018,6 @@
       <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3288889" sideWeight="0.497006" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293944" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1066,7 +1072,8 @@
     <MESSAGE value="changed sql to postgresql on heroku" />
     <MESSAGE value="set prefix modified to prefix" />
     <MESSAGE value="fixed sql queryes and added class for rolegroups" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed sql queryes and added class for rolegroups" />
+    <MESSAGE value="-modified help&#10;-added rolegroup entry&#10;-added RoleGroup object to class BotGuild&#10;-added control methods for rolegrup in BotGuild" />
+    <option name="LAST_COMMIT_MESSAGE" value="-modified help&#10;-added rolegroup entry&#10;-added RoleGroup object to class BotGuild&#10;-added control methods for rolegrup in BotGuild" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1359,10 +1366,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/testBot/BotGuild.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="321">
+          <caret line="179" column="20" lean-forward="true" selection-start-line="179" selection-start-column="20" selection-end-line="179" selection-end-column="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <marker date="1521674298556" expanded="true" signature="1830:1886" ph="UPDATE Guilds... " />
+            <marker date="1521674298556" expanded="true" signature="3222:3272" ph="DELETE FROM Roles... " />
+            <marker date="1521674298556" expanded="true" signature="4233:4318" ph="INSERT INTO Roles... " />
+            <marker date="1521674298556" expanded="true" signature="6418:6466" ph="SELECT Guild... Guilds" />
+            <marker date="1521674298556" expanded="true" signature="6634:6673" ph="SELECT RoleI... Roles" />
+            <marker date="1521674298556" expanded="true" signature="6910:6961" ph="SELECT guild... guilds" />
+            <marker date="1521674298556" expanded="true" signature="7185:7245" ph="UPDATE Guilds... " />
+            <marker date="1521674298556" expanded="true" signature="7430:7532" ph="INSERT INTO Guilds... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/testBot/RoleGroup.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="551">
-          <caret line="39" column="56" lean-forward="false" selection-start-line="39" selection-start-column="56" selection-end-line="39" selection-end-column="56" />
+        <state relative-caret-position="339">
+          <caret line="37" column="5" lean-forward="true" selection-start-line="37" selection-start-column="5" selection-end-line="37" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#424#425#0" expanded="true" />
@@ -1375,41 +1400,23 @@
             <element signature="e#642#643#0" expanded="true" />
             <element signature="e#678#679#0" expanded="true" />
             <element signature="e#710#711#0" expanded="true" />
-            <element signature="e#775#776#0" expanded="true" />
-            <element signature="e#802#803#0" expanded="true" />
-            <marker date="1521670714012" expanded="true" signature="1274:1319" ph="SELECT Guild... Guilds" />
-            <marker date="1521670714012" expanded="true" signature="1544:1588" ph="SELECT RoleI... Roles" />
-            <marker date="1521670714012" expanded="true" signature="1997:2078" ph="INSERT INTO groups... " />
-            <marker date="1521670714012" expanded="true" signature="1997:2084" ph="INSERT INTO groups... " />
-            <marker date="1521670714012" expanded="true" signature="2560:2597" ph="DELETE FROM grouproles... " />
-            <marker date="1521670714012" expanded="true" signature="2635:2667" ph="DELETE FROM groups... " />
-            <marker date="1521670714012" expanded="true" signature="2635:2668" ph="DELETE FROM groups... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/testBot/BotGuild.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="573">
-          <caret line="187" column="53" lean-forward="true" selection-start-line="187" selection-start-column="53" selection-end-line="187" selection-end-column="53" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <marker date="1521670713976" expanded="true" signature="1830:1886" ph="UPDATE Guilds... " />
-            <marker date="1521670713976" expanded="true" signature="3222:3272" ph="DELETE FROM Roles... " />
-            <marker date="1521670713976" expanded="true" signature="4233:4318" ph="INSERT INTO Roles... " />
-            <marker date="1521670713976" expanded="true" signature="6411:6459" ph="SELECT Guild... Guilds" />
-            <marker date="1521670713976" expanded="true" signature="6627:6666" ph="SELECT RoleI... Roles" />
-            <marker date="1521670713976" expanded="true" signature="6903:6954" ph="SELECT guild... guilds" />
-            <marker date="1521670713976" expanded="true" signature="7178:7238" ph="UPDATE Guilds... " />
-            <marker date="1521670713976" expanded="true" signature="7423:7525" ph="INSERT INTO Guilds... " />
+            <element signature="e#782#783#0" expanded="true" />
+            <element signature="e#809#810#0" expanded="true" />
+            <marker date="1521674298576" expanded="true" signature="1281:1326" ph="SELECT Guild... Guilds" />
+            <marker date="1521674298576" expanded="true" signature="1551:1595" ph="SELECT RoleI... Roles" />
+            <marker date="1521674298576" expanded="true" signature="2004:2085" ph="INSERT INTO groups... " />
+            <marker date="1521674298576" expanded="true" signature="2004:2091" ph="INSERT INTO groups... " />
+            <marker date="1521674298576" expanded="true" signature="2567:2604" ph="DELETE FROM grouproles... " />
+            <marker date="1521674298576" expanded="true" signature="2642:2674" ph="DELETE FROM groups... " />
+            <marker date="1521674298576" expanded="true" signature="2642:2675" ph="DELETE FROM groups... " />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/testBot/MyListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="393">
-          <caret line="203" column="32" lean-forward="true" selection-start-line="203" selection-start-column="32" selection-end-line="203" selection-end-column="32" />
+        <state relative-caret-position="288">
+          <caret line="201" column="63" lean-forward="false" selection-start-line="201" selection-start-column="63" selection-end-line="201" selection-end-column="63" />
           <folding />
         </state>
       </provider>

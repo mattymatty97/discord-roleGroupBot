@@ -180,7 +180,7 @@ public class BotGuild {
         return this;
     }
 
-    public BotGuild modifyRoleGroup(String groupName,String[] args,Channel channel)
+    public BotGuild modifyRoleGroup(String groupName,String[] args,MessageChannel channel)
     {
         RoleGroup role = RoleGroup.findGroup(this.roleGroups,groupName);
         if(role!=null)
