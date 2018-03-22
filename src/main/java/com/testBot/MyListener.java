@@ -352,7 +352,7 @@ public class MyListener extends ListenerAdapter {
                         "Usage: complex call **help rolegroup** ", false);
             }
             message.addBlankField(false);
-            message.addField("CUSTOM COMMANDS:", "up now\n they are called rolegroups", false);
+            message.addField("CUSTOM COMMANDS:", "up now\nthey are called rolegroups", false);
         }else
             switch (args[1])
             {
@@ -421,6 +421,8 @@ public class MyListener extends ListenerAdapter {
                             "rolegroup color add @yellow_role as yellow\n" +
                             "rolegroup color remove blue\n" +
                             "rolegroup type LIST", false);
+                    message.addField("Example userside:", "color yellow\n" +
+                            "pirate ship1", false);
                     message.addField("do you know?", "all variables [variable] are case sensitive\n" +
                             "that means that 'Case' is different from 'case'", false);
                 default :
