@@ -256,6 +256,7 @@ public class MyListener extends ListenerAdapter {
         EmbedBuilder message = new EmbedBuilder();
 
         message.setColor(Color.GREEN);
+        message.se
 
         message.setTitle("Help for testbot:");
         message.addField("help", "shows this help", false);
@@ -276,7 +277,7 @@ public class MyListener extends ListenerAdapter {
                     "actions: add, remove", false);
         }
         message.addBlankField(false);
-        message.addField("COUSTOUM COMMANDS:", "coming soon", false);
+        message.addField("CUSTOM COMMANDS:", "coming soon", false);
 
         channel.sendMessage(message.build()).queue();
     }
