@@ -49,6 +49,6 @@ public class BOT
 
         JDA api = new JDABuilder(AccountType.BOT).setToken("NDIwNTY0MTU1NjQ5NjIyMDE4.DYA5dA._MmdVLt7jHqwlJpbEI4YE07ULxs").buildAsync();
         api.addEventListener(new MyListener(conn,savedGuilds));
-        api.getPresence().setGame(Game.playing("\"testing the bot :/\""));
+        api.getPresence().setGame(Game.listening("\"to suggestions :/\""));
     }
 }
