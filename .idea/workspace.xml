@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="8fb65ecf-fe0e-49e5-afc1-e181856c2b21" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/testBot/MyListener.java" afterPath="$PROJECT_DIR$/src/main/java/com/testBot/MyListener.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -893,7 +892,7 @@
       <workItem from="1521665738475" duration="8770000" />
       <workItem from="1521709246425" duration="1173000" />
       <workItem from="1521714950875" duration="1020000" />
-      <workItem from="1521730031437" duration="8229000" />
+      <workItem from="1521730031437" duration="8238000" />
     </task>
     <task id="LOCAL-00001" summary="COMMENTED AND ADDED PRINTS">
       <created>1521578483181</created>
@@ -1028,11 +1027,18 @@
       <option name="project" value="LOCAL" />
       <updated>1521734302238</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="improved embedded help spelling">
+      <created>1521738284573</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1521738284574</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="76050000" />
+    <option name="totallyTimeSpent" value="76059000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
