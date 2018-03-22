@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="8fb65ecf-fe0e-49e5-afc1-e181856c2b21" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/testBot/BOT.class" afterPath="$PROJECT_DIR$/out/production/classes/com/testBot/BOT.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/testBot/MyListener.class" afterPath="$PROJECT_DIR$/out/production/classes/com/testBot/MyListener.class" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/testBot/BOT.java" afterPath="$PROJECT_DIR$/src/main/java/com/testBot/BOT.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -96,8 +94,8 @@
       <file leaf-file-name="BOT.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/testBot/BOT.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="41" column="54" lean-forward="true" selection-start-line="41" selection-start-column="54" selection-end-line="41" selection-end-column="54" />
+            <state relative-caret-position="198">
+              <caret line="38" column="64" lean-forward="true" selection-start-line="38" selection-start-column="64" selection-end-line="38" selection-end-column="64" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -899,7 +897,7 @@
       <workItem from="1521665738475" duration="8770000" />
       <workItem from="1521709246425" duration="1173000" />
       <workItem from="1521714950875" duration="1020000" />
-      <workItem from="1521730031437" duration="9159000" />
+      <workItem from="1521730031437" duration="9719000" />
     </task>
     <task id="LOCAL-00001" summary="COMMENTED AND ADDED PRINTS">
       <created>1521578483181</created>
@@ -1055,11 +1053,18 @@
       <option name="project" value="LOCAL" />
       <updated>1521738878173</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="changed database auth try 3">
+      <created>1521739225220</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1521739225220</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="76980000" />
+    <option name="totallyTimeSpent" value="77540000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1167,7 +1172,8 @@
     <MESSAGE value="improved embedded help try 3" />
     <MESSAGE value="improved embedded help spelling" />
     <MESSAGE value="changed database auth" />
-    <option name="LAST_COMMIT_MESSAGE" value="changed database auth" />
+    <MESSAGE value="changed database auth try 3" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed database auth try 3" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1480,8 +1486,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/testBot/BOT.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="41" column="54" lean-forward="true" selection-start-line="41" selection-start-column="54" selection-end-line="41" selection-end-column="54" />
+        <state relative-caret-position="198">
+          <caret line="38" column="64" lean-forward="true" selection-start-line="38" selection-start-column="64" selection-end-line="38" selection-end-column="64" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

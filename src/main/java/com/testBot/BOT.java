@@ -37,8 +37,8 @@ public class BOT
 
             String username = dbUri.getUserInfo().split(":")[0];
             String password = dbUri.getUserInfo().split(":")[1];
-            String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath()+"?sslmode=require&"+"user="+username+"&password="+password;
-
+            String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath()+"?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory&"+"user="+username+"&password="+password;
+            System.out.println("Connecting to: "+ dbUrl);
             conn = DriverManager.getConnection(dbUrl);
             System.out.println("SQL INITIALIZZATED");
         } catch (SQLException ex) {
