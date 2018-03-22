@@ -256,7 +256,6 @@ public class MyListener extends ListenerAdapter {
         EmbedBuilder message = new EmbedBuilder();
 
         message.setColor(Color.GREEN);
-        message.se
 
         message.setTitle("Help for testbot:");
         message.addField("help", "shows this help", false);
