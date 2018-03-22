@@ -43,7 +43,7 @@ public class MyListener extends ListenerAdapter {
         //if length is enough test if the message starts with right prefix
         if (content.length() > guild.getPrefix().length() && content.substring(0, guild.getPrefix().length()).equals(guild.getPrefix())) {
             //split by spaces into args
-            String[] args = content.substring(guild.getPrefix().length()).split(" ");
+            String[] args = content.substring(guild.getPrefix().length()).split(" +");
             //test first argument
             switch (args[0]) {
 
@@ -217,27 +217,34 @@ public class MyListener extends ListenerAdapter {
                                 //get a list of all mentions
                                 List<Role> list = message.getMentionedRoles();
                                 //if there is a mentioned role
-                                if (list.size() != 1) {
+                                if (list.size() == 1) {
                                     //if the argument is not the mentioned role
                                     if (!args[2].contains(list.get(0).getName())) {
                                         //call the class method
-                                        if (guild.addRoleGroup(list.get(0).getIdLong(), args[2]) != null) {
+                                        if (guild.addRoleGroup(list.get(0), args[2]) != null) {
                                             System.out.println("created rolegroup '" + args[2] + "' in guild: '" + guildname + "'");
                                             channel.sendMessage("rolegroup created!\ntype: LIST").queue();
                                         } else {
                                             System.out.println("found existent rolegroup in guild: '" + guildname + "'");
                                             channel.sendMessage("this rolegroup already exists").queue();
                                         }
+                                    }else{
+                                        System.out.println("wrong syntax in guild : '" + guildname + "'");
+                                        channel.sendMessage("wrong syntax").queue();
                                     }
+                                }else
+                                {
+                                    System.out.println("wrong syntax in guild: '" + guildname + "'");
+                                    channel.sendMessage("no roles or too many roles mentioned").queue();
                                 }
                                 break;
-                            case "remove":
+                            case "delete":
                                 //if there is an arg
                                 if (args[2] != null) {
                                     //call the class method
                                     if (guild.removeRoleGroup(args[2]) != null) {
-                                        System.out.println("removed rolegroup '" + args[2] + "' in guild: '" + guildname + "'");
-                                        channel.sendMessage("rolegroup created!\ntype: LIST").queue();
+                                        System.out.println("deleted rolegroup '" + args[2] + "' in guild: '" + guildname + "'");
+                                        channel.sendMessage("rolegroup deleted").queue();
                                     } else {
                                         System.out.println("found unexistent rolegroup in guild: '" + guildname + "'");
                                         channel.sendMessage("this rolegroup does not exists").queue();

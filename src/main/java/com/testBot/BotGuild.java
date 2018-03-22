@@ -158,11 +158,11 @@ public class BotGuild {
         return this;
     }
 
-    public BotGuild addRoleGroup(Long roleId,String groupName)
+    public BotGuild addRoleGroup(Role role,String groupName)
     {
         if(RoleGroup.findGroup(this.roleGroups,groupName)==null)
         {
-            roleGroups.add(new RoleGroup(conn,this,null,groupName));
+            roleGroups.add(new RoleGroup(conn,this,role,groupName));
         }else
             return null;
         return this;

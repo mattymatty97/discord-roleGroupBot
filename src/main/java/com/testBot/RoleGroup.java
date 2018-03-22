@@ -37,7 +37,7 @@ public class RoleGroup {
         return groupName;
     }
 
-    public String command(Guild guild,Member member,String rolename)
+    public String command(Guild guild, Member member, String rolename)
     {
         RoleData rd;
         StringBuilder ret = new StringBuilder();
@@ -83,29 +83,39 @@ public class RoleGroup {
                 //get mention list
                 List<Role> list = message.getMentionedRoles();
                 //if there is a mention and the syintax is correct
-                if(list.size()==1 && args[2].equals("as") && args[3]!=null )
+                if(list.size()==1 && args.length == 4 && args[2].equals("as"))
                 {
                     //if the name is not too long
-                    if( args[3].length()<10)
-                    {
-                        try {
-                            stmt = conn.createStatement();
-                            stmt.execute("INSERT INTO grouproles(groupid, roleid, rolename) VALUE ("+this.groupId+
-                                            ","+list.get(0).getIdLong()+",'"+args[3]+"')");
-                            stmt.execute("COMMIT");
-                            roles.add(new RoleData(args[3],list.get(0).getIdLong()));
-                            stmt.close();
-                            retStr.append("Role correctly added");
-                            System.out.print("grouproles - role added ");
-                        } catch (SQLException ex) {
-                            System.out.println("SQLException: " + ex.getMessage());
-                            System.out.println("SQLState: " + ex.getSQLState());
-                            System.out.println("VendorError: " + ex.getErrorCode());
-                            System.exit(-1);
-                            retStr.append("error adding role");
-                            System.out.print("grouproles - error on role ");
+                    if( args[3].length()<10) {
+                        if (RoleData.find(roles, list.get(0).getIdLong()) == null) {
+                            if (RoleData.find(roles, args[3]) == null) {
+                                try {
+                                    stmt = conn.createStatement();
+                                    Long id = list.get(0).getIdLong();
+                                    stmt.execute("INSERT INTO grouproles(groupid, roleid, rolename) VALUES (" + this.groupId + "," + id + ",'" + args[3] + "')");
+                                    stmt.execute("COMMIT");
+                                    roles.add(new RoleData(args[3], list.get(0).getIdLong()));
+                                    stmt.close();
+                                    retStr.append("Role correctly added");
+                                    System.out.print("grouproles - role added ");
+                                } catch (SQLException ex) {
+                                    System.out.println("SQLException: " + ex.getMessage());
+                                    System.out.println("SQLState: " + ex.getSQLState());
+                                    System.out.println("VendorError: " + ex.getErrorCode());
+                                    System.exit(-1);
+                                    retStr.append("error adding role");
+                                    System.out.print("grouproles - error on role ");
+                                }
+                            }else
+                            {
+                                System.out.print("grouproles - found existing nick ");
+                                retStr.append("that nick is already used");
+                            }
+                        }else{
+                            System.out.print("grouproles - found existing role ");
+                            retStr.append("that role is already included");
                         }
-                    }else{
+                    }else {
                         System.out.print("grouproles - name limit exceed ");
                         retStr.append("error name too long limit to 10 char");
                     }
@@ -199,12 +209,10 @@ public class RoleGroup {
         this.groupId=groupId;
         this.groupName = groupName;
         this.roles = new ArrayList<>();
-        Long guildId = guild.getId();
         Statement stmt;
         ResultSet rs;
         try {
             stmt = conn.createStatement();
-            if(groupId!=null){
                 rs = stmt.executeQuery("SELECT type,roleid FROM groups WHERE groupid=" + groupId);
 
                 if (rs.next()) {
@@ -214,17 +222,36 @@ public class RoleGroup {
                     rs = stmt.executeQuery("SELECT roleid,rolename FROM grouproles WHERE groupid=" + groupId);
                     this.roles.clear();
                     while (rs.next()) {
-                        this.roles.add(new RoleData(rs.getString(1),rs.getLong(2)));
+                        this.roles.add(new RoleData(rs.getString(2),rs.getLong(1)));
                     }
                     rs.close();
                 } else {
                     this.roles.clear();
                     System.out.println("error id not found");
                 }
-            }else{
-                stmt.execute("INSERT INTO groups (guildid,groupname,type) VALUES ("+guildId+",'"+groupName+"','LIST')");
-                stmt.execute("COMMIT");
-            }
+            stmt.close();
+        }catch (SQLException ex) {
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+    }
+
+    public RoleGroup(Connection conn, BotGuild guild,Role role, String groupName) {
+        this.conn = conn;
+        this.guild = guild;
+        this.groupName = groupName;
+        this.roles = new ArrayList<>();
+        Long guildId = guild.getId();
+        Statement stmt;
+        ResultSet rs;
+        try {
+            stmt = conn.createStatement();
+            stmt.execute("INSERT INTO groups (guildid,groupname,type,roleid) VALUES ("+guildId+",'"+groupName+"','LIST',"+role.getIdLong()+")");
+            rs = stmt.executeQuery("SELECT groupid FROM groups WHERE guildid="+guildId+" AND groupname='"+groupName+"'");
+            if(rs.next())
+                this.groupId=rs.getLong(1);
+            stmt.execute("COMMIT");
             stmt.close();
         }catch (SQLException ex) {
             System.out.println("SQLException: " + ex.getMessage());
