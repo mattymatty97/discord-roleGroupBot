@@ -354,7 +354,7 @@ public class MyListener extends ListenerAdapter {
             message.addBlankField(false);
             message.addField("CUSTOM COMMANDS:", "up now\n they are called rolegroups", false);
         }else
-            switch (args[2])
+            switch (args[1])
             {
                 case "ping":
                     message.setTitle("testbot help for ping:");
