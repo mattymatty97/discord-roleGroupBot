@@ -15,14 +15,14 @@ public class MyListener extends ListenerAdapter {
     private Connection conn;
     private List<BotGuild> savedGuilds;
 
-    private static String toSendUser=
-                    "help of testbot\n" +
+    private static String toSendUser =
+            "help of testbot\n" +
                     "- ping: answers Pong!";
-    private static String toAddMod=  "\n\n"+
-                    "mod commands:\n" +
-                    "- prefix [prefix]: changes bot prefix for this server\n" +
-                    "- modrole <add/remove/list> [roleMention]: add a role to modroles\n"+
-                    "- role <add/remove> [rolemention] : add yourself a role";
+    private static String toAddMod = "\n\n" +
+            "mod commands:\n" +
+            "- prefix [prefix]: changes bot prefix for this server\n" +
+            "- modrole <add/remove/list> [roleMention]: add a role to modroles\n" +
+            "- role <add/remove> [rolemention] : add yourself a role";
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
@@ -38,26 +38,26 @@ public class MyListener extends ListenerAdapter {
         MessageChannel channel = event.getChannel();
         Message message = event.getMessage();
         String content = message.getContent();
-        System.out.println("Message from '"+ member.getEffectiveName() + "' in guild '"+guildname +"'");
-        if (content.length()>guild.getPrefix().length() && content.substring(0, guild.getPrefix().length()).equals(guild.getPrefix())) {
+        System.out.println("Message from '" + member.getEffectiveName() + "' in guild '" + guildname + "'");
+        if (content.length() > guild.getPrefix().length() && content.substring(0, guild.getPrefix().length()).equals(guild.getPrefix())) {
             String[] args = content.substring(guild.getPrefix().length()).split(" ");
             switch (args[0]) {
 
 //------USER---------------------HELP--------------------------------------
 
                 case "help":
-                    System.out.println("help shown in guild: '"+guildname+"'");
+                    System.out.println("help shown in guild: '" + guildname + "'");
                     /*channel.sendMessage(toSendUser).queue();
                     if (member.isOwner() || guild.memberIsMod(member))
                         channel.sendMessage(toAddMod).queue();*/
-                    PrintHelp(channel,member,guild);
+                    PrintHelp(channel, member, guild);
                     break;
 
 //------USER--------------------PING---------------------------------------
 
                 case "ping":
                 case "Ping":
-                    System.out.println("Ping executed in guild: '"+guildname+"'");
+                    System.out.println("Ping executed in guild: '" + guildname + "'");
                     channel.sendMessage("Pong!").queue(); // Important to call .queue() on the RestAction returned by sendMessage(...)
                     break;
 
@@ -93,46 +93,46 @@ public class MyListener extends ListenerAdapter {
                             switch (args[1]) {
                                 case "add":
                                     if (mentions.size() == 1) {
-                                        System.out.println("adding modrole '"+mentions.get(0).getName()+"' to guild '"+guildname+"'");
+                                        System.out.println("adding modrole '" + mentions.get(0).getName() + "' to guild '" + guildname + "'");
                                         guild.addModRole(mentions.get(0).getIdLong(), mentions.get(0).getName());
                                         channel.sendMessage("Role added!").queue();
                                     } else {
-                                        System.out.println("modrole syntax in guild: '"+guildname+"'");
+                                        System.out.println("modrole syntax in guild: '" + guildname + "'");
                                         channel.sendMessage("wrong syntax!").queue();
                                     }
                                     break;
                                 case "remove":
                                     if (mentions.size() == 1) {
-                                        System.out.println("removing modrole '"+mentions.get(0).getName()+"' from guild '"+guildname+"'");
-                                        if(guild.removeModRole(mentions.get(0).getIdLong())!=null)
+                                        System.out.println("removing modrole '" + mentions.get(0).getName() + "' from guild '" + guildname + "'");
+                                        if (guild.removeModRole(mentions.get(0).getIdLong()) != null)
                                             channel.sendMessage("Role removed!").queue();
                                         else
                                             channel.sendMessage("Role is not a modrole!").queue();
                                     } else {
-                                        System.out.println("modrole syntax in guild: '"+guildname+"'");
+                                        System.out.println("modrole syntax in guild: '" + guildname + "'");
                                         channel.sendMessage("wrong syntax!").queue();
                                     }
                                     break;
                                 case "list":
-                                    System.out.println("listing modroles in guild: '"+guildname+"'");
-                                    String text = "Active ModRoles:\n";
+                                    System.out.println("listing modroles in guild: '" + guildname + "'");
+                                    StringBuilder text = new StringBuilder("Active ModRoles:\n");
                                     for (Long id : guild.getModRolesById()) {
                                         for (Role role : event.getGuild().getRoles()) {
                                             if (role.getIdLong() == (id))
-                                                text += role.getName() + "\n";
+                                                text.append(role.getName()).append("\n");
                                         }
                                     }
-                                    channel.sendMessage(text).queue();
+                                    channel.sendMessage(text.toString()).queue();
                                     break;
                                 default:
-                                    System.out.println("command syntax in guild: '"+guildname+"'");
+                                    System.out.println("command syntax in guild: '" + guildname + "'");
                                     channel.sendMessage("wrong syntax!").queue();
                             }
 
                         }
                         break;
                     } else {
-                        System.out.println("no permission in guild: '"+guildname+"'");
+                        System.out.println("no permission in guild: '" + guildname + "'");
                         channel.sendMessage("Error you have not permission to do this!").queue();
                     }
                     break;
@@ -148,28 +148,28 @@ public class MyListener extends ListenerAdapter {
                                 case "add":
                                     if (mentions.size() == 1) {
                                         List<Role> roles = event.getGuild().getSelfMember().getRoles();
-                                        if(roles.get(0).getPosition() > mentions.get(0).getPosition()) {
+                                        if (roles.get(0).getPosition() > mentions.get(0).getPosition()) {
                                             event.getGuild().getController().addRolesToMember(member, mentions).queue();
                                             channel.sendMessage("Role added!").queue();
-                                            System.out.println("added a role to '"+member.getEffectiveName()+"'in guild: '"+guildname+"'");
-                                        }else{
-                                            System.out.println("role permission error in guild : '"+guildname+"'");
+                                            System.out.println("added a role to '" + member.getEffectiveName() + "'in guild: '" + guildname + "'");
+                                        } else {
+                                            System.out.println("role permission error in guild : '" + guildname + "'");
                                             channel.sendMessage("Cannot modify a higher or equal role to my higher role!").queue();
                                         }
                                     } else {
-                                        System.out.println("wrong role syntax in guild: '"+guildname+"'");
+                                        System.out.println("wrong role syntax in guild: '" + guildname + "'");
                                         channel.sendMessage("wrong syntax!").queue();
                                     }
                                     break;
                                 case "remove":
                                     if (mentions.size() == 1) {
                                         List<Role> roles = event.getGuild().getSelfMember().getRoles();
-                                        if(roles.get(0).getPosition() > mentions.get(0).getPosition()) {
+                                        if (roles.get(0).getPosition() > mentions.get(0).getPosition()) {
                                             event.getGuild().getController().removeRolesFromMember(member, mentions).queue();
                                             channel.sendMessage("Role removed!").queue();
-                                            System.out.println("removed a role to '"+member.getEffectiveName()+"'in guild: '"+guildname+"'");
-                                        }else{
-                                            System.out.println("role permission error in guild : '"+guildname+"'");
+                                            System.out.println("removed a role to '" + member.getEffectiveName() + "'in guild: '" + guildname + "'");
+                                        } else {
+                                            System.out.println("role permission error in guild : '" + guildname + "'");
                                             channel.sendMessage("Cannot modify a higher or equal role to my higher role!").queue();
                                         }
                                     } else {
@@ -184,14 +184,14 @@ public class MyListener extends ListenerAdapter {
                         }
                         break;
                     } else {
-                        System.out.println("missing permissions for '"+member.getEffectiveName()+"' in guild: '"+guildname+"'");
+                        System.out.println("missing permissions for '" + member.getEffectiveName() + "' in guild: '" + guildname + "'");
                         channel.sendMessage("Error you have not permission to do this!").queue();
                     }
                     break;
 
 //-------MOD--------------------------ROLEGROUP-------------------------------
 
-                case "rolegroup": if(false) {//disabled for now
+                case "rolegroup"://disabled for now
                     if (member.isOwner() || guild.memberIsMod(member)) {
                         switch (args[1]) {
                             case "create":
@@ -222,11 +222,11 @@ public class MyListener extends ListenerAdapter {
                             default:
                                 if (args[2] != null) {
                                     if (guild.modifyRoleGroup(args[2], Arrays.copyOfRange(args, 3, args.length), event.getChannel()) != null) {
-                                        /*System.out.println("removed rolegroup '"+args[2]+"' in guild: '" + guildname + "'");
+                                        System.out.println("removed rolegroup '" + args[2] + "' in guild: '" + guildname + "'");
                                         channel.sendMessage("rolegroup created!\ntype: LIST").queue();
-                                    }else{
+                                    } else {
                                         System.out.println("found unexistent rolegroup in guild: '" + guildname + "'");
-                                        channel.sendMessage("this rolegroup does not exists").queue();*/
+                                        channel.sendMessage("this rolegroup does not exists").queue();
                                     }
                                 }
                                 break;
@@ -234,12 +234,11 @@ public class MyListener extends ListenerAdapter {
                         }
                         break;
                     }
-                }
             }
 
 //-------ALL---------------------------IGNORED--------------------------------
 
-        }else{
+        } else {
             System.out.println("Ignored");
         }
     }
@@ -252,35 +251,35 @@ public class MyListener extends ListenerAdapter {
         return null;
     }
 
-    private void PrintHelp(MessageChannel channel,Member member,BotGuild guild)
-    {
-        EmbedBuilder message =new EmbedBuilder();
+    private void PrintHelp(MessageChannel channel, Member member, BotGuild guild) {
+        EmbedBuilder message = new EmbedBuilder();
 
         message.setTitle("Help for testbot:");
-        message.addField("help","shows this help",false);
-        message.addField("ping","answers pong (userfull for speed tests and alive check)",false);
+        message.addField("help", "shows this help", false);
+        message.addField("ping", "answers pong (userfull for speed tests and alive check)", false);
 
-        if (member.isOwner() || guild.memberIsMod(member))
-        {
+        if (member.isOwner() || guild.memberIsMod(member)) {
             message.addBlankField(false);
-            message.addField("MOD commands:","",false);
-            message.addField("prefix","sets the prefix of the bot",true);
-            message.addField("Usage:","prefix [prefix]",false);
+            message.addField("MOD commands:", "", false);
+            message.addField("prefix", "sets the prefix of the bot\n" +
+                    "Usage: prefix [prefix]", false);
 
-            message.addField("modrole","manages the roles allowed to use mod commands",true);
-            message.addField("Usage:","modrole <add/remove/list> [RoleMention]",false);
+            message.addField("modrole", "manages the roles allowed to use mod commands\n" +
+                    "Usage: modrole <action> [RoleMention]\n" +
+                    "Actions: add, remove, list", false);
 
-            message.addField("role","add or remove a role to the caller",true);
-            message.addField("Usage:","role <add/remove> [RoleMention]",false);
+            message.addField("role", "add or remove a roleto caller\n" +
+                    "Usage: role <action> [RoleMention]\n" +
+                    "actions: add, remove", false);
         }
         message.addBlankField(false);
-        message.addField("COUSTOUM COMMANDS:","coming soon",false);
+        message.addField("COUSTOUM COMMANDS:", "coming soon", false);
 
         channel.sendMessage(message.build()).queue();
     }
 
 
-    public MyListener(Connection conn, List<BotGuild> savedGuilds) {
+    MyListener(Connection conn, List<BotGuild> savedGuilds) {
         this.conn = conn;
         this.savedGuilds = savedGuilds;
     }
