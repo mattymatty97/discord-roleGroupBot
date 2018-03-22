@@ -1,6 +1,7 @@
 package com.testBot;
 
 
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
@@ -46,9 +47,10 @@ public class MyListener extends ListenerAdapter {
 
                 case "help":
                     System.out.println("help shown in guild: '"+guildname+"'");
-                    channel.sendMessage(toSendUser).queue();
+                    /*channel.sendMessage(toSendUser).queue();
                     if (member.isOwner() || guild.memberIsMod(member))
-                        channel.sendMessage(toAddMod).queue();
+                        channel.sendMessage(toAddMod).queue();*/
+                    PrintHelp(channel,member,guild);
                     break;
 
 //------USER--------------------PING---------------------------------------
@@ -175,15 +177,6 @@ public class MyListener extends ListenerAdapter {
                                         channel.sendMessage("wrong syntax!").queue();
                                     }
                                     break;
-                                case "list":
-                                    System.out.println("listing modroles in guild: '"+guildname+"'");
-                                    String text = "Active ModRoles:\n";
-                                    Guild g = event.getGuild();
-                                    for (Long id : guild.getModRolesById()) {
-                                        text +=  g.getRoleById(id).getName() + "\n";
-                                    }
-                                    channel.sendMessage(text).queue();
-                                    break;
                                 default:
                                     channel.sendMessage("wrong syntax!").queue();
                             }
@@ -257,6 +250,33 @@ public class MyListener extends ListenerAdapter {
                 return guild;
         }
         return null;
+    }
+
+    private void PrintHelp(MessageChannel channel,Member member,BotGuild guild)
+    {
+        EmbedBuilder message =new EmbedBuilder();
+
+        message.setTitle("Help for testbot:");
+        message.addField("help","shows this help",false);
+        message.addField("ping","answers pong (userfull for speed tests and alive check)",false);
+
+        if (member.isOwner() || guild.memberIsMod(member))
+        {
+            message.addBlankField(false);
+            message.addField("MOD commands:","",false);
+            message.addField("prefix","sets the prefix of the bot",false);
+            message.addField("Usage:","prefix [prefix]",true);
+
+            message.addField("modrole","manages the roles allowed to use mod commands",false);
+            message.addField("Usage:","modrole <add/remove/list> [RoleMention]",true);
+
+            message.addField("role","add or remove a role to the caller",false);
+            message.addField("Usage:","role <add/remove> [RoleMention]",true);
+        }
+        message.addBlankField(false);
+        message.addField("COUSTOUM COMMANDS:","coming soon",false);
+
+        channel.sendMessage(message.build()).queue();
     }
 
 

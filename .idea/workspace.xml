@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8fb65ecf-fe0e-49e5-afc1-e181856c2b21" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/06ddc922-2575-49c2-a0a9-5aa3bfe811d5.xml" afterPath="" />
+    <list default="true" id="8fb65ecf-fe0e-49e5-afc1-e181856c2b21" name="Default" comment="modified imports Mylistener">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/testBot/MyListener.java" afterPath="$PROJECT_DIR$/src/main/java/com/testBot/MyListener.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/testBot/RoleGroup.java" afterPath="$PROJECT_DIR$/src/main/java/com/testBot/RoleGroup.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -94,8 +93,8 @@
       <file leaf-file-name="BOT.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/testBot/BOT.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="515">
-              <caret line="54" column="0" lean-forward="true" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
+            <state relative-caret-position="756">
+              <caret line="54" column="0" lean-forward="false" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -104,8 +103,8 @@
       <file leaf-file-name="MyListener.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/testBot/MyListener.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="239" column="38" lean-forward="false" selection-start-line="239" selection-start-column="38" selection-end-line="239" selection-end-column="38" />
+            <state relative-caret-position="321">
+              <caret line="51" column="64" lean-forward="true" selection-start-line="51" selection-start-column="64" selection-end-line="51" selection-end-column="64" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -137,7 +136,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/com/testBot/RoleGroup.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="501">
-              <caret line="44" column="0" lean-forward="false" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
+              <caret line="133" column="0" lean-forward="true" selection-start-line="133" selection-start-column="0" selection-end-line="133" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#424#425#0" expanded="true" />
@@ -167,7 +166,7 @@
       <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="137">
+            <state relative-caret-position="558">
               <caret line="31" column="38" lean-forward="false" selection-start-line="31" selection-start-column="38" selection-end-line="31" selection-end-column="38" />
               <folding />
             </state>
@@ -648,8 +647,8 @@
         <option value="$PROJECT_DIR$/src/main/java/com/testBot/BOT.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/testBot/RoleGroupComparator.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/testBot/BotGuild.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/testBot/MyListener.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/testBot/RoleGroup.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/testBot/MyListener.java" />
       </list>
     </option>
   </component>
@@ -687,17 +686,15 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="testBot" type="b2602c69:ProjectViewProjectNode" />
               <item name="TestBot" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-            </path>
-            <path>
-              <item name="testBot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TestBot" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name=".gradle" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="testBot" type="b2602c69:ProjectViewProjectNode" />
@@ -730,9 +727,6 @@
         </subPane>
       </pane>
       <pane id="AndroidView" />
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -897,6 +891,8 @@
       <workItem from="1521657017923" duration="5933000" />
       <workItem from="1521665738475" duration="8770000" />
       <workItem from="1521709246425" duration="1173000" />
+      <workItem from="1521714950875" duration="1020000" />
+      <workItem from="1521730031437" duration="1522000" />
     </task>
     <task id="LOCAL-00001" summary="COMMENTED AND ADDED PRINTS">
       <created>1521578483181</created>
@@ -982,11 +978,18 @@
       <option name="project" value="LOCAL" />
       <updated>1521674440834</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="modified imports Mylistener">
+      <created>1521715318463</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1521715318464</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="66801000" />
+    <option name="totallyTimeSpent" value="69343000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -999,6 +1002,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-4" width="1215" height="804" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3288889" sideWeight="0.49529514" order="6" side_tool="false" content_ui="tabs" />
@@ -1013,7 +1017,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3288889" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15739949" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16253208" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2112917" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32848588" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24978614" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1086,7 +1090,8 @@
     <MESSAGE value="fixed sql queryes and added class for rolegroups" />
     <MESSAGE value="-modified help&#10;-added rolegroup entry&#10;-added RoleGroup object to class BotGuild&#10;-added control methods for rolegrup in BotGuild" />
     <MESSAGE value="todo:&#10;end rolegroup control in listener&#10;set all controls in RoleGroup class" />
-    <option name="LAST_COMMIT_MESSAGE" value="todo:&#10;end rolegroup control in listener&#10;set all controls in RoleGroup class" />
+    <MESSAGE value="modified imports Mylistener" />
+    <option name="LAST_COMMIT_MESSAGE" value="modified imports Mylistener" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1318,6 +1323,36 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/testBot/RoleGroupComparator.java" />
+    <entry file="file://$PROJECT_DIR$/out/production/classes/com/testBot/BOT.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-374">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/testBot/BOT.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="756">
+          <caret line="54" column="0" lean-forward="false" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://table:/84b5c365/a9369699-e2f1-4b5c-a235-64781bd1d6b9/d5a36f2opkuv4a.public.guilds">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="558">
+          <caret line="31" column="38" lean-forward="false" selection-start-line="31" selection-start-column="38" selection-end-line="31" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/testBot/BotGuild.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3168">
@@ -1336,35 +1371,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/out/production/classes/com/testBot/BOT.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-374">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#2037#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/testBot/BOT.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="515">
-          <caret line="54" column="0" lean-forward="true" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://table:/84b5c365/a9369699-e2f1-4b5c-a235-64781bd1d6b9/d5a36f2opkuv4a.public.guilds">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/testBot/RoleGroup.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="501">
-          <caret line="44" column="0" lean-forward="false" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
+          <caret line="133" column="0" lean-forward="true" selection-start-line="133" selection-start-column="0" selection-end-line="133" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#424#425#0" expanded="true" />
@@ -1390,18 +1400,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="137">
-          <caret line="31" column="38" lean-forward="false" selection-start-line="31" selection-start-column="38" selection-end-line="31" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/testBot/MyListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="239" column="38" lean-forward="false" selection-start-line="239" selection-start-column="38" selection-end-line="239" selection-end-column="38" />
+        <state relative-caret-position="321">
+          <caret line="51" column="64" lean-forward="true" selection-start-line="51" selection-start-column="64" selection-end-line="51" selection-end-column="64" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
