@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8fb65ecf-fe0e-49e5-afc1-e181856c2b21" name="Default" comment="minor help fix">
+    <list default="true" id="8fb65ecf-fe0e-49e5-afc1-e181856c2b21" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/testBot/MyListener.class" afterPath="$PROJECT_DIR$/out/production/classes/com/testBot/MyListener.class" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/testBot/MyListener.java" afterPath="$PROJECT_DIR$/src/main/java/com/testBot/MyListener.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -110,8 +111,8 @@
       <file leaf-file-name="MyListener.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/testBot/MyListener.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="250">
-              <caret line="417" column="46" lean-forward="false" selection-start-line="417" selection-start-column="46" selection-end-line="417" selection-end-column="46" />
+            <state relative-caret-position="-362">
+              <caret line="401" column="37" lean-forward="true" selection-start-line="401" selection-start-column="37" selection-end-line="401" selection-end-column="37" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -911,7 +912,7 @@
       <workItem from="1521709246425" duration="1173000" />
       <workItem from="1521714950875" duration="1020000" />
       <workItem from="1521730031437" duration="24740000" />
-      <workItem from="1521756626473" duration="5508000" />
+      <workItem from="1521756626473" duration="5690000" />
     </task>
     <task id="LOCAL-00001" summary="COMMENTED AND ADDED PRINTS">
       <created>1521578483181</created>
@@ -1116,11 +1117,18 @@
       <option name="project" value="LOCAL" />
       <updated>1521762045302</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="minor help fix">
+      <created>1521762149744</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1521762149744</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="98069000" />
+    <option name="totallyTimeSpent" value="98251000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1593,8 +1601,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/testBot/MyListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="417" column="46" lean-forward="false" selection-start-line="417" selection-start-column="46" selection-end-line="417" selection-end-column="46" />
+        <state relative-caret-position="-362">
+          <caret line="401" column="37" lean-forward="true" selection-start-line="401" selection-start-column="37" selection-end-line="401" selection-end-column="37" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

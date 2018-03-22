@@ -395,7 +395,7 @@ public class MyListener extends ListenerAdapter {
                                                                 "every role and user in theyre guild", false);
 
                     break;
-                case "rolegroups":
+                case "rolegroup":
                     message.setTitle("testbot help for rolegroups:");
                     message.setDescription("set a coustom command controlled by a trigger role\n"+
                                             "that allows users to add or remove themself to a list of roles");
@@ -423,6 +423,9 @@ public class MyListener extends ListenerAdapter {
                             "rolegroup type LIST", false);
                     message.addField("do you know?", "all variables [variable] are case sensitive\n" +
                             "that means that 'Case' is different from 'case'", false);
+                default :
+                    message.setTitle("default help of testbot:");
+                    message.setDescription("I don't know the command you asked.... try again?");
             }
         channel.sendMessage(message.build()).queue();
     }
