@@ -44,9 +44,6 @@ public class RoleGroup {
 
 
 
-
-
-
     public RoleGroup(Connection conn, BotGuild guild, Long groupId, String groupName) {
         this.conn = conn;
         this.guild = guild;

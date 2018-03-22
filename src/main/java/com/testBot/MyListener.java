@@ -39,7 +39,7 @@ public class MyListener extends ListenerAdapter {
         Message message = event.getMessage();
         String content = message.getContent();
         System.out.println("Message from '"+ member.getEffectiveName() + "' in guild '"+guildname +"'");
-        if (content.substring(0, guild.getPrefix().length()).equals(guild.getPrefix())) {
+        if (content.lenght()>guild.getPrefix().length() && content.substring(0, guild.getPrefix().length()).equals(guild.getPrefix())) {
             String[] args = content.substring(guild.getPrefix().length()).split(" ");
             switch (args[0]) {
 
@@ -227,7 +227,7 @@ public class MyListener extends ListenerAdapter {
                                     }
                                 }
                                 break;
-                            case "set":
+                            default:
                                 if (args[2] != null) {
                                     if (guild.modifyRoleGroup(args[2], Arrays.copyOfRange(args, 3, args.length), event.getChannel()) != null) {
                                         /*System.out.println("removed rolegroup '"+args[2]+"' in guild: '" + guildname + "'");
@@ -238,8 +238,6 @@ public class MyListener extends ListenerAdapter {
                                     }
                                 }
                                 break;
-                            default:
-                                channel.sendMessage("Wrong syntax").queue();
 
                         }
                         break;
