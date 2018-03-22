@@ -10,15 +10,15 @@ import net.dv8tion.jda.core.entities.*;
 public class RoleGroup {
 
     private Connection conn;
-    private List<Long> rolesById;
+    private List<RoleData> roles;
     private String type;
     private Long boundRole;
     private BotGuild guild;
     private Long groupId;
     private String groupName;
 
-    public List<Long> getRolesById() {
-        return rolesById;
+    public List<RoleData> getRoles() {
+        return roles;
     }
 
     public String getType() {
@@ -39,17 +39,42 @@ public class RoleGroup {
 
     public String[] modify(String[] args,MessageChannel channel)
     {
+        switch (args[0])
+        {
+            case "add":
+
+                break;
+
+            case "remove":
+
+                break;
+
+            case "type":
+
+                break;
+
+            default:
+
+                break;
+
+        }
+
+
+
+
+
+
+
+
         return null;
     }
-
-
 
     public RoleGroup(Connection conn, BotGuild guild, Long groupId, String groupName) {
         this.conn = conn;
         this.guild = guild;
         this.groupId=groupId;
         this.groupName = groupName;
-        this.rolesById = new ArrayList<>();
+        this.roles = new ArrayList<>();
         Long guildId = guild.getId();
         Statement stmt;
         ResultSet rs;
@@ -62,14 +87,14 @@ public class RoleGroup {
                     this.type = rs.getString(1);
                     this.boundRole = rs.getLong(2);
                     rs.close();
-                    rs = stmt.executeQuery("SELECT roleid FROM grouproles WHERE groupid=" + groupId);
-                    this.rolesById.clear();
+                    rs = stmt.executeQuery("SELECT roleid,rolename FROM grouproles WHERE groupid=" + groupId);
+                    this.roles.clear();
                     while (rs.next()) {
-                        this.rolesById.add(rs.getLong(1));
+                        this.roles.add(new RoleData(rs.getString(1),rs.getLong(2)));
                     }
                     rs.close();
                 } else {
-                    this.rolesById.clear();
+                    this.roles.clear();
                     System.out.println("error id not found");
                 }
             }else{
@@ -94,7 +119,7 @@ public class RoleGroup {
             stmt.execute("COMMIT");
             stmt.close();
             conn=null;
-            rolesById=null;
+            roles=null;
             type=null;
             boundRole=null;
             guild=null;
@@ -127,7 +152,4 @@ public class RoleGroup {
         }
         return null;
     }
-
-
-
 }

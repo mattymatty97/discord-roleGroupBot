@@ -7,13 +7,8 @@ import java.sql.*;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
-
-import com.testBot.BotGuild;
-import com.testBot.MyListener;
 
 import net.dv8tion.jda.core.entities.Game;
-import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 public class BOT
 {
@@ -24,10 +19,8 @@ public class BOT
 
         List<BotGuild> savedGuilds=new ArrayList<BotGuild>();
         try {
-            //Class.forName("com.mysql.jdbc.Driver");
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
-            //System.out.println("Missing MySQL JDBC Driver!");
             System.out.println("Missing postgresql JDBC Driver!");
             e.printStackTrace();
             return;

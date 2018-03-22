@@ -8,6 +8,7 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 import java.awt.*;
 import java.sql.*;
+import java.util.Arrays;
 import java.util.List;
 
 public class MyListener extends ListenerAdapter {
@@ -156,8 +157,6 @@ public class MyListener extends ListenerAdapter {
                 case "role":
                     //if the member is allowed
                     if (member.isOwner() || guild.memberIsMod(member)) {
-                        //if there are other args
-                        if (args[1] != null) {
                             //get mentions list
                             List<Role> mentions = message.getMentionedRoles();
                             switch (args[1]) {
@@ -201,8 +200,6 @@ public class MyListener extends ListenerAdapter {
                                 default:
                                     channel.sendMessage("wrong syntax!").queue();
                             }
-
-                        }
                         break;
                     } else {
                         System.out.println("missing permissions for '" + member.getEffectiveName() + "' in guild: '" + guildname + "'");
@@ -211,14 +208,19 @@ public class MyListener extends ListenerAdapter {
                     break;
 
 //-------MOD--------------------------ROLEGROUP-------------------------------
-                /*
-                case "rolegroup"://disabled for now
+
+                case "rolegroup":
+                    //if member is allowed
                     if (member.isOwner() || guild.memberIsMod(member)) {
                         switch (args[1]) {
                             case "create":
+                                //get a list of all mentions
                                 List<Role> list = message.getMentionedRoles();
+                                //if there is a mentioned role
                                 if (list.size() != 1) {
-                                    if (args[2] != null && !args[2].contains(list.get(0).getName())) {
+                                    //if the argument is not the mentioned role
+                                    if (!args[2].contains(list.get(0).getName())) {
+                                        //call the class method
                                         if (guild.addRoleGroup(list.get(0).getIdLong(), args[2]) != null) {
                                             System.out.println("created rolegroup '" + args[2] + "' in guild: '" + guildname + "'");
                                             channel.sendMessage("rolegroup created!\ntype: LIST").queue();
@@ -230,7 +232,9 @@ public class MyListener extends ListenerAdapter {
                                 }
                                 break;
                             case "remove":
+                                //if there is an arg
                                 if (args[2] != null) {
+                                    //call the class method
                                     if (guild.removeRoleGroup(args[2]) != null) {
                                         System.out.println("removed rolegroup '" + args[2] + "' in guild: '" + guildname + "'");
                                         channel.sendMessage("rolegroup created!\ntype: LIST").queue();
@@ -241,20 +245,11 @@ public class MyListener extends ListenerAdapter {
                                 }
                                 break;
                             default:
-                                if (args[2] != null) {
-                                    if (guild.modifyRoleGroup(args[2], Arrays.copyOfRange(args, 3, args.length), event.getChannel()) != null) {
-                                        System.out.println("removed rolegroup '" + args[2] + "' in guild: '" + guildname + "'");
-                                        channel.sendMessage("rolegroup created!\ntype: LIST").queue();
-                                    } else {
-                                        System.out.println("found unexistent rolegroup in guild: '" + guildname + "'");
-                                        channel.sendMessage("this rolegroup does not exists").queue();
-                                    }
-                                }
+                                    guild.optionRoleGroup(args[1], Arrays.copyOfRange(args, 2, args.length), channel);
                                 break;
-
                         }
                         break;
-                    }*/
+                    }//*/
             }
 
 //-------ALL---------------------------IGNORED--------------------------------
@@ -284,7 +279,7 @@ public class MyListener extends ListenerAdapter {
         message.addField("help", "shows this help", false);
         message.addField("ping", "answers pong (userfull for speed tests and alive check)", false);
 
-        //if 
+        //if is allowed to use mod commands
         if (member.isOwner() || guild.memberIsMod(member)) {
             message.addBlankField(false);
             message.addField("MOD commands:", "", false);
