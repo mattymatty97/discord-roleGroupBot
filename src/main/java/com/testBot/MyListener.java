@@ -6,6 +6,7 @@ import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
+import java.awt.*;
 import java.sql.*;
 
 import java.util.Arrays;
@@ -190,14 +191,14 @@ public class MyListener extends ListenerAdapter {
                     break;
 
 //-------MOD--------------------------ROLEGROUP-------------------------------
-
+                /*
                 case "rolegroup"://disabled for now
                     if (member.isOwner() || guild.memberIsMod(member)) {
                         switch (args[1]) {
                             case "create":
                                 List<Role> list = message.getMentionedRoles();
                                 if (list.size() != 1) {
-                                    if (!args[2].contains(list.get(0).getName()) && args[2] != null) {
+                                    if (args[2] != null && !args[2].contains(list.get(0).getName())) {
                                         if (guild.addRoleGroup(list.get(0).getIdLong(), args[2]) != null) {
                                             System.out.println("created rolegroup '" + args[2] + "' in guild: '" + guildname + "'");
                                             channel.sendMessage("rolegroup created!\ntype: LIST").queue();
@@ -233,7 +234,7 @@ public class MyListener extends ListenerAdapter {
 
                         }
                         break;
-                    }
+                    }*/
             }
 
 //-------ALL---------------------------IGNORED--------------------------------
@@ -253,6 +254,8 @@ public class MyListener extends ListenerAdapter {
 
     private void PrintHelp(MessageChannel channel, Member member, BotGuild guild) {
         EmbedBuilder message = new EmbedBuilder();
+
+        message.setColor(Color.GREEN);
 
         message.setTitle("Help for testbot:");
         message.addField("help", "shows this help", false);
