@@ -413,6 +413,9 @@ public class MyListener extends ListenerAdapter {
                             "lists all connected Roles and theyre nicks\n\n" +
                             "rolegroup [command] type <type>\n" +
                             "sets the type of command", false);
+                    message.addField("Types:", "LIST\n" +
+                            "a list of roles all indipendent\n\n" +
+                            "other coming soon", false);
                     message.addField("Example:", "rolegroup create color @painter\n" +
                             "rolegroup delete pirate\n" +
                             "rolegroup color add @yellow_role as yellow\n" +

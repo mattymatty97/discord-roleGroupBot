@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8fb65ecf-fe0e-49e5-afc1-e181856c2b21" name="Default" comment="">
+    <list default="true" id="8fb65ecf-fe0e-49e5-afc1-e181856c2b21" name="Default" comment="minor help fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/testBot/MyListener.class" afterPath="$PROJECT_DIR$/out/production/classes/com/testBot/MyListener.class" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/testBot/MyListener.java" afterPath="$PROJECT_DIR$/src/main/java/com/testBot/MyListener.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -111,8 +110,8 @@
       <file leaf-file-name="MyListener.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/testBot/MyListener.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="718">
-              <caret line="356" column="28" lean-forward="true" selection-start-line="356" selection-start-column="28" selection-end-line="356" selection-end-column="28" />
+            <state relative-caret-position="250">
+              <caret line="417" column="46" lean-forward="false" selection-start-line="417" selection-start-column="46" selection-end-line="417" selection-end-column="46" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -912,7 +911,7 @@
       <workItem from="1521709246425" duration="1173000" />
       <workItem from="1521714950875" duration="1020000" />
       <workItem from="1521730031437" duration="24740000" />
-      <workItem from="1521756626473" duration="5401000" />
+      <workItem from="1521756626473" duration="5508000" />
     </task>
     <task id="LOCAL-00001" summary="COMMENTED AND ADDED PRINTS">
       <created>1521578483181</created>
@@ -1110,11 +1109,18 @@
       <option name="project" value="LOCAL" />
       <updated>1521761930764</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="minor help fix">
+      <created>1521762045302</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1521762045302</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="97962000" />
+    <option name="totallyTimeSpent" value="98069000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1228,7 +1234,8 @@
     <MESSAGE value="first test on grouproles -todo update help if working" />
     <MESSAGE value="rolegroups are working - todo lists and help addition" />
     <MESSAGE value="rolegroups help and lists added - missing dynamic help for user commands" />
-    <option name="LAST_COMMIT_MESSAGE" value="rolegroups help and lists added - missing dynamic help for user commands" />
+    <MESSAGE value="minor help fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="minor help fix" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1586,8 +1593,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/testBot/MyListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="718">
-          <caret line="356" column="28" lean-forward="true" selection-start-line="356" selection-start-column="28" selection-end-line="356" selection-end-column="28" />
+        <state relative-caret-position="250">
+          <caret line="417" column="46" lean-forward="false" selection-start-line="417" selection-start-column="46" selection-end-line="417" selection-end-column="46" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
