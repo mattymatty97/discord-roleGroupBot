@@ -264,14 +264,14 @@ public class MyListener extends ListenerAdapter {
         {
             message.addBlankField(false);
             message.addField("MOD commands:","",false);
-            message.addField("prefix","sets the prefix of the bot",false);
-            message.addField("Usage:","prefix [prefix]",true);
+            message.addField("prefix","sets the prefix of the bot",true);
+            message.addField("Usage:","prefix [prefix]",false);
 
-            message.addField("modrole","manages the roles allowed to use mod commands",false);
-            message.addField("Usage:","modrole <add/remove/list> [RoleMention]",true);
+            message.addField("modrole","manages the roles allowed to use mod commands",true);
+            message.addField("Usage:","modrole <add/remove/list> [RoleMention]",false);
 
-            message.addField("role","add or remove a role to the caller",false);
-            message.addField("Usage:","role <add/remove> [RoleMention]",true);
+            message.addField("role","add or remove a role to the caller",true);
+            message.addField("Usage:","role <add/remove> [RoleMention]",false);
         }
         message.addBlankField(false);
         message.addField("COUSTOUM COMMANDS:","coming soon",false);
