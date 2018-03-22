@@ -245,11 +245,35 @@ public class MyListener extends ListenerAdapter {
                                 }
                                 break;
                             default:
-                                    guild.optionRoleGroup(args[1], Arrays.copyOfRange(args, 2, args.length), channel);
+                                    guild.optionRoleGroup(args[1], Arrays.copyOfRange(args, 2, args.length),message, channel);
+                                    System.out.println(" in guild: '" + guildname + "'");
                                 break;
                         }
                         break;
                     }//*/
+
+//----------------------------------CUSTOM COMMANDS-------------------------------
+                default :
+                {
+                    RoleGroup group = RoleGroup.findGroup(guild.getRoleGroups(),args[0]);
+                    if(group!=null)
+                    {
+                        if(memberHasRole(member,group.getBoundRole()))
+                        {
+                            if(args[1]!=null) {
+                                String ret = group.command(event.getGuild(), member, args[1]);
+                                channel.sendMessage(ret).queue();
+                                System.out.println(" in guild: '" + guildname + "'");
+                            }
+                        }else{
+                            channel.sendMessage("you cant do that").queue();
+                            System.out.println("grouproles cc - denied in guild: '" + guildname + "'");
+                        }
+                    }else{
+                        channel.sendMessage("unknown command").queue();
+                        System.out.println("not a command");
+                    }
+                }
             }
 
 //-------ALL---------------------------IGNORED--------------------------------
@@ -259,6 +283,18 @@ public class MyListener extends ListenerAdapter {
             System.out.println("Ignored");
         }
     }
+
+    private boolean memberHasRole(Member member,Long roleId)
+    {
+        List<Role> list = member.getRoles();
+        for (Role role : list)
+        {
+            if(roleId.equals(role.getIdLong()))
+                return true;
+        }
+        return false;
+    }
+
 
     //need explanation?
     private BotGuild findGuild(Long guildId) {

@@ -37,36 +37,160 @@ public class RoleGroup {
         return groupName;
     }
 
-    public String[] modify(String[] args,MessageChannel channel)
+    public String command(Guild guild,Member member,String rolename)
     {
+        RoleData rd;
+        StringBuilder ret = new StringBuilder();
+        switch (type)
+        {
+            case "LIST":
+                rd = RoleData.find(roles,rolename);
+                if(rd==null)
+                {
+                    System.out.print("grouproles custom - wrong syntax");
+                    ret.append("wrong syntax\nlook at help");
+                }else {
+                    Role role = guild.getRoleById(rd.getRoleId());
+                    if (guild.getSelfMember().getRoles().get(0).getPosition() > role.getPosition()) {
+                        if (memberHasRole(member, rd.getRoleId())) {
+                            guild.getController().removeRolesFromMember(member, role).queue();
+                            ret.append("Role ").append(role.getName()).append(" removed");
+                            System.out.print("grouproles custom - role removed");
+                        } else {
+                            guild.getController().addRolesToMember(member, role).queue();
+                            ret.append("Role ").append(role.getName()).append(" added");
+                            System.out.print("grouproles custom - role added");
+                        }
+                    }else{
+                        ret.append("Role ").append(role.getName()).append(" higher than my highest role");
+                        System.out.print("grouproles custom - too low role");
+                    }
+                }
+                break;
+        }
+        return ret.toString();
+    }
+
+
+
+    public String modify(String[] args,Message message)
+    {
+        Statement stmt;
+        StringBuilder retStr = new StringBuilder();
         switch (args[0])
         {
             case "add":
-
+                //get mention list
+                List<Role> list = message.getMentionedRoles();
+                //if there is a mention and the syintax is correct
+                if(list.size()==1 && args[2].equals("as") && args[3]!=null )
+                {
+                    //if the name is not too long
+                    if( args[3].length()<10)
+                    {
+                        try {
+                            stmt = conn.createStatement();
+                            stmt.execute("INSERT INTO grouproles(groupid, roleid, rolename) VALUE ("+this.groupId+
+                                            ","+list.get(0).getIdLong()+",'"+args[3]+"')");
+                            stmt.execute("COMMIT");
+                            roles.add(new RoleData(args[3],list.get(0).getIdLong()));
+                            stmt.close();
+                            retStr.append("Role correctly added");
+                            System.out.print("grouproles - role added ");
+                        } catch (SQLException ex) {
+                            System.out.println("SQLException: " + ex.getMessage());
+                            System.out.println("SQLState: " + ex.getSQLState());
+                            System.out.println("VendorError: " + ex.getErrorCode());
+                            System.exit(-1);
+                            retStr.append("error adding role");
+                            System.out.print("grouproles - error on role ");
+                        }
+                    }else{
+                        System.out.print("grouproles - name limit exceed ");
+                        retStr.append("error name too long limit to 10 char");
+                    }
+                }else{
+                    System.out.print("grouproles - wrong syntax");
+                    retStr.append("wrong syntax");
+                }
                 break;
 
             case "remove":
-
+                if(args[1]!=null)
+                {
+                    RoleData role = RoleData.find(roles,args[1]);
+                    if(role!=null)
+                    {
+                        try {
+                            stmt = conn.createStatement();
+                            stmt.execute("DELETE FROM grouproles WHERE groupid="+groupId+" AND roleid="+role.getRoleId());
+                            stmt.execute("COMMIT");
+                            roles.remove(role);
+                            stmt.close();
+                            System.out.println("grouproles - role removed");
+                            retStr.append("Role correctly removed");
+                        } catch (SQLException ex) {
+                            System.out.println("SQLException: " + ex.getMessage());
+                            System.out.println("SQLState: " + ex.getSQLState());
+                            System.out.println("VendorError: " + ex.getErrorCode());
+                            System.exit(-1);
+                            System.out.print("grouproles - error on role");
+                            retStr.append("error on role");
+                        }
+                    }else{
+                        System.out.print("grouproles - role not found");
+                        retStr.append("wrong syntax");
+                    }
+                }else{
+                    System.out.print("grouproles - wrong syntax");
+                    retStr.append("wrong syntax");
+                }
                 break;
 
             case "type":
+                if(args[1]!=null)
+                {
+                    switch (args[1])
+                    {
+                        case "list":
+                        case "List":
+                        case "LIST":
+                            try {
+                                stmt = conn.createStatement();
+                                stmt.execute("UPDATE groups SET type WHERE groupid="+groupId+" VALUE '"+args[1].toUpperCase()+"'");
+                                stmt.execute("COMMIT");
+                                this.type = args[1].toUpperCase();
+                                stmt.close();
+                                System.out.print("grouproles - type udated");
+                                retStr.append("type updated");
+                            } catch (SQLException ex) {
+                                System.out.println("SQLException: " + ex.getMessage());
+                                System.out.println("SQLState: " + ex.getSQLState());
+                                System.out.println("VendorError: " + ex.getErrorCode());
+                                System.exit(-1);
+                                System.out.print("grouproles - error in type");
+                                retStr.append("error on type");
+                            }
+                            break;
+                        default :
+                            System.out.print("grouproles - type not found");
+                            retStr.append("type not found");
 
+                    }
+                }else
+                {
+                    System.out.print("grouproles - wrong syntax");
+                    retStr.append("wrong syntax");
+                }
                 break;
 
             default:
-
+                System.out.print("grouproles - wrong syntax");
+                retStr.append("wrong syntax");
                 break;
 
         }
-
-
-
-
-
-
-
-
-        return null;
+        return retStr.toString();
     }
 
     public RoleGroup(Connection conn, BotGuild guild, Long groupId, String groupName) {
@@ -152,4 +276,16 @@ public class RoleGroup {
         }
         return null;
     }
+
+    private boolean memberHasRole(Member member,Long roleId)
+    {
+        List<Role> list = member.getRoles();
+        for (Role role : list)
+        {
+            if(roleId.equals(role.getIdLong()))
+                return true;
+        }
+        return false;
+    }
+
 }
