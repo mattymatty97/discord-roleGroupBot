@@ -51,7 +51,7 @@ public class MyListener extends ListenerAdapter {
 
                 case "help":
                     System.out.println("help shown in guild: '" + guildname + "'");
-                    PrintHelp(channel, member, guild);
+                    PrintHelp(channel, member, guild,args);
                     break;
 
 //------USER--------------------PING---------------------------------------
@@ -251,6 +251,15 @@ public class MyListener extends ListenerAdapter {
                                     }
                                 }
                                 break;
+                            case "list": {
+                                StringBuilder str = new StringBuilder("Listing rolegroups:\n");
+                                for (RoleGroup group : guild.getRoleGroups()) {
+                                    str.append(group.getGroupName()).append("\n");
+                                }
+                                channel.sendMessage(str.toString()).queue();
+                                System.out.println("listing rolegroups in guild: '" + guildname + "'");
+                            }
+                                break;
                             default:
                                     guild.optionRoleGroup(args[1], Arrays.copyOfRange(args, 2, args.length),message, channel);
                                     System.out.println(" in guild: '" + guildname + "'");
@@ -313,33 +322,105 @@ public class MyListener extends ListenerAdapter {
     }
 
     //prints the help message
-    private void PrintHelp(MessageChannel channel, Member member, BotGuild guild) {
+    private void PrintHelp(MessageChannel channel, Member member, BotGuild guild, String[] args) {
         EmbedBuilder message = new EmbedBuilder();
 
         message.setColor(Color.GREEN);
 
-        message.setTitle("Help for testbot:");
-        message.addField("help", "shows this help", false);
-        message.addField("ping", "answers pong (userfull for speed tests and alive check)", false);
+        if(args.length == 1) {
+            message.setTitle("Help for testbot:");
+            message.addField("help", "shows this help", false);
+            message.addField("ping", "answers pong (userfull for speed tests and alive check)", false);
 
-        //if is allowed to use mod commands
-        if (member.isOwner() || guild.memberIsMod(member)) {
+            //if is allowed to use mod commands
+            if (member.isOwner() || guild.memberIsMod(member)) {
+                message.addBlankField(false);
+                message.addField("MOD commands:", "", false);
+                message.addField("prefix", "sets the prefix of the bot\n" +
+                        "Usage: prefix [prefix]", false);
+
+                message.addField("modrole", "manages the roles allowed to use mod commands\n" +
+                        "Usage: modrole <action> [RoleMention]\n" +
+                        "Actions: add, remove, list", false);
+
+                message.addField("role", "add or remove a roleto caller\n" +
+                        "Usage: role <action> [RoleMention]\n" +
+                        "actions: add, remove", false);
+
+                message.addField("rolegroup", "set a coustom command controlled by a trigger role\n" +
+                        "that allows users to add or remove themself to a list of roles\n" +
+                        "Usage: complex call **help rolegroup** ", false);
+            }
             message.addBlankField(false);
-            message.addField("MOD commands:", "", false);
-            message.addField("prefix", "sets the prefix of the bot\n" +
-                    "Usage: prefix [prefix]", false);
+            message.addField("CUSTOM COMMANDS:", "up now\n they are called rolegroups", false);
+        }else
+            switch (args[2])
+            {
+                case "ping":
+                    message.setTitle("testbot help for ping:");
+                    message.addField("YOU REALLY NEED HELP ON THIS?", "", false);
+                    break;
+                case "help":
+                    message.setTitle("testbot help for help:");
+                    message.addField("SERIOUSLY?", "", false);
 
-            message.addField("modrole", "manages the roles allowed to use mod commands\n" +
-                    "Usage: modrole <action> [RoleMention]\n" +
-                    "Actions: add, remove, list", false);
+                case "prefix":
+                    message.setTitle("testbot help for prefix:");
+                    message.setDescription("allows mods to modify bot prefix");
+                    message.addField("Usage:", "prefix [new prefix]", false);
+                    message.addField("Example:", "prefix tb!\nprefix t?\nprefix bot!", false);
+                    message.addField("Suggestions:", "use as last charachter one of this |!?", false);
 
-            message.addField("role", "add or remove a roleto caller\n" +
-                    "Usage: role <action> [RoleMention]\n" +
-                    "actions: add, remove", false);
-        }
-        message.addBlankField(false);
-        message.addField("CUSTOM COMMANDS:", "coming soon", false);
+                    break;
 
+                case "modrole":
+                    message.setTitle("testbot help for modrole:");
+                    message.setDescription("allows mods to manage roles that are allowed to access mod commands");
+                    message.addField("Usage:", "modrole <action> [RoleMention]", false);
+                    message.addField("Actions:", "add: adds the mentioned role\n"+
+                                                            "remove: removes the mentioned role\n"+
+                                                            "list: prints all active roles", false);
+                    message.addField("Example:", "modrole add @Mod\nmodrole remove @User\nmodrole list", false);
+                    message.addField("do you know?", "owner is always allowed to use mod commands", false);
+                    break;
+
+                case "role":
+                    message.setTitle("testbot help for role:");
+                    message.setDescription("allows mods to manage they own roles");
+                    message.addField("Usage:", "role <action> [RoleMention]", false);
+                    message.addField("Actions:", "add: adds the mentioned role\n"+
+                            "remove: removes the mentioned role\n", false);
+                    message.addField("Example:", "role add @Strong\nmodrole remove @Weak", false);
+                    message.addField("do you know?", "administrators are always able to modify\n"+
+                                                                "every role and user in theyre guild", false);
+
+                    break;
+                case "rolegroups":
+                    message.setTitle("testbot help for rolegroups:");
+                    message.setDescription("set a coustom command controlled by a trigger role\n"+
+                                            "that allows users to add or remove themself to a list of roles");
+                    message.addField("Usage:", "rolegroup create [command] [RoleMention]\n"+
+                            "creates the command [command] triggered by mentioned role\n\n"+
+                            "rolegroup delete [command]\n"+
+                            "deletes the specified command\n\n"+
+                            "rolegroup list\n" +
+                            "lists all existents rolegroups\n\n" +
+                            "rolegroup [command] add [RoleMention] as [nick]\n" +
+                            "adds the mentioned role to [command] and sets his trigger name as [nick]\n\n" +
+                            "rolegroup [command] remove [nick]\n" +
+                            "removes the Role whit trigger name [nick] from [command] role list\n\n" +
+                            "rolegroup [command] list\n" +
+                            "lists all connected Roles and theyre nicks\n\n" +
+                            "rolegroup [command] type <type>\n" +
+                            "sets the type of command", false);
+                    message.addField("Example:", "rolegroup create color @painter\n" +
+                            "rolegroup delete pirate\n" +
+                            "rolegroup color add @yellow_role as yellow\n" +
+                            "rolegroup color remove blue\n" +
+                            "rolegroup type LIST", false);
+                    message.addField("do you know?", "all variables [variable] are case sensitive\n" +
+                            "that means that 'Case' is different from 'case'", false);
+            }
         channel.sendMessage(message.build()).queue();
     }
 

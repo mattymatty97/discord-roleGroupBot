@@ -193,7 +193,17 @@ public class RoleGroup {
                     retStr.append("wrong syntax");
                 }
                 break;
-
+            case "roles":
+            {
+                Guild guild = message.getGuild();
+                retStr.append("Listing roles in: ").append(groupName).append("\n");
+                for (RoleData role : roles)
+                {
+                    retStr.append(guild.getRoleById(role.getRoleId()).getName()).append("\tas ");
+                    retStr.append(role.getRoleName()).append("\n");
+                }
+                System.out.print("grouproles - listing roles of "+ groupName);
+            }
             default:
                 System.out.print("grouproles - wrong syntax");
                 retStr.append("wrong syntax");
