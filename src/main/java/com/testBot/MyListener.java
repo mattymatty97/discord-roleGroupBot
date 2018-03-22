@@ -363,6 +363,7 @@ public class MyListener extends ListenerAdapter {
                 case "help":
                     message.setTitle("testbot help for help:");
                     message.addField("SERIOUSLY?", "", false);
+                    break;
 
                 case "prefix":
                     message.setTitle("testbot help for prefix:");
