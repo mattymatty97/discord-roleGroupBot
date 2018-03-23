@@ -167,9 +167,15 @@ public class MyListener extends ListenerAdapter {
                                         List<Role> roles = event.getGuild().getSelfMember().getRoles();
                                         if (roles.get(0).getPosition() > mentions.get(0).getPosition()) {
                                             //add role using api method
-                                            event.getGuild().getController().addRolesToMember(member, mentions).queue();
-                                            channel.sendMessage("Role added!").queue();
-                                            System.out.println("added a role to '" + member.getEffectiveName() + "'in guild: '" + guildname + "'");
+                                            if(!memberHasRole(member,mentions.get(0).getIdLong())) {
+                                                event.getGuild().getController().addRolesToMember(member, mentions).queue();
+                                                channel.sendMessage("Role added!").queue();
+                                                System.out.println("added a role to '" + member.getEffectiveName() + "'in guild: '" + guildname + "'");
+                                            }else
+                                            {
+                                                channel.sendMessage("you already have this role!").queue();
+                                                System.out.println("role error in guild: '" + guildname + "'");
+                                            }
                                         } else {
                                             System.out.println("role permission error in guild : '" + guildname + "'");
                                             channel.sendMessage("Cannot modify a higher or equal role to my higher role!").queue();
@@ -185,9 +191,15 @@ public class MyListener extends ListenerAdapter {
                                         //test if your higher role is higher than the one you're setting
                                         List<Role> roles = event.getGuild().getSelfMember().getRoles();
                                         if (roles.get(0).getPosition() > mentions.get(0).getPosition()) {
-                                            event.getGuild().getController().removeRolesFromMember(member, mentions).queue();
-                                            channel.sendMessage("Role removed!").queue();
-                                            System.out.println("removed a role to '" + member.getEffectiveName() + "'in guild: '" + guildname + "'");
+                                            if(memberHasRole(member,mentions.get(0).getIdLong())) {
+                                                event.getGuild().getController().removeRolesFromMember(member, mentions).queue();
+                                                channel.sendMessage("Role removed!").queue();
+                                                System.out.println("removed a role to '" + member.getEffectiveName() + "'in guild: '" + guildname + "'");
+                                            }else
+                                            {
+                                                channel.sendMessage("you have not this role!").queue();
+                                                System.out.println("role error in guild: '" + guildname + "'");
+                                            }
                                         } else {
                                             System.out.println("role permission error in guild : '" + guildname + "'");
                                             channel.sendMessage("Cannot modify a higher or equal role to my higher role!").queue();
@@ -303,11 +315,10 @@ public class MyListener extends ListenerAdapter {
     private boolean memberHasRole(Member member,Long roleId)
     {
         List<Role> list = member.getRoles();
-        for (Role role : list)
-        {
-            if(roleId.equals(role.getIdLong()))
+        Role role = member.getGuild().getRoleById(roleId);
+        if(role!=null)
+            if(list.contains(role))
                 return true;
-        }
         return false;
     }
 

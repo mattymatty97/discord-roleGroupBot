@@ -317,11 +317,10 @@ public class RoleGroup {
     private boolean memberHasRole(Member member,Long roleId)
     {
         List<Role> list = member.getRoles();
-        for (Role role : list)
-        {
-            if(roleId.equals(role.getIdLong()))
+        Role role = member.getGuild().getRoleById(roleId);
+        if(role!=null)
+            if(list.contains(role))
                 return true;
-        }
         return false;
     }
 
