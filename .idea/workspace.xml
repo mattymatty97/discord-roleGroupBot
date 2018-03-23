@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="8fb65ecf-fe0e-49e5-afc1-e181856c2b21" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/testBot/MyListener.class" afterPath="$PROJECT_DIR$/out/production/classes/com/testBot/MyListener.class" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/testBot/MyListener.java" afterPath="$PROJECT_DIR$/src/main/java/com/testBot/MyListener.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/testBot/BotGuild.java" afterPath="$PROJECT_DIR$/src/main/java/com/testBot/BotGuild.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/testBot/RoleGroup.java" afterPath="$PROJECT_DIR$/src/main/java/com/testBot/RoleGroup.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -108,10 +108,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MyListener.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MyListener.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/testBot/MyListener.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="141">
+            <state relative-caret-position="3023">
               <caret line="423" column="59" lean-forward="true" selection-start-line="423" selection-start-column="59" selection-end-line="423" selection-end-column="59" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -120,21 +120,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BotGuild.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="BotGuild.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/testBot/BotGuild.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-867">
-              <caret line="187" column="0" lean-forward="false" selection-start-line="187" selection-start-column="0" selection-end-line="187" selection-end-column="0" />
+            <state relative-caret-position="141">
+              <caret line="182" column="38" lean-forward="false" selection-start-line="182" selection-start-column="38" selection-end-line="182" selection-end-column="38" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <marker date="1521755634185" expanded="true" signature="1830:1886" ph="UPDATE guilds... " />
-                <marker date="1521755634185" expanded="true" signature="3222:3272" ph="DELETE FROM roles... " />
-                <marker date="1521755634185" expanded="true" signature="4233:4318" ph="INSERT INTO roles... " />
-                <marker date="1521755634185" expanded="true" signature="6476:6524" ph="SELECT guild... guilds" />
-                <marker date="1521755634185" expanded="true" signature="6692:6731" ph="SELECT rolei... Roles" />
-                <marker date="1521755634185" expanded="true" signature="6968:7019" ph="SELECT group... groups" />
-                <marker date="1521755634185" expanded="true" signature="7243:7303" ph="UPDATE guilds... " />
-                <marker date="1521755634185" expanded="true" signature="7488:7590" ph="INSERT INTO guilds... " />
+                <marker date="1521798944254" expanded="true" signature="1830:1886" ph="UPDATE guilds... " />
+                <marker date="1521798944254" expanded="true" signature="3222:3272" ph="DELETE FROM roles... " />
+                <marker date="1521798944254" expanded="true" signature="4233:4318" ph="INSERT INTO roles... " />
+                <marker date="1521798944254" expanded="true" signature="6609:6657" ph="SELECT guild... guilds" />
+                <marker date="1521798944254" expanded="true" signature="6825:6864" ph="SELECT rolei... Roles" />
+                <marker date="1521798944254" expanded="true" signature="7101:7152" ph="SELECT group... groups" />
+                <marker date="1521798944254" expanded="true" signature="7376:7436" ph="UPDATE guilds... " />
+                <marker date="1521798944254" expanded="true" signature="7621:7723" ph="INSERT INTO guilds... " />
               </folding>
             </state>
           </provider>
@@ -143,8 +143,8 @@
       <file leaf-file-name="RoleGroup.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/testBot/RoleGroup.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1951">
-              <caret line="70" column="0" lean-forward="false" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
+            <state relative-caret-position="227">
+              <caret line="206" column="18" lean-forward="false" selection-start-line="206" selection-start-column="18" selection-end-line="206" selection-end-column="18" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#424#425#0" expanded="true" />
@@ -153,21 +153,21 @@
                 <element signature="e#576#577#0" expanded="true" />
                 <element signature="e#674#675#0" expanded="true" />
                 <element signature="e#706#707#0" expanded="true" />
-                <marker date="1521797424022" expanded="true" signature="3261:3352" ph="INSERT INTO grouproles... " />
-                <marker date="1521797424022" expanded="true" signature="3261:3369" ph="INSERT INTO grouproles... " />
-                <marker date="1521797424022" expanded="true" signature="5508:5545" ph="DELETE FROM grouproles... " />
-                <marker date="1521797424022" expanded="true" signature="5508:5568" ph="DELETE FROM grouproles... " />
-                <marker date="1521797424022" expanded="true" signature="7136:7173" ph="UPDATE groups... " />
-                <marker date="1521797424022" expanded="true" signature="7136:7192" ph="UPDATE groups... " />
-                <marker date="1521797424022" expanded="true" signature="7136:7218" ph="UPDATE groups... " />
-                <marker date="1521797424022" expanded="true" signature="9612:9657" ph="SELECT type,... groups" />
-                <marker date="1521797424022" expanded="true" signature="9882:9935" ph="SELECT rolei... grouproles" />
-                <marker date="1521797424022" expanded="true" signature="10974:11089" ph="INSERT INTO groups... " />
-                <marker date="1521797424022" expanded="true" signature="11129:11170" ph="SELECT group... groups" />
-                <marker date="1521797424022" expanded="true" signature="11129:11196" ph="SELECT group... groups" />
-                <marker date="1521797424022" expanded="true" signature="11129:11211" ph="SELECT group... groups" />
-                <marker date="1521797424022" expanded="true" signature="11739:11776" ph="DELETE FROM grouproles... " />
-                <marker date="1521797424022" expanded="true" signature="11814:11847" ph="DELETE FROM groups... " />
+                <marker date="1521798944266" expanded="true" signature="3261:3352" ph="INSERT INTO grouproles... " />
+                <marker date="1521798944266" expanded="true" signature="3261:3369" ph="INSERT INTO grouproles... " />
+                <marker date="1521798944266" expanded="true" signature="5508:5545" ph="DELETE FROM grouproles... " />
+                <marker date="1521798944266" expanded="true" signature="5508:5568" ph="DELETE FROM grouproles... " />
+                <marker date="1521798944266" expanded="true" signature="7136:7173" ph="UPDATE groups... " />
+                <marker date="1521798944266" expanded="true" signature="7136:7192" ph="UPDATE groups... " />
+                <marker date="1521798944266" expanded="true" signature="7136:7218" ph="UPDATE groups... " />
+                <marker date="1521798944266" expanded="true" signature="9631:9676" ph="SELECT type,... groups" />
+                <marker date="1521798944266" expanded="true" signature="9901:9954" ph="SELECT rolei... grouproles" />
+                <marker date="1521798944266" expanded="true" signature="10993:11108" ph="INSERT INTO groups... " />
+                <marker date="1521798944266" expanded="true" signature="11148:11189" ph="SELECT group... groups" />
+                <marker date="1521798944266" expanded="true" signature="11148:11215" ph="SELECT group... groups" />
+                <marker date="1521798944266" expanded="true" signature="11148:11230" ph="SELECT group... groups" />
+                <marker date="1521798944266" expanded="true" signature="11758:11795" ph="DELETE FROM grouproles... " />
+                <marker date="1521798944266" expanded="true" signature="11833:11866" ph="DELETE FROM groups... " />
               </folding>
             </state>
           </provider>
@@ -663,10 +663,10 @@
         <option value="$PROJECT_DIR$/src/main/java/com/testBot/RoleGroupComparator.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/testBot/BOT.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/testBot/RoleData.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/testBot/BotGuild.java" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/2bc6d149-e6c8-4250-ab0d-ca655c100494/console.sql" />
-        <option value="$PROJECT_DIR$/src/main/java/com/testBot/RoleGroup.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/testBot/MyListener.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/testBot/RoleGroup.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/testBot/BotGuild.java" />
       </list>
     </option>
   </component>
@@ -916,7 +916,7 @@
       <workItem from="1521730031437" duration="24740000" />
       <workItem from="1521756626473" duration="6236000" />
       <workItem from="1521762982241" duration="250000" />
-      <workItem from="1521797232797" duration="1298000" />
+      <workItem from="1521797232797" duration="1716000" />
     </task>
     <task id="LOCAL-00001" summary="COMMENTED AND ADDED PRINTS">
       <created>1521578483181</created>
@@ -1156,11 +1156,18 @@
       <option name="project" value="LOCAL" />
       <updated>1521798409176</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="minor bug fix">
+      <created>1521798551763</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1521798551763</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="100345000" />
+    <option name="totallyTimeSpent" value="100763000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1183,7 +1190,7 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3288889" sideWeight="0.502994" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934132" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29037037" sideWeight="0.49529514" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29037037" sideWeight="0.49529514" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6755555" sideWeight="0.497006" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3288889" sideWeight="0.497006" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1250,7 +1257,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="ended print add" />
     <MESSAGE value="hope las modify on prints" />
     <MESSAGE value="modified proc file" />
     <MESSAGE value="modified user print" />
@@ -1275,7 +1281,8 @@
     <MESSAGE value="rolegroups help and lists added - missing dynamic help for user commands" />
     <MESSAGE value="minor help fix" />
     <MESSAGE value="fixed nullPointerException in memberHasRole" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed nullPointerException in memberHasRole" />
+    <MESSAGE value="minor bug fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="minor bug fix" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1570,28 +1577,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/testBot/BotGuild.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/testBot/MyListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-867">
-          <caret line="187" column="0" lean-forward="false" selection-start-line="187" selection-start-column="0" selection-end-line="187" selection-end-column="0" />
+        <state relative-caret-position="3023">
+          <caret line="423" column="59" lean-forward="true" selection-start-line="423" selection-start-column="59" selection-end-line="423" selection-end-column="59" />
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1521755634185" expanded="true" signature="1830:1886" ph="UPDATE guilds... " />
-            <marker date="1521755634185" expanded="true" signature="3222:3272" ph="DELETE FROM roles... " />
-            <marker date="1521755634185" expanded="true" signature="4233:4318" ph="INSERT INTO roles... " />
-            <marker date="1521755634185" expanded="true" signature="6476:6524" ph="SELECT guild... guilds" />
-            <marker date="1521755634185" expanded="true" signature="6692:6731" ph="SELECT rolei... Roles" />
-            <marker date="1521755634185" expanded="true" signature="6968:7019" ph="SELECT group... groups" />
-            <marker date="1521755634185" expanded="true" signature="7243:7303" ph="UPDATE guilds... " />
-            <marker date="1521755634185" expanded="true" signature="7488:7590" ph="INSERT INTO guilds... " />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/testBot/RoleGroup.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1951">
-          <caret line="70" column="0" lean-forward="false" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
+        <state relative-caret-position="227">
+          <caret line="206" column="18" lean-forward="false" selection-start-line="206" selection-start-column="18" selection-end-line="206" selection-end-column="18" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#424#425#0" expanded="true" />
@@ -1600,31 +1599,39 @@
             <element signature="e#576#577#0" expanded="true" />
             <element signature="e#674#675#0" expanded="true" />
             <element signature="e#706#707#0" expanded="true" />
-            <marker date="1521797424022" expanded="true" signature="3261:3352" ph="INSERT INTO grouproles... " />
-            <marker date="1521797424022" expanded="true" signature="3261:3369" ph="INSERT INTO grouproles... " />
-            <marker date="1521797424022" expanded="true" signature="5508:5545" ph="DELETE FROM grouproles... " />
-            <marker date="1521797424022" expanded="true" signature="5508:5568" ph="DELETE FROM grouproles... " />
-            <marker date="1521797424022" expanded="true" signature="7136:7173" ph="UPDATE groups... " />
-            <marker date="1521797424022" expanded="true" signature="7136:7192" ph="UPDATE groups... " />
-            <marker date="1521797424022" expanded="true" signature="7136:7218" ph="UPDATE groups... " />
-            <marker date="1521797424022" expanded="true" signature="9612:9657" ph="SELECT type,... groups" />
-            <marker date="1521797424022" expanded="true" signature="9882:9935" ph="SELECT rolei... grouproles" />
-            <marker date="1521797424022" expanded="true" signature="10974:11089" ph="INSERT INTO groups... " />
-            <marker date="1521797424022" expanded="true" signature="11129:11170" ph="SELECT group... groups" />
-            <marker date="1521797424022" expanded="true" signature="11129:11196" ph="SELECT group... groups" />
-            <marker date="1521797424022" expanded="true" signature="11129:11211" ph="SELECT group... groups" />
-            <marker date="1521797424022" expanded="true" signature="11739:11776" ph="DELETE FROM grouproles... " />
-            <marker date="1521797424022" expanded="true" signature="11814:11847" ph="DELETE FROM groups... " />
+            <marker date="1521798944266" expanded="true" signature="3261:3352" ph="INSERT INTO grouproles... " />
+            <marker date="1521798944266" expanded="true" signature="3261:3369" ph="INSERT INTO grouproles... " />
+            <marker date="1521798944266" expanded="true" signature="5508:5545" ph="DELETE FROM grouproles... " />
+            <marker date="1521798944266" expanded="true" signature="5508:5568" ph="DELETE FROM grouproles... " />
+            <marker date="1521798944266" expanded="true" signature="7136:7173" ph="UPDATE groups... " />
+            <marker date="1521798944266" expanded="true" signature="7136:7192" ph="UPDATE groups... " />
+            <marker date="1521798944266" expanded="true" signature="7136:7218" ph="UPDATE groups... " />
+            <marker date="1521798944266" expanded="true" signature="9631:9676" ph="SELECT type,... groups" />
+            <marker date="1521798944266" expanded="true" signature="9901:9954" ph="SELECT rolei... grouproles" />
+            <marker date="1521798944266" expanded="true" signature="10993:11108" ph="INSERT INTO groups... " />
+            <marker date="1521798944266" expanded="true" signature="11148:11189" ph="SELECT group... groups" />
+            <marker date="1521798944266" expanded="true" signature="11148:11215" ph="SELECT group... groups" />
+            <marker date="1521798944266" expanded="true" signature="11148:11230" ph="SELECT group... groups" />
+            <marker date="1521798944266" expanded="true" signature="11758:11795" ph="DELETE FROM grouproles... " />
+            <marker date="1521798944266" expanded="true" signature="11833:11866" ph="DELETE FROM groups... " />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/testBot/MyListener.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/testBot/BotGuild.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="141">
-          <caret line="423" column="59" lean-forward="true" selection-start-line="423" selection-start-column="59" selection-end-line="423" selection-end-column="59" />
+          <caret line="182" column="38" lean-forward="false" selection-start-line="182" selection-start-column="38" selection-end-line="182" selection-end-column="38" />
           <folding>
             <element signature="imports" expanded="true" />
+            <marker date="1521798944254" expanded="true" signature="1830:1886" ph="UPDATE guilds... " />
+            <marker date="1521798944254" expanded="true" signature="3222:3272" ph="DELETE FROM roles... " />
+            <marker date="1521798944254" expanded="true" signature="4233:4318" ph="INSERT INTO roles... " />
+            <marker date="1521798944254" expanded="true" signature="6609:6657" ph="SELECT guild... guilds" />
+            <marker date="1521798944254" expanded="true" signature="6825:6864" ph="SELECT rolei... Roles" />
+            <marker date="1521798944254" expanded="true" signature="7101:7152" ph="SELECT group... groups" />
+            <marker date="1521798944254" expanded="true" signature="7376:7436" ph="UPDATE guilds... " />
+            <marker date="1521798944254" expanded="true" signature="7621:7723" ph="INSERT INTO guilds... " />
           </folding>
         </state>
       </provider>

@@ -204,6 +204,7 @@ public class RoleGroup {
                 }
                 System.out.print("grouproles - listing roles of "+ groupName);
             }
+            break;
             default:
                 System.out.print("grouproles - wrong syntax");
                 retStr.append("wrong syntax");

@@ -187,8 +187,11 @@ public class BotGuild {
         {
             String ret = role.modify(args,message);
             channel.sendMessage(ret).queue();
-        }else
+        }else {
+            channel.sendMessage("rolegroup not found!").queue();
+            System.out.print("rolegroup - not found ");
             return null;
+        }
         return this;
     }
 
