@@ -372,7 +372,6 @@ public class MyListener extends ListenerAdapter {
                     str.append(roleGroup.printHelp());
                     str.append("\n");
                 }
-                str.deleteCharAt(str.lastIndexOf("\n"));
             }
             message.addField("CUSTOM COMMANDS:", str.toString(), false);
             message.setFooter("The help is dynamic (different for every user) example: mod commands are shown only to mods",null);

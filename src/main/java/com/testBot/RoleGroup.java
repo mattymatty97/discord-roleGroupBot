@@ -229,7 +229,8 @@ public class RoleGroup {
                 {
                     ret.append(role.getRoleName()).append("/");
                 }
-                ret.deleteCharAt(ret.lastIndexOf("/"));
+                if(roles.size()>0)
+                    ret.deleteCharAt(ret.lastIndexOf("/"));
         }
         return ret.toString();
     }
