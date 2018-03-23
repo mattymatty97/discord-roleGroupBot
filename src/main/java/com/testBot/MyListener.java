@@ -368,12 +368,14 @@ public class MyListener extends ListenerAdapter {
             {
                 if(memberHasRole(member,roleGroup.getBoundRole()) && roleGroup.isValid())
                 {
+                    str.append("\n")
                     str.append(roleGroup.printHelp());
                     str.append("\n");
                 }
+                str.deleteCharAt(str.lastIndexOf("\n"));
             }
             message.addField("CUSTOM COMMANDS:", str.toString(), false);
-            message.setFooter("The help is dynamic (different for every user) example: mod commands are shown only to mods","https://github.com/zekroTJA/DiscordBot/blob/master/.websrc/zekroBot_Logo_-_round_small.png");
+            message.setFooter("The help is dynamic (different for every user) example: mod commands are shown only to mods",null);
         }else
             switch (args[1])
             {

@@ -3,10 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="8fb65ecf-fe0e-49e5-afc1-e181856c2b21" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/testBot/BotGuild.class" afterPath="$PROJECT_DIR$/out/production/classes/com/testBot/BotGuild.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/testBot/MyListener.class" afterPath="$PROJECT_DIR$/out/production/classes/com/testBot/MyListener.class" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/testBot/MyListener.java" afterPath="$PROJECT_DIR$/src/main/java/com/testBot/MyListener.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/testBot/RoleGroup.java" afterPath="$PROJECT_DIR$/src/main/java/com/testBot/RoleGroup.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -113,8 +110,8 @@
       <file leaf-file-name="MyListener.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/testBot/MyListener.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="321">
-              <caret line="368" column="89" lean-forward="true" selection-start-line="368" selection-start-column="89" selection-end-line="368" selection-end-column="89" />
+            <state relative-caret-position="429">
+              <caret line="377" column="128" lean-forward="false" selection-start-line="377" selection-start-column="128" selection-end-line="377" selection-end-column="128" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -920,7 +917,7 @@
       <workItem from="1521730031437" duration="24740000" />
       <workItem from="1521756626473" duration="6236000" />
       <workItem from="1521762982241" duration="250000" />
-      <workItem from="1521797232797" duration="2900000" />
+      <workItem from="1521797232797" duration="3136000" />
     </task>
     <task id="LOCAL-00001" summary="COMMENTED AND ADDED PRINTS">
       <created>1521578483181</created>
@@ -1174,11 +1171,18 @@
       <option name="project" value="LOCAL" />
       <updated>1521798972307</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="added dynamic help for rolegroups">
+      <created>1521800162609</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1521800162609</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="101947000" />
+    <option name="totallyTimeSpent" value="102183000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1268,7 +1272,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="hope las modify on prints" />
     <MESSAGE value="modified proc file" />
     <MESSAGE value="modified user print" />
     <MESSAGE value="added more comments and javadoc" />
@@ -1293,7 +1296,8 @@
     <MESSAGE value="minor help fix" />
     <MESSAGE value="fixed nullPointerException in memberHasRole" />
     <MESSAGE value="minor bug fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="minor bug fix" />
+    <MESSAGE value="added dynamic help for rolegroups" />
+    <option name="LAST_COMMIT_MESSAGE" value="added dynamic help for rolegroups" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1641,8 +1645,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/testBot/MyListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="321">
-          <caret line="368" column="89" lean-forward="true" selection-start-line="368" selection-start-column="89" selection-end-line="368" selection-end-column="89" />
+        <state relative-caret-position="429">
+          <caret line="377" column="128" lean-forward="false" selection-start-line="377" selection-start-column="128" selection-end-line="377" selection-end-column="128" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
