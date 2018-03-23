@@ -368,7 +368,7 @@ public class MyListener extends ListenerAdapter {
             {
                 if(memberHasRole(member,roleGroup.getBoundRole()) && roleGroup.isValid())
                 {
-                    str.append("\n")
+                    str.append("\n");
                     str.append(roleGroup.printHelp());
                     str.append("\n");
                 }
