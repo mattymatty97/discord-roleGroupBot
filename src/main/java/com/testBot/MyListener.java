@@ -335,10 +335,11 @@ public class MyListener extends ListenerAdapter {
     //prints the help message
     private void PrintHelp(MessageChannel channel, Member member, BotGuild guild, String[] args) {
         EmbedBuilder message = new EmbedBuilder();
-
+        StringBuilder str = new StringBuilder();
         message.setColor(Color.GREEN);
 
         if(args.length == 1) {
+            //help is dynamic (different for every user)
             message.setTitle("Help for testbot:");
             message.addField("help", "shows this help", false);
             message.addField("ping", "answers pong (userfull for speed tests and alive check)", false);
@@ -363,7 +364,16 @@ public class MyListener extends ListenerAdapter {
                         "Usage: complex call **help rolegroup** ", false);
             }
             message.addBlankField(false);
-            message.addField("CUSTOM COMMANDS:", "up now\nthey are called rolegroups", false);
+            for(RoleGroup roleGroup : guild.getRoleGroups())
+            {
+                if(memberHasRole(member,roleGroup.getBoundRole()) && roleGroup.isValid())
+                {
+                    str.append(roleGroup.printHelp());
+                    str.append("\n");
+                }
+            }
+            message.addField("CUSTOM COMMANDS:", str.toString(), false);
+            message.setFooter("The help is dynamic (different for every user) example: mod commands are shown only to mods","https://github.com/zekroTJA/DiscordBot/blob/master/.websrc/zekroBot_Logo_-_round_small.png");
         }else
             switch (args[1])
             {

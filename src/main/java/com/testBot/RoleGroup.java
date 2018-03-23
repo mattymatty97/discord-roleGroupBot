@@ -214,6 +214,29 @@ public class RoleGroup {
         return retStr.toString();
     }
 
+    public boolean isValid()
+    {
+        return roles.size() > 0;
+    }
+
+    public String printHelp()
+    {
+        StringBuilder ret = new StringBuilder(groupName).append(" ");
+        switch (type)
+        {
+            case "LIST":
+                for(RoleData role : roles)
+                {
+                    ret.append(role.getRoleName()).append("/");
+                }
+                ret.deleteCharAt(ret.lastIndexOf("/"));
+        }
+        return ret.toString();
+    }
+
+
+
+
     public RoleGroup(Connection conn, BotGuild guild, Long groupId, String groupName) {
         this.conn = conn;
         this.guild = guild;
