@@ -449,6 +449,7 @@ public class MyListener extends ListenerAdapter {
                             "pirate ship1", false);
                     message.addField("do you know?", "all variables [variable] are case sensitive\n" +
                             "that means that 'Case' is different from 'case'", false);
+                    break;
                 default :
                     message.setTitle("default help of testbot:");
                     message.setDescription("I don't know the command you asked.... try again?");
