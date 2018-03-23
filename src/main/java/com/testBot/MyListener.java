@@ -421,7 +421,7 @@ public class MyListener extends ListenerAdapter {
                             "adds the mentioned role to [command] and sets his trigger name as [nick]\n\n" +
                             "rolegroup [command] remove [nick]\n" +
                             "removes the Role whit trigger name [nick] from [command] role list\n\n" +
-                            "rolegroup [command] list\n" +
+                            "rolegroup [command] roles\n" +
                             "lists all connected Roles and theyre nicks\n\n" +
                             "rolegroup [command] type <type>\n" +
                             "sets the type of command", false);
