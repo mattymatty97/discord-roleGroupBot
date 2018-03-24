@@ -2,6 +2,9 @@ package com.testBot;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 import net.dv8tion.jda.core.entities.*;
 
 /**
@@ -16,6 +19,13 @@ public class BotGuild {
     private List<Long> modRolesById;/**list of roles (stored by id) that are allowed to run mod commands**/
     private List<RoleGroup> roleGroups;
     private boolean modified;       /**STILL UNUSED**/
+    private Locale locale;
+
+
+    public ResourceBundle getMessages()
+    {
+        return ResourceBundle.getBundle("messages",locale);
+    }
 
     /**
      * getter to id attribute
@@ -211,6 +221,8 @@ public class BotGuild {
         this.modRolesById = new ArrayList<Long>();
         this.roleGroups = new ArrayList<>();
         this.id = guildId;
+        this.locale = new Locale("en","US");
+
         Statement stmt;
         ResultSet rs;
         modified = false;
