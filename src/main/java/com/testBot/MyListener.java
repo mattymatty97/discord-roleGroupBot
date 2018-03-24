@@ -10,6 +10,8 @@ import java.awt.*;
 import java.sql.*;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class MyListener extends ListenerAdapter {
     private Connection conn;
@@ -17,6 +19,8 @@ public class MyListener extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
+        //locales generation (dynamic strings from file selectionable by language)
+        ResourceBundle outputs;
         //if is a direct message exit immediately
         if(event.isFromType(ChannelType.PRIVATE)) return;
         //if is a bot exit immediately
@@ -31,6 +35,10 @@ public class MyListener extends ListenerAdapter {
             guild = new BotGuild(event.getGuild().getIdLong(), guildname.intern(), conn);
             savedGuilds.add(guild);
         }
+        //set locales to giuld setting
+
+        outputs= guild.getMessages();
+
         //get sender member
         Member member = event.getMember();
         //get channel to send
@@ -59,7 +67,7 @@ public class MyListener extends ListenerAdapter {
                 case "ping":
                 case "Ping":
                     System.out.println("Ping executed in guild: '" + guildname + "'");
-                    channel.sendMessage("Pong!").queue(); // Important to call .queue() on the RestAction returned by sendMessage(...)
+                    channel.sendMessage(outputs.getString("pong")).queue(); // Important to call .queue() on the RestAction returned by sendMessage(...)
                     break;
 
 //------MOD---------------------SET----------------------------------------
@@ -75,9 +83,9 @@ public class MyListener extends ListenerAdapter {
                                 channel.sendMessage("Error too long prefix (limit is 10)!").queue();
                                 break;
                             }
-                            System.out.println("seting prefix for guild: '" + guildname + "' to: '" + args[1] + "?");
+                            System.out.println("seting prefix for guild: '" + guildname + "' to: '" + args[1]);
                             guild.setPrefix(args[1]);
-                            channel.sendMessage("Prefix set! in guild: '" + guildname + "'").queue();
+                            channel.sendMessage(outputs.getString("prefix-correct")).queue();
                         }
                         break;
                     } else {
@@ -105,7 +113,7 @@ public class MyListener extends ListenerAdapter {
                                         //call class method to add roles
                                         System.out.println("adding modrole '" + mentions.get(0).getName() + "' to guild '" + guildname + "'");
                                         guild.addModRole(mentions.get(0).getIdLong(), mentions.get(0).getName());
-                                        channel.sendMessage("Role added!").queue();
+                                        channel.sendMessage(outputs.getString("modrole-added")).queue();
                                     } else {
                                         System.out.println("modrole syntax in guild: '" + guildname + "'");
                                         channel.sendMessage("wrong syntax!").queue();
@@ -117,7 +125,7 @@ public class MyListener extends ListenerAdapter {
                                         //call class method to remove roles
                                         System.out.println("removing modrole '" + mentions.get(0).getName() + "' from guild '" + guildname + "'");
                                         if (guild.removeModRole(mentions.get(0).getIdLong()) != null)
-                                            channel.sendMessage("Role removed!").queue();
+                                            channel.sendMessage(outputs.getString("modrole-removed")).queue();
                                         else
                                             channel.sendMessage("Role is not a modrole!").queue();
                                     } else {
@@ -128,7 +136,7 @@ public class MyListener extends ListenerAdapter {
                                 case "list":
                                     //list all modroles
                                     System.out.println("listing modroles in guild: '" + guildname + "'");
-                                    StringBuilder text = new StringBuilder("Active ModRoles:\n");
+                                    StringBuilder text = new StringBuilder(outputs.getString("modrole-list")+"\n");
                                     for (Long id : guild.getModRolesById()) {
                                         for (Role role : event.getGuild().getRoles()) {
                                             if (role.getIdLong() == (id))
@@ -169,7 +177,7 @@ public class MyListener extends ListenerAdapter {
                                             //add role using api method
                                             if(!memberHasRole(member,mentions.get(0).getIdLong())) {
                                                 event.getGuild().getController().addRolesToMember(member, mentions).queue();
-                                                channel.sendMessage("Role added!").queue();
+                                                channel.sendMessage(outputs.getString("role-added")).queue();
                                                 System.out.println("added a role to '" + member.getEffectiveName() + "'in guild: '" + guildname + "'");
                                             }else
                                             {
@@ -193,7 +201,7 @@ public class MyListener extends ListenerAdapter {
                                         if (roles.get(0).getPosition() > mentions.get(0).getPosition()) {
                                             if(memberHasRole(member,mentions.get(0).getIdLong())) {
                                                 event.getGuild().getController().removeRolesFromMember(member, mentions).queue();
-                                                channel.sendMessage("Role removed!").queue();
+                                                channel.sendMessage(outputs.getString("role-removed")).queue();
                                                 System.out.println("removed a role to '" + member.getEffectiveName() + "'in guild: '" + guildname + "'");
                                             }else
                                             {
@@ -235,7 +243,7 @@ public class MyListener extends ListenerAdapter {
                                         //call the class method
                                         if (guild.addRoleGroup(list.get(0), args[2]) != null) {
                                             System.out.println("created rolegroup '" + args[2] + "' in guild: '" + guildname + "'");
-                                            channel.sendMessage("rolegroup created!\ntype: LIST").queue();
+                                            channel.sendMessage(outputs.getString("rolegroup-created")).queue();
                                         } else {
                                             System.out.println("found existent rolegroup in guild: '" + guildname + "'");
                                             channel.sendMessage("this rolegroup already exists").queue();
@@ -256,7 +264,7 @@ public class MyListener extends ListenerAdapter {
                                     //call the class method
                                     if (guild.removeRoleGroup(args[2]) != null) {
                                         System.out.println("deleted rolegroup '" + args[2] + "' in guild: '" + guildname + "'");
-                                        channel.sendMessage("rolegroup deleted").queue();
+                                        channel.sendMessage(outputs.getString("rolegroup-deleted")).queue();
                                     } else {
                                         System.out.println("found unexistent rolegroup in guild: '" + guildname + "'");
                                         channel.sendMessage("this rolegroup does not exists").queue();
@@ -264,7 +272,7 @@ public class MyListener extends ListenerAdapter {
                                 }
                                 break;
                             case "list": {
-                                StringBuilder str = new StringBuilder("Listing rolegroups:\n");
+                                StringBuilder str = new StringBuilder(outputs.getString("rolegroup-listing")).append("\n");
                                 for (RoleGroup group : guild.getRoleGroups()) {
                                     str.append(group.getGroupName()).append("\n");
                                 }

@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 import net.dv8tion.jda.core.entities.*;
 
@@ -75,6 +76,7 @@ public class RoleGroup {
 
     public String modify(String[] args,Message message)
     {
+        ResourceBundle outputs = guild.getMessages();
         Statement stmt;
         StringBuilder retStr = new StringBuilder();
         switch (args[0])
@@ -196,7 +198,7 @@ public class RoleGroup {
             case "roles":
             {
                 Guild guild = message.getGuild();
-                retStr.append("Listing roles in: ").append(groupName).append("\n");
+                retStr.append(outputs.getString("rolegroup-role-listing")).append(" ").append(groupName).append("\n");
                 for (RoleData role : roles)
                 {
                     retStr.append(guild.getRoleById(role.getRoleId()).getName()).append("\tas ");
