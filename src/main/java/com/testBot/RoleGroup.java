@@ -104,7 +104,6 @@ public class RoleGroup {
                                     System.out.println("SQLException: " + ex.getMessage());
                                     System.out.println("SQLState: " + ex.getSQLState());
                                     System.out.println("VendorError: " + ex.getErrorCode());
-                                    System.exit(-1);
                                     retStr.append(output.getString("error-rolegroup-add"));
                                     System.out.print("grouproles - error on role ");
                                 }
@@ -145,7 +144,6 @@ public class RoleGroup {
                             System.out.println("SQLException: " + ex.getMessage());
                             System.out.println("SQLState: " + ex.getSQLState());
                             System.out.println("VendorError: " + ex.getErrorCode());
-                            System.exit(-1);
                             System.out.print("grouproles - error on role");
                             retStr.append(output.getString("error-rolegroup-remove"));
                         }
@@ -158,7 +156,23 @@ public class RoleGroup {
                     retStr.append(output.getString("error-wrong-syntax"));
                 }
                 break;
-
+            case "reset":
+                try {
+                    stmt = conn.createStatement();
+                    stmt.execute("DELETE FROM grouproles WHERE groupid="+groupId);
+                    stmt.execute("COMMIT");
+                    roles.clear();
+                    stmt.close();
+                    System.out.println("grouproles - role removed");
+                    retStr.append(output.getString("rolegroup-role-removed"));
+                } catch (SQLException ex) {
+                    System.out.println("SQLException: " + ex.getMessage());
+                    System.out.println("SQLState: " + ex.getSQLState());
+                    System.out.println("VendorError: " + ex.getErrorCode());
+                    System.out.print("grouproles - error on role");
+                    retStr.append(output.getString("error-rolegroup-reset"));
+                }
+                break;
             case "type":
                 if(args[1]!=null)
                 {
