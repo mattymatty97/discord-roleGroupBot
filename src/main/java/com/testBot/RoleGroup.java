@@ -88,7 +88,7 @@ public class RoleGroup {
                 if(list.size()==1 && args.length == 4 && args[2].equals("as"))
                 {
                     //if the name is not too long
-                    if( args[3].length()<10) {
+                    if( args[3].length()<=10) {
                         if (RoleData.find(roles, list.get(0).getIdLong()) == null) {
                             if (RoleData.find(roles, args[3]) == null) {
                                 try {
@@ -289,6 +289,7 @@ public class RoleGroup {
             if(rs.next())
                 this.groupId=rs.getLong(1);
             stmt.execute("COMMIT");
+            this.boundRole = role.getIdLong();
             stmt.close();
         }catch (SQLException ex) {
             System.out.println("SQLException: " + ex.getMessage());
