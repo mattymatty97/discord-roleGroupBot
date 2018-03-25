@@ -192,13 +192,14 @@ public class BotGuild {
 
     public BotGuild optionRoleGroup(String groupName,String[] args,Message message,MessageChannel channel)
     {
+        ResourceBundle output = getMessages();
         RoleGroup role = RoleGroup.findGroup(this.roleGroups,groupName);
         if(role!=null)
         {
             String ret = role.modify(args,message);
             channel.sendMessage(ret).queue();
         }else {
-            channel.sendMessage("rolegroup not found!").queue();
+            channel.sendMessage(output.getString("error-rolegroup-not-exist")).queue();
             System.out.print("rolegroup - not found ");
             return null;
         }

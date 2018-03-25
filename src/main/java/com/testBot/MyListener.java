@@ -20,7 +20,7 @@ public class MyListener extends ListenerAdapter {
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
         //locales generation (dynamic strings from file selectionable by language)
-        ResourceBundle outputs;
+        ResourceBundle output;
         //if is a direct message exit immediately
         if(event.isFromType(ChannelType.PRIVATE)) return;
         //if is a bot exit immediately
@@ -37,7 +37,7 @@ public class MyListener extends ListenerAdapter {
         }
         //set locales to giuld setting
 
-        outputs= guild.getMessages();
+        output= guild.getMessages();
 
         //get sender member
         Member member = event.getMember();
@@ -67,7 +67,7 @@ public class MyListener extends ListenerAdapter {
                 case "ping":
                 case "Ping":
                     System.out.println("Ping executed in guild: '" + guildname + "'");
-                    channel.sendMessage(outputs.getString("pong")).queue(); // Important to call .queue() on the RestAction returned by sendMessage(...)
+                    channel.sendMessage(output.getString("pong")).queue(); // Important to call .queue() on the RestAction returned by sendMessage(...)
                     break;
 
 //------MOD---------------------SET----------------------------------------
@@ -80,16 +80,16 @@ public class MyListener extends ListenerAdapter {
                             //if is not too long
                             if (args[1].length() > 10) {
                                 System.out.println("prefix set failed in guild: '" + guildname + "'");
-                                channel.sendMessage("Error too long prefix (limit is 10)!").queue();
+                                channel.sendMessage(output.getString("error-long-prefix")).queue();
                                 break;
                             }
                             System.out.println("seting prefix for guild: '" + guildname + "' to: '" + args[1]);
                             guild.setPrefix(args[1]);
-                            channel.sendMessage(outputs.getString("prefix-correct")).queue();
+                            channel.sendMessage(output.getString("prefix-correct")).queue();
                         }
                         break;
                     } else {
-                        channel.sendMessage("Error you have not permission to do this!").queue();
+                        channel.sendMessage(output.getString("error-user-permission")).queue();
                         System.out.println("no permission in guild: '" + guildname + "'");
                     }
 
@@ -113,10 +113,10 @@ public class MyListener extends ListenerAdapter {
                                         //call class method to add roles
                                         System.out.println("adding modrole '" + mentions.get(0).getName() + "' to guild '" + guildname + "'");
                                         guild.addModRole(mentions.get(0).getIdLong(), mentions.get(0).getName());
-                                        channel.sendMessage(outputs.getString("modrole-added")).queue();
+                                        channel.sendMessage(output.getString("modrole-added")).queue();
                                     } else {
                                         System.out.println("modrole syntax in guild: '" + guildname + "'");
-                                        channel.sendMessage("wrong syntax!").queue();
+                                        channel.sendMessage(output.getString("error-wrong-syntax")).queue();
                                     }
                                     break;
                                 case "remove":
@@ -125,18 +125,18 @@ public class MyListener extends ListenerAdapter {
                                         //call class method to remove roles
                                         System.out.println("removing modrole '" + mentions.get(0).getName() + "' from guild '" + guildname + "'");
                                         if (guild.removeModRole(mentions.get(0).getIdLong()) != null)
-                                            channel.sendMessage(outputs.getString("modrole-removed")).queue();
+                                            channel.sendMessage(output.getString("modrole-removed")).queue();
                                         else
-                                            channel.sendMessage("Role is not a modrole!").queue();
+                                            channel.sendMessage(output.getString("error-not-modrole")).queue();
                                     } else {
                                         System.out.println("modrole syntax in guild: '" + guildname + "'");
-                                        channel.sendMessage("wrong syntax!").queue();
+                                        channel.sendMessage(output.getString("error-wrong-syntax")).queue();
                                     }
                                     break;
                                 case "list":
                                     //list all modroles
                                     System.out.println("listing modroles in guild: '" + guildname + "'");
-                                    StringBuilder text = new StringBuilder(outputs.getString("modrole-list")+"\n");
+                                    StringBuilder text = new StringBuilder(output.getString("modrole-list")+"\n");
                                     for (Long id : guild.getModRolesById()) {
                                         for (Role role : event.getGuild().getRoles()) {
                                             if (role.getIdLong() == (id))
@@ -148,15 +148,15 @@ public class MyListener extends ListenerAdapter {
                                     break;
                                 default:
                                     System.out.println("command syntax in guild: '" + guildname + "'");
-                                    channel.sendMessage("wrong syntax!").queue();
+                                    channel.sendMessage(output.getString("error-wrong-syntax")).queue();
                             }
 
                         }
                         break;
                     } else {
-                        System.out.println("no permission in guild: '" + guildname + "'");
-                        channel.sendMessage("Error you have not permission to do this!").queue();
-                    }
+                    channel.sendMessage(output.getString("error-user-permission")).queue();
+                    System.out.println("no permission in guild: '" + guildname + "'");
+                }
                     break;
 
 
@@ -177,20 +177,20 @@ public class MyListener extends ListenerAdapter {
                                             //add role using api method
                                             if(!memberHasRole(member,mentions.get(0).getIdLong())) {
                                                 event.getGuild().getController().addRolesToMember(member, mentions).queue();
-                                                channel.sendMessage(outputs.getString("role-added")).queue();
+                                                channel.sendMessage(output.getString("role-added")).queue();
                                                 System.out.println("added a role to '" + member.getEffectiveName() + "'in guild: '" + guildname + "'");
                                             }else
                                             {
-                                                channel.sendMessage("you already have this role!").queue();
+                                                channel.sendMessage(output.getString("error-role-owned")).queue();
                                                 System.out.println("role error in guild: '" + guildname + "'");
                                             }
                                         } else {
                                             System.out.println("role permission error in guild : '" + guildname + "'");
-                                            channel.sendMessage("Cannot modify a higher or equal role to my higher role!").queue();
+                                            channel.sendMessage(output.getString("error-bot-permission")).queue();
                                         }
                                     } else {
                                         System.out.println("wrong role syntax in guild: '" + guildname + "'");
-                                        channel.sendMessage("wrong syntax!").queue();
+                                        channel.sendMessage(output.getString("error-wrong-syntax")).queue();
                                     }
                                     break;
                                 case "remove":
@@ -201,29 +201,29 @@ public class MyListener extends ListenerAdapter {
                                         if (roles.get(0).getPosition() > mentions.get(0).getPosition()) {
                                             if(memberHasRole(member,mentions.get(0).getIdLong())) {
                                                 event.getGuild().getController().removeRolesFromMember(member, mentions).queue();
-                                                channel.sendMessage(outputs.getString("role-removed")).queue();
+                                                channel.sendMessage(output.getString("role-removed")).queue();
                                                 System.out.println("removed a role to '" + member.getEffectiveName() + "'in guild: '" + guildname + "'");
                                             }else
                                             {
-                                                channel.sendMessage("you have not this role!").queue();
+                                                channel.sendMessage(output.getString("error-role-not-owned")).queue();
                                                 System.out.println("role error in guild: '" + guildname + "'");
                                             }
                                         } else {
                                             System.out.println("role permission error in guild : '" + guildname + "'");
-                                            channel.sendMessage("Cannot modify a higher or equal role to my higher role!").queue();
+                                            channel.sendMessage(output.getString("error-bot-permission")).queue();
                                         }
                                     } else {
                                         System.out.println("wrong role syntax in guild: '" + guildname + "'");
-                                        channel.sendMessage("wrong syntax!").queue();
+                                        channel.sendMessage(output.getString("error-wrong-syntax")).queue();
                                     }
                                     break;
                                 default:
-                                    channel.sendMessage("wrong syntax!").queue();
+                                    channel.sendMessage(output.getString("error-wrong-syntax")).queue();
                             }
                         break;
                     } else {
-                        System.out.println("missing permissions for '" + member.getEffectiveName() + "' in guild: '" + guildname + "'");
-                        channel.sendMessage("Error you have not permission to do this!").queue();
+                        channel.sendMessage(output.getString("error-user-permission")).queue();
+                        System.out.println("no permission in guild: '" + guildname + "'");
                     }
                     break;
 
@@ -243,19 +243,19 @@ public class MyListener extends ListenerAdapter {
                                         //call the class method
                                         if (guild.addRoleGroup(list.get(0), args[2]) != null) {
                                             System.out.println("created rolegroup '" + args[2] + "' in guild: '" + guildname + "'");
-                                            channel.sendMessage(outputs.getString("rolegroup-created")).queue();
+                                            channel.sendMessage(output.getString("rolegroup-created")).queue();
                                         } else {
                                             System.out.println("found existent rolegroup in guild: '" + guildname + "'");
-                                            channel.sendMessage("this rolegroup already exists").queue();
+                                            channel.sendMessage(output.getString("error-existing-rolegroup")).queue();
                                         }
                                     }else{
                                         System.out.println("wrong syntax in guild : '" + guildname + "'");
-                                        channel.sendMessage("wrong syntax").queue();
+                                        channel.sendMessage(output.getString("error-wrong-syntax")).queue();
                                     }
                                 }else
                                 {
                                     System.out.println("wrong syntax in guild: '" + guildname + "'");
-                                    channel.sendMessage("no roles or too many roles mentioned").queue();
+                                    channel.sendMessage(output.getString("error-role-mention")).queue();
                                 }
                                 break;
                             case "delete":
@@ -264,15 +264,15 @@ public class MyListener extends ListenerAdapter {
                                     //call the class method
                                     if (guild.removeRoleGroup(args[2]) != null) {
                                         System.out.println("deleted rolegroup '" + args[2] + "' in guild: '" + guildname + "'");
-                                        channel.sendMessage(outputs.getString("rolegroup-deleted")).queue();
+                                        channel.sendMessage(output.getString("rolegroup-deleted")).queue();
                                     } else {
                                         System.out.println("found unexistent rolegroup in guild: '" + guildname + "'");
-                                        channel.sendMessage("this rolegroup does not exists").queue();
+                                        channel.sendMessage(output.getString("error-rolegroup-not-exist")).queue();
                                     }
                                 }
                                 break;
                             case "list": {
-                                StringBuilder str = new StringBuilder(outputs.getString("rolegroup-listing")).append("\n");
+                                StringBuilder str = new StringBuilder(output.getString("rolegroup-listing")).append("\n");
                                 for (RoleGroup group : guild.getRoleGroups()) {
                                     str.append(group.getGroupName()).append("\n");
                                 }
@@ -286,7 +286,10 @@ public class MyListener extends ListenerAdapter {
                                 break;
                         }
                         break;
-                    }//*/
+                    }else {
+                        channel.sendMessage(output.getString("error-user-permission")).queue();
+                        System.out.println("no permission in guild: '" + guildname + "'");
+                    }
 
 //----------------------------------CUSTOM COMMANDS-------------------------------
                 default :
@@ -297,16 +300,16 @@ public class MyListener extends ListenerAdapter {
                         if(memberHasRole(member,group.getBoundRole()))
                         {
                             if(args[1]!=null) {
-                                String ret = group.command(event.getGuild(), member, args[1]);
+                                String ret = group.command(event.getGuild(), member, args[1],output);
                                 channel.sendMessage(ret).queue();
                                 System.out.println(" in guild: '" + guildname + "'");
                             }
                         }else{
-                            channel.sendMessage("you cant do that").queue();
-                            System.out.println("grouproles cc - denied in guild: '" + guildname + "'");
+                            channel.sendMessage(output.getString("error-user-permission")).queue();
+                            System.out.println("rolegroup cc - denied in guild: '" + guildname + "'");
                         }
                     }else{
-                        channel.sendMessage("unknown command").queue();
+                        channel.sendMessage(output.getString("error-unknown-command")).queue();
                         System.out.println("not a command");
                     }
                 }
@@ -342,36 +345,30 @@ public class MyListener extends ListenerAdapter {
 
     //prints the help message
     private void PrintHelp(MessageChannel channel, Member member, BotGuild guild, String[] args) {
-        EmbedBuilder message = new EmbedBuilder();
+        ResourceBundle output = guild.getMessages();
+        EmbedBuilder helpMsg = new EmbedBuilder();
         StringBuilder str = new StringBuilder();
-        message.setColor(Color.GREEN);
+        helpMsg.setColor(Color.GREEN);
 
         if(args.length == 1) {
             //help is dynamic (different for every user)
-            message.setTitle("Help for testbot:");
-            message.addField("help", "shows this help", false);
-            message.addField("ping", "answers pong (userfull for speed tests and alive check)", false);
+            helpMsg.setTitle(output.getString("help-title"));
+            helpMsg.addField("help", output.getString("help-def-help"), false);
+            helpMsg.addField("ping", output.getString("help-def-ping"), false);
 
             //if is allowed to use mod commands
             if (member.isOwner() || guild.memberIsMod(member)) {
-                message.addBlankField(false);
-                message.addField("MOD commands:", "", false);
-                message.addField("prefix", "sets the prefix of the bot\n" +
-                        "Usage: prefix [prefix]", false);
+                helpMsg.addBlankField(false);
+                helpMsg.addField("MOD commands:", "", false);
+                helpMsg.addField("prefix", output.getString("help-def-prefix"), false);
 
-                message.addField("modrole", "manages the roles allowed to use mod commands\n" +
-                        "Usage: modrole <action> [RoleMention]\n" +
-                        "Actions: add, remove, list", false);
+                helpMsg.addField("modrole", output.getString("help-def-modrole"), false);
 
-                message.addField("role", "add or remove a roleto caller\n" +
-                        "Usage: role <action> [RoleMention]\n" +
-                        "actions: add, remove", false);
+                helpMsg.addField("role", output.getString("help-def-role"), false);
 
-                message.addField("rolegroup", "set a coustom command controlled by a trigger role\n" +
-                        "that allows users to add or remove themself to a list of roles\n" +
-                        "Usage: complex call **help rolegroup** ", false);
+                helpMsg.addField("rolegroup", output.getString("help-def-rolegroup"), false);
             }
-            message.addBlankField(false);
+            helpMsg.addBlankField(false);
             for(RoleGroup roleGroup : guild.getRoleGroups())
             {
                 if(memberHasRole(member,roleGroup.getBoundRole()) && roleGroup.isValid())
@@ -381,87 +378,60 @@ public class MyListener extends ListenerAdapter {
                     str.append("\n");
                 }
             }
-            message.addField("CUSTOM COMMANDS:", str.toString(), false);
-            message.setFooter("The help is dynamic (different for every user) example: mod commands are shown only to mods",null);
+            helpMsg.addField("CUSTOM COMMANDS:", str.toString(), false);
+            helpMsg.setFooter(output.getString("help-footer"),null);
         }else
             switch (args[1])
             {
                 case "ping":
-                    message.setTitle("testbot help for ping:");
-                    message.addField("YOU REALLY NEED HELP ON THIS?", "", false);
+                    helpMsg.setTitle(output.getString("help-ping-title"));
+                    helpMsg.addField(output.getString("help-ping"), "", false);
                     break;
                 case "help":
-                    message.setTitle("testbot help for help:");
-                    message.addField("SERIOUSLY?", "", false);
+                    helpMsg.setTitle(output.getString("help-help-title"));
+                    helpMsg.addField(output.getString("help-help"), "", false);
                     break;
 
                 case "prefix":
-                    message.setTitle("testbot help for prefix:");
-                    message.setDescription("allows mods to modify bot prefix");
-                    message.addField("Usage:", "prefix [new prefix]", false);
-                    message.addField("Example:", "prefix tb!\nprefix t?\nprefix bot!", false);
-                    message.addField("Suggestions:", "use as last charachter one of this |!?", false);
-
+                    helpMsg.setTitle(output.getString("help-prefix-title"));
+                    helpMsg.setDescription(output.getString("help-prefix-description"));
+                    helpMsg.addField(output.getString("help-field-usage"), output.getString("help-prefix-usage"), false);
+                    helpMsg.addField(output.getString("help-field-example"), output.getString("help-prefix-example"), false);
+                    helpMsg.addField(output.getString("help-field-suggestions"), output.getString("help-prefix-suggestions"), false);
                     break;
 
                 case "modrole":
-                    message.setTitle("testbot help for modrole:");
-                    message.setDescription("allows mods to manage roles that are allowed to access mod commands");
-                    message.addField("Usage:", "modrole <action> [RoleMention]", false);
-                    message.addField("Actions:", "add: adds the mentioned role\n"+
-                                                            "remove: removes the mentioned role\n"+
-                                                            "list: prints all active roles", false);
-                    message.addField("Example:", "modrole add @Mod\nmodrole remove @User\nmodrole list", false);
-                    message.addField("do you know?", "owner is always allowed to use mod commands", false);
+                    helpMsg.setTitle(output.getString("help-modrole-title"));
+                    helpMsg.setDescription(output.getString("help-modrole-description"));
+                    helpMsg.addField(output.getString("help-field-usage"), output.getString("help-modrole-usage"), false);
+                    helpMsg.addField(output.getString("help-field-actions"), output.getString("help-modrole-actions"), false);
+                    helpMsg.addField(output.getString("help-field-example"), output.getString("help-modrole-examples"), false);
+                    helpMsg.addField(output.getString("help-field-dyk"), output.getString("help-modrole-dyk"), false);
                     break;
 
                 case "role":
-                    message.setTitle("testbot help for role:");
-                    message.setDescription("allows mods to manage they own roles");
-                    message.addField("Usage:", "role <action> [RoleMention]", false);
-                    message.addField("Actions:", "add: adds the mentioned role\n"+
-                            "remove: removes the mentioned role\n", false);
-                    message.addField("Example:", "role add @Strong\nmodrole remove @Weak", false);
-                    message.addField("do you know?", "administrators are always able to modify\n"+
-                                                                "every role and user in theyre guild", false);
+                    helpMsg.setTitle(output.getString("help-role-title"));
+                    helpMsg.setDescription(output.getString("help-role-description"));
+                    helpMsg.addField(output.getString("help-field-usage"), output.getString("help-role-usage"), false);
+                    helpMsg.addField(output.getString("help-field-actions"), output.getString("help-role-actions"), false);
+                    helpMsg.addField(output.getString("help-field-example"), output.getString("help-role-example"), false);
+                    helpMsg.addField(output.getString("help-field-dyk"), output.getString("help-role-dyk"), false);
 
                     break;
                 case "rolegroup":
-                    message.setTitle("testbot help for rolegroups:");
-                    message.setDescription("set a coustom command controlled by a trigger role\n"+
-                                            "that allows users to add or remove themself to a list of roles");
-                    message.addField("Usage:", "rolegroup create [command] [RoleMention]\n"+
-                            "creates the command [command] triggered by mentioned role\n\n"+
-                            "rolegroup delete [command]\n"+
-                            "deletes the specified command\n\n"+
-                            "rolegroup list\n" +
-                            "lists all existents rolegroups\n\n" +
-                            "rolegroup [command] add [RoleMention] as [nick]\n" +
-                            "adds the mentioned role to [command] and sets his trigger name as [nick]\n\n" +
-                            "rolegroup [command] remove [nick]\n" +
-                            "removes the Role whit trigger name [nick] from [command] role list\n\n" +
-                            "rolegroup [command] roles\n" +
-                            "lists all connected Roles and theyre nicks\n\n" +
-                            "rolegroup [command] type <type>\n" +
-                            "sets the type of command", false);
-                    message.addField("Types:", "LIST\n" +
-                            "a list of roles all indipendent\n\n" +
-                            "other coming soon", false);
-                    message.addField("Example:", "rolegroup create color @painter\n" +
-                            "rolegroup delete pirate\n" +
-                            "rolegroup color add @yellow_role as yellow\n" +
-                            "rolegroup color remove blue\n" +
-                            "rolegroup type LIST", false);
-                    message.addField("Example userside:", "color yellow\n" +
-                            "pirate ship1", false);
-                    message.addField("do you know?", "all variables [variable] are case sensitive\n" +
-                            "that means that 'Case' is different from 'case'", false);
+                    helpMsg.setTitle(output.getString("help-rolegroup-title"));
+                    helpMsg.setDescription(output.getString("help-rolegroup-description"));
+                    helpMsg.addField(output.getString("help-field-usage"), output.getString("help-rolegroup-usage"), false);
+                    helpMsg.addField(output.getString("help-field-types"), output.getString("help-rolegroup-types"), false);
+                    helpMsg.addField(output.getString("help-field-example"), output.getString("help-rolegroup-example"), false);
+                    helpMsg.addField(output.getString("help-field-user-example"), output.getString("help-rolegroup-user-example"), false);
+                    helpMsg.addField(output.getString("help-field-dyk"), output.getString("help-rolegroup-dyk"), false);
                     break;
                 default :
-                    message.setTitle("default help of testbot:");
-                    message.setDescription("I don't know the command you asked.... try again?");
+                    helpMsg.setTitle(output.getString("help-404-title"));
+                    helpMsg.setDescription(output.getString("help-404-cmd"));
             }
-        channel.sendMessage(message.build()).queue();
+        channel.sendMessage(helpMsg.build()).queue();
     }
 
 

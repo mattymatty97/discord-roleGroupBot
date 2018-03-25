@@ -38,7 +38,7 @@ public class RoleGroup {
         return groupName;
     }
 
-    public String command(Guild guild, Member member, String rolename)
+    public String command(Guild guild, Member member, String rolename,ResourceBundle output)
     {
         RoleData rd;
         StringBuilder ret = new StringBuilder();
@@ -49,21 +49,21 @@ public class RoleGroup {
                 if(rd==null)
                 {
                     System.out.print("grouproles custom - wrong syntax");
-                    ret.append("wrong syntax\nlook at help");
+                    ret.append(output.getString("error-wrong-syntax"));
                 }else {
                     Role role = guild.getRoleById(rd.getRoleId());
                     if (guild.getSelfMember().getRoles().get(0).getPosition() > role.getPosition()) {
                         if (memberHasRole(member, rd.getRoleId())) {
                             guild.getController().removeRolesFromMember(member, role).queue();
-                            ret.append("Role ").append(role.getName()).append(" removed");
+                            ret.append(output.getString("cc-role-removed").replace("{role}",role.getName()));
                             System.out.print("grouproles custom - role removed");
                         } else {
                             guild.getController().addRolesToMember(member, role).queue();
-                            ret.append("Role ").append(role.getName()).append(" added");
+                            ret.append(output.getString("cc-role-added").replace("{role}",role.getName()));
                             System.out.print("grouproles custom - role added");
                         }
                     }else{
-                        ret.append("Role ").append(role.getName()).append(" higher than my highest role");
+                        ret.append(output.getString("error-bot-permission"));
                         System.out.print("grouproles custom - too low role");
                     }
                 }
@@ -76,7 +76,7 @@ public class RoleGroup {
 
     public String modify(String[] args,Message message)
     {
-        ResourceBundle outputs = guild.getMessages();
+        ResourceBundle output = guild.getMessages();
         Statement stmt;
         StringBuilder retStr = new StringBuilder();
         switch (args[0])
@@ -98,32 +98,32 @@ public class RoleGroup {
                                     stmt.execute("COMMIT");
                                     roles.add(new RoleData(args[3], list.get(0).getIdLong()));
                                     stmt.close();
-                                    retStr.append("Role correctly added");
-                                    System.out.print("grouproles - role added ");
+                                    retStr.append(output.getString("rolegroup-role-added"));
+                                    System.out.print("grouproles - role added");
                                 } catch (SQLException ex) {
                                     System.out.println("SQLException: " + ex.getMessage());
                                     System.out.println("SQLState: " + ex.getSQLState());
                                     System.out.println("VendorError: " + ex.getErrorCode());
                                     System.exit(-1);
-                                    retStr.append("error adding role");
+                                    retStr.append(output.getString("error-rolegroup-add"));
                                     System.out.print("grouproles - error on role ");
                                 }
                             }else
                             {
                                 System.out.print("grouproles - found existing nick ");
-                                retStr.append("that nick is already used");
+                                retStr.append(output.getString("error-rolegroup-nick"));
                             }
                         }else{
                             System.out.print("grouproles - found existing role ");
-                            retStr.append("that role is already included");
+                            retStr.append(output.getString("error-rolegroup-role-included"));
                         }
                     }else {
                         System.out.print("grouproles - name limit exceed ");
-                        retStr.append("error name too long limit to 10 char");
+                        retStr.append(output.getString("error-rolegroup-long-nick"));
                     }
                 }else{
                     System.out.print("grouproles - wrong syntax");
-                    retStr.append("wrong syntax");
+                    retStr.append(output.getString("error-wrong-syntax"));
                 }
                 break;
 
@@ -140,22 +140,22 @@ public class RoleGroup {
                             roles.remove(role);
                             stmt.close();
                             System.out.println("grouproles - role removed");
-                            retStr.append("Role correctly removed");
+                            retStr.append(output.getString("rolegroup-role-removed"));
                         } catch (SQLException ex) {
                             System.out.println("SQLException: " + ex.getMessage());
                             System.out.println("SQLState: " + ex.getSQLState());
                             System.out.println("VendorError: " + ex.getErrorCode());
                             System.exit(-1);
                             System.out.print("grouproles - error on role");
-                            retStr.append("error on role");
+                            retStr.append(output.getString("error-rolegroup-remove"));
                         }
                     }else{
                         System.out.print("grouproles - role not found");
-                        retStr.append("wrong syntax");
+                        retStr.append(output.getString("error-wrong-syntax"));
                     }
                 }else{
                     System.out.print("grouproles - wrong syntax");
-                    retStr.append("wrong syntax");
+                    retStr.append(output.getString("error-wrong-syntax"));
                 }
                 break;
 
@@ -174,31 +174,31 @@ public class RoleGroup {
                                 this.type = args[1].toUpperCase();
                                 stmt.close();
                                 System.out.print("grouproles - type udated");
-                                retStr.append("type updated");
+                                retStr.append(output.getString("rolegroup-type-updated"));
                             } catch (SQLException ex) {
                                 System.out.println("SQLException: " + ex.getMessage());
                                 System.out.println("SQLState: " + ex.getSQLState());
                                 System.out.println("VendorError: " + ex.getErrorCode());
                                 System.exit(-1);
                                 System.out.print("grouproles - error in type");
-                                retStr.append("error on type");
+                                retStr.append(output.getString("error-rolegroup-type"));
                             }
                             break;
                         default :
                             System.out.print("grouproles - type not found");
-                            retStr.append("type not found");
+                            retStr.append(output.getString("error-rolegroup-404-type"));
 
                     }
                 }else
                 {
                     System.out.print("grouproles - wrong syntax");
-                    retStr.append("wrong syntax");
+                    retStr.append(output.getString("error-wrong-syntax"));
                 }
                 break;
             case "roles":
             {
                 Guild guild = message.getGuild();
-                retStr.append(outputs.getString("rolegroup-role-listing")).append(" ").append(groupName).append("\n");
+                retStr.append(output.getString("rolegroup-role-listing")).append(" ").append(groupName).append("\n");
                 for (RoleData role : roles)
                 {
                     retStr.append(guild.getRoleById(role.getRoleId()).getName()).append("\tas ");
@@ -209,7 +209,7 @@ public class RoleGroup {
             break;
             default:
                 System.out.print("grouproles - wrong syntax");
-                retStr.append("wrong syntax");
+                retStr.append(output.getString("error-wrong-syntax"));
                 break;
 
         }
