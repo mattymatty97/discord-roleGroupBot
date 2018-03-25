@@ -249,7 +249,7 @@ public class BotGuild {
                 stmt.execute("COMMIT");
             } else {
                 this.modRolesById.clear();
-                this.prefix = "tb!";
+                this.prefix = System.getenv("DEFAULT_PREFIX");
                 stmt.execute("INSERT INTO guilds(guildid,prefix,guildname) VALUES (" + guildId + ",'" + prefix + "','"+guildName+"')");
                 stmt.execute("COMMIT");
             }
