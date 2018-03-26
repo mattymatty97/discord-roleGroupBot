@@ -18,7 +18,6 @@ public class BotGuild {
     private String prefix;          /**prefix for trig a reaction**/
     private List<Long> modRolesById;/**list of roles (stored by id) that are allowed to run mod commands**/
     private List<RoleGroup> roleGroups;
-    private boolean modified;       /**STILL UNUSED**/
     private Locale locale;
 
 
@@ -212,21 +211,22 @@ public class BotGuild {
      * test the remote database to see if the guild already exist
      * get all informations if yes
      * create records of it otherwise
-     * @param guildId the id of the guild
-     * @param guildName the common name of the guild
+     * @param guild the guild class of api
      * @param actconn the db connection
      */
-    public BotGuild(Long guildId, String guildName, Connection actconn)
+    BotGuild(Guild guild, Connection actconn)
     {
+        String guildName = guild.getName();
+        Long guildId = guild.getIdLong();
         this.conn = actconn;
-        this.modRolesById = new ArrayList<Long>();
+        this.modRolesById = new ArrayList<>();
         this.roleGroups = new ArrayList<>();
         this.id = guildId;
         this.locale = new Locale("en","US");
 
         Statement stmt;
         ResultSet rs;
-        modified = false;
+        List<Long> to_remove = new ArrayList<>();
         try {
             stmt = conn.createStatement();
             rs = stmt.executeQuery("SELECT guildid,prefix FROM guilds WHERE guildid=" + guildId);
@@ -237,13 +237,23 @@ public class BotGuild {
                 rs = stmt.executeQuery("SELECT roleid FROM Roles WHERE guildid=" + guildId);
                 this.modRolesById.clear();
                 while (rs.next()) {
-                    this.modRolesById.add(rs.getLong(1));
+                    if(guild.getRoleById(rs.getLong(1))!=null)
+                        this.modRolesById.add(rs.getLong(1));
+                    else {
+                        to_remove.add(rs.getLong(1));
+                        MyListener.deleted=true;
+                    }
                 }
                 rs.close();
+                for(Long roleId : to_remove)
+                {
+                    stmt.execute("DELETE FROM roles WHERE roleid="+roleId);
+                    stmt.execute("COMMIT ");
+                }
                 rs = stmt.executeQuery("SELECT groupid,groupname FROM groups WHERE guildid=" + guildId);
 
                 while (rs.next()) {
-                    this.roleGroups.add(new RoleGroup(conn,this,rs.getLong(1),rs.getString(2)));
+                    this.roleGroups.add(new RoleGroup(conn,guild,this,rs.getLong(1),rs.getString(2)));
                 }
                 rs.close();
                 stmt.execute("UPDATE guilds SET guildname='"+ guildName +"' WHERE guildid=" + guildId);
@@ -265,7 +275,6 @@ public class BotGuild {
 
     public boolean onRoleDeleted(Role role)
     {
-        Statement stmt;
         boolean ret=false;
         List<Long> to_remove = new ArrayList<>();
         for (Long roleId : modRolesById)
@@ -294,7 +303,6 @@ public class BotGuild {
         this.modRolesById=null;
         this.prefix=null;
         this.id=null;
-        this.modified=false;
         this.isOpen=false;
     }
 

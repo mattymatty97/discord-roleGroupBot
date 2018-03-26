@@ -359,12 +359,13 @@ public class RoleGroup {
 
 
 
-    public RoleGroup(Connection conn, BotGuild guild, Long groupId, String groupName) {
+    RoleGroup(Connection conn, Guild guild, BotGuild botGuild, Long groupId, String groupName) {
         this.conn = conn;
-        this.guild = guild;
+        this.guild = botGuild;
         this.groupId=groupId;
         this.groupName = groupName;
         this.roles = new ArrayList<>();
+        List<Long> to_remove = new ArrayList<>();
         Statement stmt;
         ResultSet rs;
         try {
@@ -378,9 +379,20 @@ public class RoleGroup {
                     rs = stmt.executeQuery("SELECT roleid,rolename FROM grouproles WHERE groupid=" + groupId);
                     this.roles.clear();
                     while (rs.next()) {
-                        this.roles.add(new RoleData(rs.getString(2),rs.getLong(1)));
+                        if(guild.getRoleById(rs.getLong(1))!=null)
+                            this.roles.add(new RoleData(rs.getString(2),rs.getLong(1)));
+                        else
+                        {
+                            to_remove.add(rs.getLong(1));
+                            MyListener.deleted=true;
+                        }
                     }
                     rs.close();
+                    for (Long roleId : to_remove)
+                    {
+                        stmt.execute("DELETE FROM grouproles WHERE groupid="+groupId+" AND roleid="+roleId);
+                        stmt.execute("COMMIT");
+                    }
                 } else {
                     this.roles.clear();
                     System.out.println("error id not found");
@@ -393,12 +405,12 @@ public class RoleGroup {
         }
     }
 
-    public RoleGroup(Connection conn, BotGuild guild,Role role, String groupName) {
+    RoleGroup(Connection conn, BotGuild botGuild,Role role, String groupName) {
         this.conn = conn;
-        this.guild = guild;
+        this.guild = botGuild;
         this.groupName = groupName;
         this.roles = new ArrayList<>();
-        Long guildId = guild.getId();
+        Long guildId = botGuild.getId();
         Statement stmt;
         ResultSet rs;
         try {
@@ -406,7 +418,7 @@ public class RoleGroup {
             stmt.execute("INSERT INTO groups (guildid,groupname,type,roleid) VALUES ("+guildId+",'"+groupName+"','LIST',"+role.getIdLong()+")");
             rs = stmt.executeQuery("SELECT groupid FROM groups WHERE guildid="+guildId+" AND groupname='"+groupName+"'");
             if(rs.next())
-                this.groupId=rs.getLong(1);
+                this.groupId = rs.getLong(1);
             stmt.execute("COMMIT");
             this.boundRole = role.getIdLong();
             stmt.close();
@@ -430,6 +442,7 @@ public class RoleGroup {
                 stmt.execute("UPDATE groups SET roleid=NULL WHERE groupid="+groupId);
                 stmt.execute("COMMIT");
                 this.boundRole=null;
+                this.enabled=false;
                 ret=true;
                 stmt.close();
             } catch (SQLException ex) {
@@ -444,6 +457,7 @@ public class RoleGroup {
             if(data.getRoleId().equals(role.getIdLong()))
             {
                 to_remove.add(data);
+                this.enabled = false;
             }
         }
 
@@ -510,14 +524,10 @@ public class RoleGroup {
         return null;
     }
 
-    private boolean memberHasRole(Member member,Long roleId)
-    {
+    private boolean memberHasRole(Member member,Long roleId) {
         List<Role> list = member.getRoles();
         Role role = member.getGuild().getRoleById(roleId);
-        if(role!=null)
-            if(list.contains(role))
-                return true;
-        return false;
+        return role != null && list.contains(role);
     }
 
 }

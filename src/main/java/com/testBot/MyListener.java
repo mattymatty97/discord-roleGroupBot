@@ -11,12 +11,12 @@ import java.awt.*;
 import java.sql.*;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class MyListener extends ListenerAdapter {
     private Connection conn;
     private List<BotGuild> savedGuilds;
+    public static boolean deleted=false;
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
@@ -33,13 +33,24 @@ public class MyListener extends ListenerAdapter {
         guild = findGuild(event.getGuild().getIdLong());
         if (guild == null) {
             //create local instance of server informations
-            guild = new BotGuild(event.getGuild().getIdLong(), guildname.intern(), conn);
+            guild = new BotGuild(event.getGuild(), conn);
             savedGuilds.add(guild);
+            output = guild.getMessages();
+            if(deleted)
+            {
+                deleted=false;
+                System.out.println("role deleted in guild: " +guildname);
+                event.getGuild().getOwner().getUser().openPrivateChannel().queue((channel) ->
+                {
+                    channel.sendMessage(output.getString("event-role-deleted")).queue();
+                    channel.sendMessage(output.getString("event-role-deleted-2")).queue();
+                });
+            }
+        }else {
+            //set locales to giuld setting
+
+            output = guild.getMessages();
         }
-        //set locales to giuld setting
-
-        output= guild.getMessages();
-
         //get sender member
         Member member = event.getMember();
         //get channel to send
@@ -334,15 +345,16 @@ public class MyListener extends ListenerAdapter {
         guild = findGuild(event.getGuild().getIdLong());
         if (guild == null) {
             //create local instance of server informations
-            guild = new BotGuild(event.getGuild().getIdLong(), guildname.intern(), conn);
+            guild = new BotGuild(event.getGuild(), conn);
             savedGuilds.add(guild);
         }
         //set locales to giuld setting
 
         output= guild.getMessages();
 
-        if(guild.onRoleDeleted(event.getRole()))
+        if(guild.onRoleDeleted(event.getRole()) || deleted)
         {
+            deleted = false;
             System.out.println("role deleted in guild: " +guildname);
             event.getGuild().getOwner().getUser().openPrivateChannel().queue((channel) ->
             {
@@ -353,14 +365,10 @@ public class MyListener extends ListenerAdapter {
 
     }
 
-    private boolean memberHasRole(Member member, Long roleId)
-    {
+    private boolean memberHasRole(Member member, Long roleId) {
         List<Role> list = member.getRoles();
         Role role = member.getGuild().getRoleById(roleId);
-        if(role!=null)
-            if(list.contains(role))
-                return true;
-        return false;
+        return role != null && list.contains(role);
     }
 
 
