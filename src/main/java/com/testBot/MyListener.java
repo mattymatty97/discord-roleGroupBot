@@ -344,6 +344,11 @@ public class MyListener extends ListenerAdapter {
         if(guild.onRoleDeleted(event.getRole()))
         {
             System.out.println("role deleted in guild: " +guildname);
+            event.getGuild().getOwner().getUser().openPrivateChannel().queue((channel) ->
+            {
+                channel.sendMessage(output.getString("event-role-deleted")).queue();
+                channel.sendMessage(output.getString("event-role-deleted-2")).queue();
+            });
         }
 
     }

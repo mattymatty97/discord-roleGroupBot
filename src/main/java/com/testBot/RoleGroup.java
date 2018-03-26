@@ -421,6 +421,7 @@ public class RoleGroup {
     public boolean onRoleDeleted(Role role)
     {
         boolean ret=false;
+        List<RoleData> to_remove = new ArrayList<>();
         if(boundRole.equals(role.getIdLong()))
         {
             Statement stmt;
@@ -442,20 +443,25 @@ public class RoleGroup {
         {
             if(data.getRoleId().equals(role.getIdLong()))
             {
-                Statement stmt;
-                try {
-                    stmt = conn.createStatement();
-                    stmt.execute("DELETE FROM grouproles WHERE groupid="+groupId+" AND roleid="+data.getRoleId());
-                    stmt.execute("COMMIT");
-                    roles.remove(data);
-                    stmt.close();
-                } catch (SQLException ex) {
-                    System.out.println("SQLException: " + ex.getMessage());
-                    System.out.println("SQLState: " + ex.getSQLState());
-                    System.out.println("VendorError: " + ex.getErrorCode());
-                }
-                ret=true;
+                to_remove.add(data);
             }
+        }
+
+        for (RoleData data : to_remove)
+        {
+            Statement stmt;
+            try {
+                stmt = conn.createStatement();
+                stmt.execute("DELETE FROM grouproles WHERE groupid=" + groupId + " AND roleid=" + data.getRoleId());
+                stmt.execute("COMMIT");
+                roles.remove(data);
+                stmt.close();
+            } catch (SQLException ex) {
+                System.out.println("SQLException: " + ex.getMessage());
+                System.out.println("SQLState: " + ex.getSQLState());
+                System.out.println("VendorError: " + ex.getErrorCode());
+            }
+            ret=true;
         }
         return ret;
     }

@@ -267,13 +267,16 @@ public class BotGuild {
     {
         Statement stmt;
         boolean ret=false;
+        List<Long> to_remove = new ArrayList<>();
         for (Long roleId : modRolesById)
         {
             if(roleId.equals(role.getIdLong())) {
-                removeModRole(roleId);
+                to_remove.add(roleId);
                 ret=true;
             }
         }
+        for (Long roleId : to_remove)
+            removeModRole(roleId);
 
         for (RoleGroup group : roleGroups)
         {
