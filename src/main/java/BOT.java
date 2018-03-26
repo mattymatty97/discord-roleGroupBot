@@ -45,4 +45,9 @@ public class BOT
         api.addEventListener(new MyListener(conn,savedGuilds));
         api.getPresence().setGame(Game.listening("suggestions :/"));
     }
+
+    public static void reconnect()
+    {
+
+    }
 }
