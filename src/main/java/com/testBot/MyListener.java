@@ -435,7 +435,7 @@ public class MyListener extends ListenerAdapter {
     }
 
 
-    MyListener(Connection conn, List<BotGuild> savedGuilds) {
+    public MyListener(Connection conn, List<BotGuild> savedGuilds) {
         this.conn = conn;
         this.savedGuilds = savedGuilds;
     }

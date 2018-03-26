@@ -9,7 +9,7 @@ group 'testBot'
 version '1.0'
 
 
-mainClassName = 'com.testBot.BOT'
+mainClassName = 'BOT'
 
 def jdaVersion = '3.3.1_308'
 
@@ -47,7 +47,7 @@ jar {
     manifest {
         attributes(
                 "Manifest-Version": "1.0",
-                'Main-Class': 'com.testBot.BOT'
+                'Main-Class': 'BOT'
         )
     }
 }

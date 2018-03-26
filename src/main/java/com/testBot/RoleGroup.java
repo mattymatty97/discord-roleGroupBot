@@ -1,4 +1,4 @@
-package com.testBot;
+import com.testBot.*;
 
 import java.sql.*;
 import java.util.ArrayList;
