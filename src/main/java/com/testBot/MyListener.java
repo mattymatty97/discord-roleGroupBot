@@ -4,6 +4,7 @@ package com.testBot;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.events.role.RoleDeleteEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 import java.awt.*;
@@ -323,7 +324,31 @@ public class MyListener extends ListenerAdapter {
         }
     }
 
-    private boolean memberHasRole(Member member,Long roleId)
+    @Override
+    public void onRoleDelete(RoleDeleteEvent event) {
+        ResourceBundle output;
+        BotGuild guild;
+        //name of sender server
+        String guildname = event.getGuild().getName();
+        //search for existent informations class for server
+        guild = findGuild(event.getGuild().getIdLong());
+        if (guild == null) {
+            //create local instance of server informations
+            guild = new BotGuild(event.getGuild().getIdLong(), guildname.intern(), conn);
+            savedGuilds.add(guild);
+        }
+        //set locales to giuld setting
+
+        output= guild.getMessages();
+
+        if(guild.onRoleDeleted(event.getRole()))
+        {
+            System.out.println("role deleted in guild: " +guildname);
+        }
+
+    }
+
+    private boolean memberHasRole(Member member, Long roleId)
     {
         List<Role> list = member.getRoles();
         Role role = member.getGuild().getRoleById(roleId);

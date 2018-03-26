@@ -263,6 +263,25 @@ public class BotGuild {
         }
     }
 
+    public boolean onRoleDeleted(Role role)
+    {
+        Statement stmt;
+        boolean ret=false;
+        for (Long roleId : modRolesById)
+        {
+            if(roleId.equals(role.getIdLong())) {
+                removeModRole(roleId);
+                ret=true;
+            }
+        }
+
+        for (RoleGroup group : roleGroups)
+        {
+            if(group.onRoleDeleted(role))
+                ret = true;
+        }
+        return ret;
+    }
 
     public void close()
     {

@@ -1,4 +1,4 @@
-import com.testBot.*;
+package com.testBot;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -17,6 +17,11 @@ public class RoleGroup {
     private BotGuild guild;
     private Long groupId;
     private String groupName;
+    private boolean enabled;
+
+    public boolean isEnabled(){
+        return enabled;
+    }
 
     public List<RoleData> getRoles() {
         return roles;
@@ -38,41 +43,47 @@ public class RoleGroup {
         return groupName;
     }
 
+
+
     public String command(Guild guild, Member member, String rolename,ResourceBundle output)
     {
         RoleData rd;
         StringBuilder ret = new StringBuilder();
-        switch (type)
-        {
-            case "LIST":
-                rd = RoleData.find(roles,rolename);
-                if(rd==null)
-                {
-                    System.out.print("grouproles custom - wrong syntax");
-                    ret.append(output.getString("error-wrong-syntax"));
-                }else {
-                    Role role = guild.getRoleById(rd.getRoleId());
-                    if (guild.getSelfMember().getRoles().get(0).getPosition() > role.getPosition()) {
-                        if (memberHasRole(member, rd.getRoleId())) {
-                            guild.getController().removeRolesFromMember(member, role).queue();
-                            ret.append(output.getString("cc-role-removed").replace("{role}",role.getName()));
-                            System.out.print("grouproles custom - role removed");
-                        } else {
-                            guild.getController().addRolesToMember(member, role).queue();
-                            ret.append(output.getString("cc-role-added").replace("{role}",role.getName()));
-                            System.out.print("grouproles custom - role added");
+        if(isEnabled()){
+            switch (type)
+            {
+                case "LIST":
+                    rd = RoleData.find(roles,rolename);
+                    if(rd==null)
+                    {
+                        System.out.print("grouproles custom - wrong syntax");
+                        ret.append(output.getString("error-wrong-syntax"));
+                    }else {
+                        Role role = guild.getRoleById(rd.getRoleId());
+                        if (guild.getSelfMember().getRoles().get(0).getPosition() > role.getPosition()) {
+                            if (memberHasRole(member, rd.getRoleId())) {
+                                guild.getController().removeRolesFromMember(member, role).queue();
+                                ret.append(output.getString("cc-role-removed").replace("{role}",role.getName()));
+                                System.out.print("grouproles custom - role removed");
+                            } else {
+                                guild.getController().addRolesToMember(member, role).queue();
+                                ret.append(output.getString("cc-role-added").replace("{role}",role.getName()));
+                                System.out.print("grouproles custom - role added");
+                            }
+                        }else{
+                            ret.append(output.getString("error-bot-permission"));
+                            System.out.print("grouproles custom - too low role");
                         }
-                    }else{
-                        ret.append(output.getString("error-bot-permission"));
-                        System.out.print("grouproles custom - too low role");
                     }
-                }
-                break;
+                    break;
+            }
+        }else{
+            ret.append(output.getString("error-cc-disabled"));
+            System.out.print("grouproles custom - command disabled");
         }
+
         return ret.toString();
     }
-
-
 
     public String modify(String[] args,Message message)
     {
@@ -193,7 +204,6 @@ public class RoleGroup {
                                 System.out.println("SQLException: " + ex.getMessage());
                                 System.out.println("SQLState: " + ex.getSQLState());
                                 System.out.println("VendorError: " + ex.getErrorCode());
-                                System.exit(-1);
                                 System.out.print("grouproles - error in type");
                                 retStr.append(output.getString("error-rolegroup-type"));
                             }
@@ -209,18 +219,75 @@ public class RoleGroup {
                     retStr.append(output.getString("error-wrong-syntax"));
                 }
                 break;
-            case "roles":
-            {
-                Guild guild = message.getGuild();
-                retStr.append(output.getString("rolegroup-role-listing")).append(" ").append(groupName).append("\n");
-                for (RoleData role : roles)
+            case "status":
                 {
-                    retStr.append(guild.getRoleById(role.getRoleId()).getName()).append("\tas ");
-                    retStr.append(role.getRoleName()).append("\n");
+                    Guild guild = message.getGuild();
+                    retStr.append(output.getString("rolegroup-status-title").replace("{group}",groupName)).append("\n");
+                    retStr.append(output.getString("rolegroup-status-enabled")).append(enabled).append("\n");
+                    retStr.append(output.getString("rolegroup-status-boundrole"));
+                    if(boundRole!=null)
+                        retStr.append(guild.getRoleById(boundRole).getName());
+                    retStr.append("\n");
+                    retStr.append(output.getString("rolegroup-status-type")).append(type).append("\n");
+                    retStr.append(output.getString("rolegroup-status-role")).append("\n");
+                    for (RoleData role : roles)
+                    {
+                        retStr.append(guild.getRoleById(role.getRoleId()).getName());
+                        retStr.append(" ").append(output.getString("rolegroup-status-as")).append(" ");
+                        retStr.append(role.getRoleName()).append("\n");
+                    }
+                    System.out.print("grouproles - showing status of "+ groupName);
                 }
-                System.out.print("grouproles - listing roles of "+ groupName);
-            }
-            break;
+                break;
+            case "enable":
+                if(boundRole!=null)
+                {
+                    if(!isEnabled()) {
+                        try {
+                            stmt = conn.createStatement();
+                            stmt.execute("UPDATE groups SET enabled WHERE groupid=" + groupId + " VALUE TRUE");
+                            stmt.execute("COMMIT");
+                            this.enabled = true;
+                            stmt.close();
+                            System.out.print("grouproles - group enabled");
+                            retStr.append(output.getString("rolegroup-enabled"));
+                        } catch (SQLException ex) {
+                            System.out.println("SQLException: " + ex.getMessage());
+                            System.out.println("SQLState: " + ex.getSQLState());
+                            System.out.println("VendorError: " + ex.getErrorCode());
+                            System.out.print("grouproles - error in enable");
+                            retStr.append(output.getString("error-rolegroup-enable"));
+                        }
+                    }else{
+                        System.out.print("grouproles - error yet enabled");
+                        retStr.append(output.getString("error-rolegroup-is-enable"));
+                    }
+                }else{
+                    System.out.print("grouproles - missing boundrole");
+                    retStr.append(output.getString("error-rolegroup-bound"));
+                }
+                break;
+            case "disable":
+                if(isEnabled()) {
+                    try {
+                        stmt = conn.createStatement();
+                        stmt.execute("UPDATE groups SET enabled WHERE groupid=" + groupId + " VALUE FALSE");
+                        stmt.execute("COMMIT");
+                        this.enabled = false;
+                        stmt.close();
+                        System.out.print("grouproles - group disabled");
+                        retStr.append(output.getString("rolegroup-disabled"));
+                    } catch (SQLException ex) {
+                        System.out.println("SQLException: " + ex.getMessage());
+                        System.out.println("SQLState: " + ex.getSQLState());
+                        System.out.println("VendorError: " + ex.getErrorCode());
+                        System.out.print("grouproles - error in disable");
+                        retStr.append(output.getString("error-rolegroup-disable"));
+                    }
+                }else{
+                    System.out.print("grouproles - error yet disabled");
+                    retStr.append(output.getString("error-rolegroup-is-disable"));
+                }
             default:
                 System.out.print("grouproles - wrong syntax");
                 retStr.append(output.getString("error-wrong-syntax"));
@@ -229,6 +296,8 @@ public class RoleGroup {
         }
         return retStr.toString();
     }
+
+
 
     public boolean isValid()
     {
@@ -310,6 +379,49 @@ public class RoleGroup {
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
         }
+    }
+
+
+    public boolean onRoleDeleted(Role role)
+    {
+        boolean ret=false;
+        if(boundRole.equals(role.getIdLong()))
+        {
+            Statement stmt;
+            try {
+                stmt = conn.createStatement();
+                stmt.execute("UPDATE groups SET roleid=NULL WHERE groupid="+groupId);
+                stmt.execute("COMMIT");
+                this.boundRole=null;
+                ret=true;
+                stmt.close();
+            } catch (SQLException ex) {
+                System.out.println("SQLException: " + ex.getMessage());
+                System.out.println("SQLState: " + ex.getSQLState());
+                System.out.println("VendorError: " + ex.getErrorCode());
+            }
+        }
+
+        for (RoleData data : roles)
+        {
+            if(data.getRoleId().equals(role.getIdLong()))
+            {
+                Statement stmt;
+                try {
+                    stmt = conn.createStatement();
+                    stmt.execute("DELETE FROM grouproles WHERE groupid="+groupId+" AND roleid="+data.getRoleId());
+                    stmt.execute("COMMIT");
+                    roles.remove(data);
+                    stmt.close();
+                } catch (SQLException ex) {
+                    System.out.println("SQLException: " + ex.getMessage());
+                    System.out.println("SQLState: " + ex.getSQLState());
+                    System.out.println("VendorError: " + ex.getErrorCode());
+                }
+                ret=true;
+            }
+        }
+        return ret;
     }
 
     public void delete()
