@@ -45,20 +45,24 @@ public class BOT
         try {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT guildid FROM guilds");
+            List<Long> to_remove = new ArrayList<>();
             while (rs.next())
             {
                 if(api.getGuildById(rs.getLong(1))==null)
                 {
-                    guildDeleteDB(conn,rs.getLong(1));
+                    to_remove.add(rs.getLong(1));
                 }
             }
             rs.close();
             stmt.close();
+            for (Long guildId : to_remove)
+                guildDeleteDB(conn,guildId);
         }catch (SQLException ex) {
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
         }
+
         api.addEventListener(new MyListener(conn,savedGuilds));
         api.getPresence().setGame(Game.playing("v1.1"));
     }
@@ -79,8 +83,9 @@ public class BOT
                 rs.close();
                 stmt.execute("DELETE FROM groups WHERE guildid="+guildId);
                 stmt.execute("DELETE FROM roles WHERE guildid="+guildId);
-            }else
+            }else {
                 rs.close();
+            }
             stmt.execute("DELETE FROM guilds WHERE guildid="+guildId);
             stmt.execute("COMMIT");
             stmt.close();
