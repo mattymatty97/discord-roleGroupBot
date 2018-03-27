@@ -52,6 +52,8 @@ public class BOT
                     guildDeleteDB(conn,rs.getLong(1));
                 }
             }
+            rs.close();
+            stmt.close();
         }catch (SQLException ex) {
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());
