@@ -281,7 +281,7 @@ public class RoleGroup {
                     if(!isEnabled()) {
                         try {
                             stmt = conn.createStatement();
-                            stmt.execute("UPDATE groups SET enabled WHERE groupid=" + groupId + " VALUE TRUE");
+                            stmt.execute("UPDATE groups SET enabled=TRUE WHERE groupid=" + groupId);
                             stmt.execute("COMMIT");
                             this.enabled = true;
                             stmt.close();
@@ -307,7 +307,7 @@ public class RoleGroup {
                 if(isEnabled()) {
                     try {
                         stmt = conn.createStatement();
-                        stmt.execute("UPDATE groups SET enabled WHERE groupid=" + groupId + " VALUE FALSE");
+                        stmt.execute("UPDATE groups SET enabled=FALSE WHERE groupid=" + groupId);
                         stmt.execute("COMMIT");
                         this.enabled = false;
                         stmt.close();
@@ -324,6 +324,7 @@ public class RoleGroup {
                     System.out.print("grouproles - error yet disabled");
                     retStr.append(output.getString("error-rolegroup-is-disable"));
                 }
+                break;
             default:
                 System.out.print("grouproles - wrong syntax");
                 retStr.append(output.getString("error-wrong-syntax"));

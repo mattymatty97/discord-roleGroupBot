@@ -287,6 +287,7 @@ public class BotGuild {
                 stmt.execute("UPDATE guilds SET guildname='"+ guildName +"' WHERE guildid=" + guildId);
                 stmt.execute("COMMIT");
             } else {
+                rs.close();
                 this.modRolesById.clear();
                 this.prefix = System.getenv("DEFAULT_PREFIX");
                 stmt.execute("INSERT INTO guilds(guildid,prefix,guildname) VALUES (" + guildId + ",'" + prefix + "','"+guildName+"')");
