@@ -72,15 +72,20 @@ public class BOT
         try{
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM guilds WHERE guildid="+guildId);
+            List<Long> to_remove = new ArrayList<>();
             if(rs.next())
             {
                 rs.close();
                 rs = stmt.executeQuery("SELECT groupid FROM groups WHERE guildid="+guildId);
                 while(rs.next())
                 {
-                    stmt.execute("DELETE FROM grouproles WHERE groupid="+rs.getLong(1));
+                    to_remove.add(rs.getLong(1));
                 }
                 rs.close();
+                for (Long id : to_remove)
+                {
+                    stmt.execute("DELETE FROM grouproles WHERE groupid="+id);
+                }
                 stmt.execute("DELETE FROM groups WHERE guildid="+guildId);
                 stmt.execute("DELETE FROM roles WHERE guildid="+guildId);
             }else {
