@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.dv8tion.jda.core.entities.Game;
+import net.dv8tion.jda.core.entities.Guild;
 
 public class BOT
 {
@@ -48,10 +49,16 @@ public class BOT
             List<Long> to_remove = new ArrayList<>();
             while (rs.next())
             {
-                if(api.getGuildById(rs.getLong(1))==null)
+                boolean found=false;
+                for (Guild guild : api.getSelfUser().getMutualGuilds())
                 {
-                    to_remove.add(rs.getLong(1));
+                    if(guild.getIdLong()==rs.getLong(1)) {
+                        found = true;
+                        break;
+                    }
                 }
+                if(!found)
+                    to_remove.add(rs.getLong(1));
             }
             rs.close();
             stmt.close();
