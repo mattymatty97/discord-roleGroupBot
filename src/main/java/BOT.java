@@ -42,8 +42,52 @@ public class BOT
         }
 
         JDA api = new JDABuilder(AccountType.BOT).setToken(System.getenv("BOT_TOKEN")).buildAsync();
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT guildid FROM guilds");
+            while (rs.next())
+            {
+                if(api.getGuildById(rs.getLong(1))==null)
+                {
+                    guildDeleteDB(conn,rs.getLong(1));
+                }
+            }
+        }catch (SQLException ex) {
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
         api.addEventListener(new MyListener(conn,savedGuilds));
-        api.getPresence().setGame(Game.listening("suggestions :/"));
+        api.getPresence().setGame(Game.playing("v1.1"));
+    }
+
+    private static void guildDeleteDB(Connection conn,Long guildId)
+    {
+        try{
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM guilds WHERE guildid="+guildId);
+            if(rs.next())
+            {
+                rs.close();
+                rs = stmt.executeQuery("SELECT groupid FROM groups WHERE guildid="+guildId);
+                while(rs.next())
+                {
+                    stmt.execute("DELETE FROM grouproles WHERE groupid="+rs.getLong(1));
+                }
+                rs.close();
+                stmt.execute("DELETE FROM groups WHERE guildid="+guildId);
+                stmt.execute("DELETE FROM roles WHERE guildid="+guildId);
+            }else
+                rs.close();
+            stmt.execute("DELETE FROM guilds WHERE guildid="+guildId);
+            stmt.execute("COMMIT");
+            stmt.close();
+        }catch (SQLException ex)
+        {
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
     }
 
     public static void reconnect()

@@ -2,8 +2,11 @@ package com.testBot;
 
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.*;
+import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
+import net.dv8tion.jda.core.events.guild.GuildLeaveEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.events.role.RoleDeleteEvent;
+import net.dv8tion.jda.core.exceptions.InsufficientPermissionException;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 import java.awt.*;
@@ -144,6 +147,15 @@ public class MyListener extends ListenerAdapter {
                                             channel.sendMessage(output.getString("error-wrong-syntax")).queue();
                                         }
                                         break;
+                                    case "clear":
+                                        guild.clearModrole();
+                                        channel.sendMessage(output.getString("modrole-clear")).queue();
+                                        break;
+                                    case "auto":
+                                        guild.autoModrole(event.getGuild());
+                                        channel.sendMessage(output.getString("modrole-auto")).queue();
+                                        System.out.println("auto adding moroles to guild: "+guildname);
+                                        //break; //break removed to list new modrole list
                                     case "list":
                                         //list all modroles
                                         System.out.println("listing modroles in guild: '" + guildname + "'");
@@ -362,6 +374,69 @@ public class MyListener extends ListenerAdapter {
         }else{
             event.getJDA().shutdown();
             Reconnector.reconnect();
+        }
+    }
+
+    @Override
+    public void onGuildJoin(GuildJoinEvent event) {
+        ResourceBundle output;
+        BotGuild guild;
+        //name of sender server
+        String guildname = event.getGuild().getName();
+        //search for existent informations class for server
+        guild = findGuild(event.getGuild().getIdLong());
+        if (guild == null) {
+            //create local instance of server informations
+            guild = new BotGuild(event.getGuild(), conn);
+            savedGuilds.add(guild);
+            output = guild.getMessages();
+            if(guild.isNew)
+            {
+                guild.isNew=false;
+                System.out.println("guild "+event.getGuild().getName()+" added");
+                try {
+                    event.getGuild().getDefaultChannel().sendMessage(output.getString("event-join")).queue();
+                }catch (InsufficientPermissionException ex)
+                {
+                    event.getGuild().getOwner().getUser().openPrivateChannel().queue((channel) ->
+                    {
+                        channel.sendMessage(output.getString("event-join")).queue();
+                    });
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onGuildLeave(GuildLeaveEvent event){
+        try{
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM guilds WHERE guildid="+event.getGuild().getIdLong());
+            if(rs.next())
+            {
+                rs.close();
+                rs = stmt.executeQuery("SELECT groupid FROM groups WHERE guildid="+event.getGuild().getIdLong());
+                while(rs.next())
+                {
+                    stmt.execute("DELETE FROM grouproles WHERE groupid="+rs.getLong(1));
+                }
+                rs.close();
+                stmt.execute("DELETE FROM groups WHERE guildid="+event.getGuild().getIdLong());
+                stmt.execute("DELETE FROM roles WHERE guildid="+event.getGuild().getIdLong());
+            }else
+                rs.close();
+            stmt.execute("DELETE FROM guilds WHERE guildid="+event.getGuild().getIdLong());
+            stmt.execute("COMMIT");
+            stmt.close();
+            BotGuild guild = findGuild(event.getGuild().getIdLong());
+            if(guild!=null)
+                savedGuilds.remove(guild);
+            System.out.println("guild "+event.getGuild().getName()+" has been removed");
+        }catch (SQLException ex)
+        {
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
         }
     }
 

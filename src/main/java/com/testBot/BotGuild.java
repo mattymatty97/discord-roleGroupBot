@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.*;
 
 /**
@@ -14,11 +15,12 @@ import net.dv8tion.jda.core.entities.*;
 public class BotGuild {
     private boolean isOpen;         /**bool value to test validity of object**/
     private Connection conn;        /**SQL connection object send by main**/
-    private Long id;                /**guild id used to identify guild**/
+    private Long guildId;                /**guild id used to identify guild**/
     private String prefix;          /**prefix for trig a reaction**/
     private List<Long> modRolesById;/**list of roles (stored by id) that are allowed to run mod commands**/
     private List<RoleGroup> roleGroups;
     private Locale locale;
+    public  boolean isNew = true;
 
 
     public ResourceBundle getMessages()
@@ -34,7 +36,7 @@ public class BotGuild {
     {
         if(!isOpen)
             return null;
-        return id;
+        return guildId;
     }
 
     /**
@@ -75,7 +77,7 @@ public class BotGuild {
         Statement stmt;
         try {
             stmt = conn.createStatement();
-            stmt.execute("UPDATE guilds SET prefix='"+ n_prefix +"' WHERE guildId="+this.id);
+            stmt.execute("UPDATE guilds SET prefix='"+ n_prefix +"' WHERE guildId="+this.guildId);
             stmt.execute("COMMIT");
             this.prefix = n_prefix;
             stmt.close();
@@ -123,7 +125,7 @@ public class BotGuild {
             Statement stmt ;
             try {
                 stmt = conn.createStatement();
-                stmt.execute("DELETE FROM roles WHERE guildid="+id+" AND roleid="+roleId);
+                stmt.execute("DELETE FROM roles WHERE guildid="+guildId+" AND roleid="+roleId);
                 stmt.execute("COMMIT");
                 this.modRolesById.remove(roleId);
                 stmt.close();
@@ -152,7 +154,7 @@ public class BotGuild {
             Statement stmt;
             try {
                 stmt = conn.createStatement();
-                stmt.execute("INSERT INTO roles (guildid,roleid,rolename) VALUES ("+id+","+roleId+",'"+roleName+"')");
+                stmt.execute("INSERT INTO roles (guildid,roleid,rolename) VALUES ("+guildId+","+roleId+",'"+roleName+"')");
                 stmt.execute("COMMIT");
                 this.modRolesById.add(roleId);
                 stmt.close();
@@ -164,6 +166,31 @@ public class BotGuild {
             }
         }else
             return null;
+        return this;
+    }
+
+    public BotGuild clearModrole()
+    {
+        Statement stmt;
+        try{
+            stmt = conn.createStatement();
+            stmt.execute("DELETE FROM roles WHERE guildid="+guildId);
+            stmt.execute("COMMIT ");
+            stmt.close();
+            modRolesById.clear();
+        }catch (SQLException ex)
+        {
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+            return null;
+        }
+        return this;
+    }
+
+    public BotGuild autoModrole(Guild guild)
+    {
+        autoModRole(guild);
         return this;
     }
 
@@ -221,7 +248,7 @@ public class BotGuild {
         this.conn = actconn;
         this.modRolesById = new ArrayList<>();
         this.roleGroups = new ArrayList<>();
-        this.id = guildId;
+        this.guildId = guildId;
         this.locale = new Locale("en","US");
 
         Statement stmt;
@@ -232,6 +259,7 @@ public class BotGuild {
             rs = stmt.executeQuery("SELECT guildid,prefix FROM guilds WHERE guildid=" + guildId);
 
             if (rs.next()) {
+                this.isNew=false;
                 this.prefix = rs.getString(2).intern();
                 rs.close();
                 rs = stmt.executeQuery("SELECT roleid FROM Roles WHERE guildid=" + guildId);
@@ -263,6 +291,7 @@ public class BotGuild {
                 this.prefix = System.getenv("DEFAULT_PREFIX");
                 stmt.execute("INSERT INTO guilds(guildid,prefix,guildname) VALUES (" + guildId + ",'" + prefix + "','"+guildName+"')");
                 stmt.execute("COMMIT");
+                autoModRole(guild);
             }
             stmt.close();
             this.isOpen = true;
@@ -270,6 +299,30 @@ public class BotGuild {
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
+        }
+    }
+
+    private void autoModRole(Guild guild)
+    {
+        Statement stmt;
+        for (Role role : guild.getRoles())
+        {
+            if(role.isManaged())
+                continue;
+            if(role.hasPermission(Permission.ADMINISTRATOR) ||
+                    role.hasPermission(Permission.MANAGE_SERVER) ||
+                    role.hasPermission(Permission.MANAGE_ROLES))
+                try {
+                    stmt = conn.createStatement();
+                    stmt.execute("INSERT INTO roles (guildid,roleid,rolename) VALUES ("+guildId+","+role.getIdLong()+",'"+role.getName()+"')");
+                    stmt.execute("COMMIT");
+                    this.modRolesById.add(role.getIdLong());
+                    stmt.close();
+                }catch (SQLException ex) {
+                    System.out.println("SQLException: " + ex.getMessage());
+                    System.out.println("SQLState: " + ex.getSQLState());
+                    System.out.println("VendorError: " + ex.getErrorCode());
+                }
         }
     }
 
@@ -302,7 +355,7 @@ public class BotGuild {
         this.roleGroups=null;
         this.modRolesById=null;
         this.prefix=null;
-        this.id=null;
+        this.guildId=null;
         this.isOpen=false;
     }
 
