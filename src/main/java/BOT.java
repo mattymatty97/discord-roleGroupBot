@@ -96,9 +96,4 @@ public class BOT
             System.out.println("VendorError: " + ex.getErrorCode());
         }
     }
-
-    public static void reconnect()
-    {
-
-    }
 }
