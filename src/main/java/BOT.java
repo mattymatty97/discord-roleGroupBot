@@ -43,69 +43,10 @@ public class BOT
         }
 
         JDA api = new JDABuilder(AccountType.BOT).setToken(System.getenv("BOT_TOKEN")).buildAsync();
-        try {
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT guildid FROM guilds");
-            List<Long> to_remove = new ArrayList<>();
-            while (rs.next())
-            {
-                boolean found=false;
-                for (Guild guild : api.getSelfUser().getMutualGuilds())
-                {
-                    if(guild.getIdLong()==rs.getLong(1)) {
-                        found = true;
-                        break;
-                    }
-                }
-                if(!found)
-                    to_remove.add(rs.getLong(1));
-            }
-            rs.close();
-            stmt.close();
-            for (Long guildId : to_remove)
-                guildDeleteDB(conn,guildId);
-        }catch (SQLException ex) {
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
-        }
 
         api.addEventListener(new MyListener(conn,savedGuilds));
         api.getPresence().setGame(Game.playing("v1.1"));
     }
 
-    private static void guildDeleteDB(Connection conn,Long guildId)
-    {
-        try{
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM guilds WHERE guildid="+guildId);
-            List<Long> to_remove = new ArrayList<>();
-            if(rs.next())
-            {
-                rs.close();
-                rs = stmt.executeQuery("SELECT groupid FROM groups WHERE guildid="+guildId);
-                while(rs.next())
-                {
-                    to_remove.add(rs.getLong(1));
-                }
-                rs.close();
-                for (Long id : to_remove)
-                {
-                    stmt.execute("DELETE FROM grouproles WHERE groupid="+id);
-                }
-                stmt.execute("DELETE FROM groups WHERE guildid="+guildId);
-                stmt.execute("DELETE FROM roles WHERE guildid="+guildId);
-            }else {
-                rs.close();
-            }
-            stmt.execute("DELETE FROM guilds WHERE guildid="+guildId);
-            stmt.execute("COMMIT");
-            stmt.close();
-        }catch (SQLException ex)
-        {
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
-        }
-    }
+
 }

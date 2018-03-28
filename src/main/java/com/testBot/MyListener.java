@@ -2,6 +2,7 @@ package com.testBot;
 
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.*;
+import net.dv8tion.jda.core.events.ReadyEvent;
 import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.core.events.guild.GuildLeaveEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -11,6 +12,7 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 import java.awt.*;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -20,6 +22,36 @@ public class MyListener extends ListenerAdapter {
     private List<BotGuild> savedGuilds;
     public static boolean deleted=false;
 
+    @Override
+    public void onReady(ReadyEvent event) {
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT guildid FROM guilds");
+            List<Long> to_remove = new ArrayList<>();
+            while (rs.next())
+            {
+                boolean found=false;
+                for (Guild guild : event.getJDA().getSelfUser().getMutualGuilds())
+                {
+                    if(guild.getIdLong()==rs.getLong(1)) {
+                        found = true;
+                        break;
+                    }
+                }
+                if(!found)
+                    to_remove.add(rs.getLong(1));
+            }
+            rs.close();
+            stmt.close();
+            for (Long guildId : to_remove)
+                guildDeleteDB(conn,guildId);
+        }catch (SQLException ex) {
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+
+    }
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
         //locales generation (dynamic strings from file selectionable by language)
@@ -567,5 +599,41 @@ public class MyListener extends ListenerAdapter {
     public MyListener(Connection conn, List<BotGuild> savedGuilds) {
         this.conn = conn;
         this.savedGuilds = savedGuilds;
+    }
+
+
+    private static void guildDeleteDB(Connection conn,Long guildId)
+    {
+        try{
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM guilds WHERE guildid="+guildId);
+            List<Long> to_remove = new ArrayList<>();
+            if(rs.next())
+            {
+                rs.close();
+                rs = stmt.executeQuery("SELECT groupid FROM groups WHERE guildid="+guildId);
+                while(rs.next())
+                {
+                    to_remove.add(rs.getLong(1));
+                }
+                rs.close();
+                for (Long id : to_remove)
+                {
+                    stmt.execute("DELETE FROM grouproles WHERE groupid="+id);
+                }
+                stmt.execute("DELETE FROM groups WHERE guildid="+guildId);
+                stmt.execute("DELETE FROM roles WHERE guildid="+guildId);
+            }else {
+                rs.close();
+            }
+            stmt.execute("DELETE FROM guilds WHERE guildid="+guildId);
+            stmt.execute("COMMIT");
+            stmt.close();
+        }catch (SQLException ex)
+        {
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
     }
 }
