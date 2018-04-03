@@ -115,16 +115,14 @@ public class EmojiGuild {
         StringBuilder ret = new StringBuilder();
         boolean found= false;
             for (RegisteredEmojiGuild guild : activeGuilds) {
-                    if (guild.getTitle().equals(title)){
-                        try
-                        {
+                    if (guild.getTitle().equals(title))
+                        try {
                             stmt = conn.createStatement();
-                            stmt.execute("DELETE FROM active_emoji_guilds WHERE guildid="+guildId+" AND emoji_guildID="+guild.getGuildId());
+                            stmt.execute("DELETE FROM active_emoji_guilds WHERE guildid=" + guildId + " AND emoji_guildID=" + guild.getGuildId());
                             activeGuilds.remove(guild);
-                            found=true;
+                            found = true;
                             break;
-                        }catch(SQLException ex)
-                        {
+                        } catch (SQLException ex) {
                             System.out.println("SQLException: " + ex.getMessage());
                             System.out.println("SQLState: " + ex.getSQLState());
                             System.out.println("VendorError: " + ex.getErrorCode());
@@ -138,7 +136,6 @@ public class EmojiGuild {
                 ret.append(output.getString("error-emoji-set-404"));
                 System.out.print("emoji server not found");
             }
-        }
         return ret.toString();
     }
 
