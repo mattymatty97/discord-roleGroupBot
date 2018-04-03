@@ -262,6 +262,23 @@ public class MyListener extends ListenerAdapter {
                                     }
                                     break;
 
+                                case "prefix":
+                                    if (member.isOwner() || guild.memberIsMod(member)) {
+                                        if(args.length>=3) {
+                                            String result;
+                                            result=emojiGuild.setPrefix(args[2],output);
+                                            System.out.println(" in guild: '" + guildname + "'");
+                                            channel.sendMessage(result).queue();
+                                        }else{
+                                            System.out.println("command syntax in guild: '" + guildname + "'");
+                                            channel.sendMessage(output.getString("error-wrong-syntax")).queue();
+                                        }
+                                    }else {
+                                        channel.sendMessage(output.getString("error-user-permission")).queue();
+                                        System.out.println("no permission in guild: '" + guildname + "'");
+                                    }
+                                    break;
+
                                 default :
 
                                     break;
@@ -526,6 +543,8 @@ public class MyListener extends ListenerAdapter {
                 for (RegisteredEmojiGuild remoji: emojiGuild.getActiveGuilds()) {
                     if (remoji.getTitle().equals(args[0])) {
                         if ((emoji = remoji.getEmoji(args[1], event.getJDA())) != null) {
+                            message.delete().queue();
+                            channel.sendMessage("<@"+member.getUser().getId()+">:").queue();
                             channel.sendMessage(emoji).queue();
                             return;
                         }

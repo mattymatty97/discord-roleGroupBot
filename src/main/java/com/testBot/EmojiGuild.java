@@ -37,6 +37,28 @@ public class EmojiGuild {
         return ret.toString();
     }
 
+    public String setPrefix(String prefix,ResourceBundle output)
+    {
+        Statement stmt;
+        StringBuilder ret = new StringBuilder();
+        if(prefix.length()<=5) {
+            try {
+                stmt = conn.createStatement();
+                stmt.execute("UPDATE guilds SET emoji_prefix='"+prefix+"' WHERE guildid="+guildId);
+                this.prefix=prefix;
+                stmt.close();
+                ret.append(output.getString("emoji-prefix-set"));
+            } catch (SQLException ex) {
+                System.out.println("SQLException: " + ex.getMessage());
+                System.out.println("SQLState: " + ex.getSQLState());
+                System.out.println("VendorError: " + ex.getErrorCode());
+            }
+        }else{
+            ret.append(output.getString("error-emoji-long"));
+        }
+        return ret.toString();
+    }
+
     public String addGuild(List<EmojiGuild> guilds,String title,ResourceBundle output)
     {
         Statement stmt;
