@@ -27,8 +27,14 @@ public class RegisteredEmojiGuild extends EmojiGuild {
         try
         {
             stmt=conn.createStatement();
-            stmt.execute("DELETE FROM \"registered-emoji-server\" WHERE guildid="+guildId);
+            stmt.execute("DELETE FROM active_emoji_guilds WHERE emoji_guildID="+guildId);
+            stmt.execute("DELETE FROM registered_emoji_server WHERE guildid="+guildId);
+            for (EmojiGuild emojiGuild : guilds)
+            {
+                emojiGuild.onGuildDelete(this);
+            }
             demoteGuild(guilds);
+            System.out.print("emoji unregistered");
             ret.append(output.getString("emoji-guild-unregistered"));
         }catch (SQLException ex) {
             System.out.println("SQLException: " + ex.getMessage());
@@ -76,7 +82,7 @@ public class RegisteredEmojiGuild extends EmojiGuild {
         super(guild,actconn);
         try{
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT title FROM \"registered-emoji-server\" WHERE guildid="+guild);
+            ResultSet rs = stmt.executeQuery("SELECT title FROM registered_emoji_server WHERE guildid="+guild);
             if(rs.next())
             {
                 this.title = rs.getString(1);

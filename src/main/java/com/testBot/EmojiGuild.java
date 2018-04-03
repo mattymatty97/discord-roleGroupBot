@@ -50,7 +50,7 @@ public class EmojiGuild {
                         try
                         {
                             stmt = conn.createStatement();
-                            stmt.execute("INSERT INTO \"active-emoji-guilds\"(guildid,\"emoji-guildID\") VALUES ("+guildId+","+rguild.getGuildId()+")");
+                            stmt.execute("INSERT INTO active_emoji_guilds(guildid,emoji_guildID) VALUES ("+guildId+","+rguild.getGuildId()+")");
                             activeGuilds.add(rguild);
                             found=true;
                             break;
@@ -66,11 +66,14 @@ public class EmojiGuild {
             }
             if(found){
                 ret.append(output.getString("emoji-add"));
+                System.out.print("emoji server added");
             }else{
                 ret.append(output.getString("error-emoji-set-404"));
+                System.out.print("emoji server not found");
             }
         }else{
             ret.append(output.getString("error-emoji-limit"));
+            System.out.print("emoji server limit");
         }
         return ret.toString();
     }
@@ -85,7 +88,7 @@ public class EmojiGuild {
                         try
                         {
                             stmt = conn.createStatement();
-                            stmt.execute("DELETE FROM \"active-emoji-guilds\" WHERE guildid="+guildId+" AND 'emoji-guildID'="+guild.getGuildId());
+                            stmt.execute("DELETE FROM active_emoji_guilds WHERE guildid="+guildId+" AND 'emoji-guildID'="+guild.getGuildId());
                             activeGuilds.remove(guild);
                             found=true;
                             break;
@@ -99,8 +102,10 @@ public class EmojiGuild {
                 }
             if(found){
                 ret.append(output.getString("emoji-remove"));
+                System.out.print("emoji server removed");
             }else{
                 ret.append(output.getString("error-emoji-set-404"));
+                System.out.print("emoji server not found");
             }
         }
         return ret.toString();
@@ -113,14 +118,16 @@ public class EmojiGuild {
         try
         {
             stmt=conn.createStatement();
-            rs = stmt.executeQuery("SELECT * FROM \"registered-emoji-server\" WHERE title='"+title+"'");
+            rs = stmt.executeQuery("SELECT * FROM registered_emoji_server WHERE title='"+title+"'");
             if(rs.next())
             {
                 ret.append(output.getString("error-emoji-title-used"));
+                System.out.print("emoji not registered");
             }else {
-                stmt.execute("INSERT INTO \"registered-emoji-server\"(guildid, title) VALUES (" + guildId + ",'"+title+"')");
+                stmt.execute("INSERT INTO registered_emoji_server(guildid, title) VALUES (" + guildId + ",'"+title+"')");
                 promoteGuild(guilds,title);
                 ret.append(output.getString("emoji-guild-registered"));
+                System.out.print("emoji registered");
             }
         }catch (SQLException ex) {
             System.out.println("SQLException: " + ex.getMessage());
@@ -145,7 +152,7 @@ public class EmojiGuild {
         try
         {
             stmt = conn.createStatement();
-            rs = stmt.executeQuery("SELECT \"emoji-guildID\" FROM \"active-emoji-guilds\" WHERE guildid="+guildId);
+            rs = stmt.executeQuery("SELECT emoji_guildID FROM active_emoji_guilds WHERE guildid="+guildId);
             while (rs.next()){
                 long emojiguild =rs.getLong(1);
                 for (EmojiGuild guild : guilds){
@@ -177,7 +184,7 @@ public class EmojiGuild {
         ResultSet rs;
         try {
             stmt = conn.createStatement();
-            rs = stmt.executeQuery("SELECT guildid,\"emoji-prefix\",\"max-emoji\" FROM guilds WHERE guildid=" + guildId);
+            rs = stmt.executeQuery("SELECT guildid,emoji_prefix,max_emoji FROM guilds WHERE guildid=" + guildId);
 
             if (rs.next()) {
                 this.prefix=rs.getString(2);
@@ -223,6 +230,12 @@ public class EmojiGuild {
                 }
             }
         return ret.toString();
+    }
+
+    public void onGuildDelete(EmojiGuild guild)
+    {
+        if(guild instanceof RegisteredEmojiGuild)
+        activeGuilds.remove(guild);
     }
 
 

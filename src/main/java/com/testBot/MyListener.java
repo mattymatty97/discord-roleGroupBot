@@ -55,7 +55,7 @@ public class MyListener extends ListenerAdapter {
         List<Long> to_promote = new ArrayList<>();
         try{
             stmt =conn.createStatement();
-            rs=stmt.executeQuery("SELECT guildid FROM \"registered-emoji-server\"");
+            rs=stmt.executeQuery("SELECT guildid FROM registered_emoji_server");
             while (rs.next())
             {
                 to_promote.add(rs.getLong(1));
@@ -164,7 +164,8 @@ public class MyListener extends ListenerAdapter {
                             switch (args[1])
                             {
                                 case "list":
-                                    channel.sendMessage(output.getString("emoji-list")+emojiGuild.printEmojiList(event.getJDA())).queue();
+                                    channel.sendMessage(output.getString("emoji-list")+" "+emojiGuild.getPrefix()+"\n"+emojiGuild.printEmojiList(event.getJDA())).queue();
+                                    System.out.println("emoji list shown in guild: '" + guildname + "'");
                                     break;
 
                                 case "register":
@@ -178,6 +179,7 @@ public class MyListener extends ListenerAdapter {
                                                 if(args[2].length()<=10){
                                                     String result;
                                                     result = emojiGuild.registerGuild(emojiGuilds,args[2],output);
+                                                    System.out.println(" in guild: '" + guildname + "'");
                                                     guild.updateEmojiGuild(emojiGuilds);
                                                     channel.sendMessage(result).queue();
                                                 }else
@@ -202,6 +204,7 @@ public class MyListener extends ListenerAdapter {
                                             RegisteredEmojiGuild emoji = (RegisteredEmojiGuild) emojiGuild;
                                             String result;
                                             result = emoji.unRegisterGuild(emojiGuilds,output);
+                                            System.out.println(" in guild: '" + guildname + "'");
                                             guild.updateEmojiGuild(emojiGuilds);
                                             channel.sendMessage(result).queue();
                                         }else{
@@ -219,6 +222,7 @@ public class MyListener extends ListenerAdapter {
                                         if(args.length>=3) {
                                             String result;
                                             result=emojiGuild.addGuild(emojiGuilds,args[2],output);
+                                            System.out.println(" in guild: '" + guildname + "'");
                                             channel.sendMessage(result).queue();
                                         }else{
                                             System.out.println("command syntax in guild: '" + guildname + "'");
@@ -235,6 +239,7 @@ public class MyListener extends ListenerAdapter {
                                         if(args.length>=3) {
                                             String result;
                                             result=emojiGuild.removeGuild(emojiGuilds,args[2],output);
+                                            System.out.println(" in guild: '" + guildname + "'");
                                             channel.sendMessage(result).queue();
                                         }else{
                                             System.out.println("command syntax in guild: '" + guildname + "'");
@@ -250,6 +255,7 @@ public class MyListener extends ListenerAdapter {
                                     if (member.isOwner() || guild.memberIsMod(member)) {
                                         String result = EmojiGuild.printRegistered(emojiGuilds,event.getJDA());
                                         channel.sendMessage(output.getString("emoji-server-list")+result).queue();
+                                        System.out.println("emoji server list shown in guild: '" + guildname + "'");
                                     }else {
                                         channel.sendMessage(output.getString("error-user-permission")).queue();
                                         System.out.println("no permission in guild: '" + guildname + "'");
@@ -510,8 +516,8 @@ public class MyListener extends ListenerAdapter {
                         }
                     }
                 }
-
-//-------ALL---------------------------IGNORED--------------------------------
+            return;
+//-------ALL---------------------------EMOJI-DIRECT--------------------------------
 
             } else if(content.length() > guild.getEmojiGuild().getPrefix().length() && content.substring(0, guild.getEmojiGuild().getPrefix().length()).equals(guild.getEmojiGuild().getPrefix())) {
                 String[] args = content.substring(emojiGuild.getPrefix().length()).split("\\.");
@@ -521,14 +527,14 @@ public class MyListener extends ListenerAdapter {
                     if (remoji.getTitle().equals(args[0])) {
                         if ((emoji = remoji.getEmoji(args[1], event.getJDA())) != null) {
                             channel.sendMessage(emoji).queue();
+                            return;
                         }
                         break;
                     }
                 }
-            }else{
-                //if the message was not directed to the bot
-                System.out.println("Ignored");
             }
+            //if the message was not directed to the bot
+            System.out.println("Ignored");
         }else{
             event.getJDA().shutdown();
             Reconnector.reconnect();
@@ -616,12 +622,19 @@ public class MyListener extends ListenerAdapter {
                 stmt.execute("DELETE FROM roles WHERE guildid="+event.getGuild().getIdLong());
             }else
                 rs.close();
-            stmt.execute("DELETE FROM guilds WHERE guildid="+event.getGuild().getIdLong());
-            stmt.execute("COMMIT");
-            stmt.close();
             BotGuild guild = findGuild(event.getGuild().getIdLong());
             if(guild!=null)
                 savedGuilds.remove(guild);
+            for (EmojiGuild emojiGuild : emojiGuilds)
+            {
+                emojiGuild.onGuildDelete(guild.getEmojiGuild());
+            }
+            emojiGuilds.remove(guild.getEmojiGuild());
+            stmt.execute("DELETE FROM active_emoji_guilds WHERE emoji_guildID="+event.getGuild().getIdLong()+" OR guildid="+event.getGuild().getIdLong());
+            stmt.execute("DELETE FROM registered_emoji_server WHERE guildid="+event.getGuild().getIdLong());
+            stmt.execute("DELETE FROM guilds WHERE guildid="+event.getGuild().getIdLong());
+            stmt.execute("COMMIT");
+            stmt.close();
             System.out.println("guild "+event.getGuild().getName()+" has been removed");
         }catch (SQLException ex)
         {
@@ -636,7 +649,6 @@ public class MyListener extends ListenerAdapter {
         Role role = member.getGuild().getRoleById(roleId);
         return role != null && list.contains(role);
     }
-
 
     //need explanation?
     private BotGuild findGuild(Long guildId) {
