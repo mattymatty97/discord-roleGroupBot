@@ -84,6 +84,7 @@ public class RegisteredEmojiGuild extends EmojiGuild {
     RegisteredEmojiGuild(Connection conn, long guildId, String prefix,List<RegisteredEmojiGuild> activeguilds,int maxguilds,String title){
         super(conn,guildId,prefix,activeguilds,maxguilds);
         this.title=title;
+        activeguilds.add(this);
         this.maxguilds++;
     }
 
@@ -95,6 +96,7 @@ public class RegisteredEmojiGuild extends EmojiGuild {
             if(rs.next())
             {
                 this.title = rs.getString(1);
+                activeGuilds.add(this);
                 this.maxguilds++;
             }
             rs.close();
