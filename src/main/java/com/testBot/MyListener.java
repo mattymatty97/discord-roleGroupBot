@@ -103,6 +103,10 @@ public class MyListener extends ListenerAdapter {
             if (event.isFromType(ChannelType.PRIVATE)) return;
             //if is a bot exit immediately
             if (event.getAuthor().isBot()) return;
+            //if i cant write
+            if(!PermissionUtil.checkPermission(event.getTextChannel(),event.getGuild().getSelfMember(),Permission.MESSAGE_WRITE))
+                return;
+
             BotGuild guild;
             //name of sender server
             String guildname = event.getGuild().getName();
