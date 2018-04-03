@@ -1,6 +1,7 @@
 package com.testBot;
 
 import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.ReadyEvent;
 import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
@@ -9,6 +10,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.events.role.RoleDeleteEvent;
 import net.dv8tion.jda.core.exceptions.InsufficientPermissionException;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import net.dv8tion.jda.core.utils.PermissionUtil;
 
 import java.awt.*;
 import java.sql.*;
@@ -543,7 +545,9 @@ public class MyListener extends ListenerAdapter {
                 for (RegisteredEmojiGuild remoji: emojiGuild.getActiveGuilds()) {
                     if (remoji.getTitle().equals(args[0])) {
                         if ((emoji = remoji.getEmoji(args[1], event.getJDA())) != null) {
-                            message.delete().queue();
+                            if(PermissionUtil.checkPermission(event.getGuild().getTextChannelById(channel.getId()),event.getGuild().getSelfMember(),Permission.MESSAGE_MANAGE)) {
+                                message.delete().queue();
+                            }
                             channel.sendMessage("<@"+member.getUser().getId()+">:").queue();
                             channel.sendMessage(emoji).queue();
                             return;
@@ -552,6 +556,7 @@ public class MyListener extends ListenerAdapter {
                     }
                 }
             }
+//-------ALL---------------------------IGNORED--------------------------------
             //if the message was not directed to the bot
             System.out.println("Ignored");
         }else{

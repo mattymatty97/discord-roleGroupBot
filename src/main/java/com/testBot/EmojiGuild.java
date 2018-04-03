@@ -32,7 +32,8 @@ public class EmojiGuild {
         StringBuilder ret = new StringBuilder();
 
         for(RegisteredEmojiGuild guild : activeGuilds){
-            ret.append(guild.getEmojiList(api));
+            if(guild!=this)
+                ret.append(guild.getEmojiList(api));
         }
         return ret.toString();
     }
@@ -62,40 +63,48 @@ public class EmojiGuild {
     public String addGuild(List<EmojiGuild> guilds,String title,ResourceBundle output)
     {
         Statement stmt;
-        StringBuilder ret = new StringBuilder();
         boolean found= false;
-        if(activeGuilds.size()<maxguilds) {
-            for (EmojiGuild guild : guilds) {
-                if (guild instanceof RegisteredEmojiGuild) {
-                    RegisteredEmojiGuild rguild = (RegisteredEmojiGuild) guild;
-                    if (rguild.getTitle().equals(title)){
-                        try
-                        {
-                            stmt = conn.createStatement();
-                            stmt.execute("INSERT INTO active_emoji_guilds(guildid,emoji_guildID) VALUES ("+guildId+","+rguild.getGuildId()+")");
-                            activeGuilds.add(rguild);
-                            found=true;
-                            break;
-                        }catch(SQLException ex)
-                        {
-                            System.out.println("SQLException: " + ex.getMessage());
-                            System.out.println("SQLState: " + ex.getSQLState());
-                            System.out.println("VendorError: " + ex.getErrorCode());
-                            break;
+        StringBuilder ret = new StringBuilder();
+        for (RegisteredEmojiGuild guild : activeGuilds)
+        {
+            if(guild.getTitle().equals(title))
+                found=true;
+        }
+        if(!found) {
+            if (activeGuilds.size() < maxguilds) {
+                for (EmojiGuild guild : guilds) {
+                    if (guild instanceof RegisteredEmojiGuild) {
+                        RegisteredEmojiGuild rguild = (RegisteredEmojiGuild) guild;
+                        if (rguild.getTitle().equals(title)) {
+                            try {
+                                stmt = conn.createStatement();
+                                stmt.execute("INSERT INTO active_emoji_guilds(guildid,emoji_guildID) VALUES (" + guildId + "," + rguild.getGuildId() + ")");
+                                activeGuilds.add(rguild);
+                                found = true;
+                                break;
+                            } catch (SQLException ex) {
+                                System.out.println("SQLException: " + ex.getMessage());
+                                System.out.println("SQLState: " + ex.getSQLState());
+                                System.out.println("VendorError: " + ex.getErrorCode());
+                                break;
+                            }
                         }
                     }
                 }
-            }
-            if(found){
-                ret.append(output.getString("emoji-add"));
-                System.out.print("emoji server added");
-            }else{
-                ret.append(output.getString("error-emoji-set-404"));
-                System.out.print("emoji server not found");
+                if (found) {
+                    ret.append(output.getString("emoji-add"));
+                    System.out.print("emoji server added");
+                } else {
+                    ret.append(output.getString("error-emoji-set-404"));
+                    System.out.print("emoji server not found");
+                }
+            } else {
+                ret.append(output.getString("error-emoji-limit"));
+                System.out.print("emoji server limit");
             }
         }else{
-            ret.append(output.getString("error-emoji-limit"));
-            System.out.print("emoji server limit");
+            ret.append(output.getString("error-emoji-used"));
+            System.out.print("emoji server yet used");
         }
         return ret.toString();
     }
@@ -110,7 +119,7 @@ public class EmojiGuild {
                         try
                         {
                             stmt = conn.createStatement();
-                            stmt.execute("DELETE FROM active_emoji_guilds WHERE guildid="+guildId+" AND 'emoji-guildID'="+guild.getGuildId());
+                            stmt.execute("DELETE FROM active_emoji_guilds WHERE guildid="+guildId+" AND emoji_guildID="+guild.getGuildId());
                             activeGuilds.remove(guild);
                             found=true;
                             break;

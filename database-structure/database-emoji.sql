@@ -1,8 +1,8 @@
 CREATE TABLE guilds
 (
-  guildid        BIGINT                                       NOT NULL,
-  prefix         VARCHAR(10) DEFAULT 'tb!' :: CHARACTER VARYING,
-  guildname      VARCHAR(21845),
+  guildid      BIGINT                                       NOT NULL,
+  prefix       VARCHAR(10) DEFAULT 'tb!' :: CHARACTER VARYING,
+  guildname    VARCHAR(21845),
   emoji_prefix VARCHAR(10) DEFAULT ';' :: CHARACTER VARYING NOT NULL,
   max_emoji    INTEGER DEFAULT 4                            NOT NULL,
   CONSTRAINT guilds_guildid_pk
@@ -58,7 +58,7 @@ CREATE TABLE registered_emoji_server
   FOREIGN KEY (guildid) REFERENCES guilds
 );
 
-CREATE UNIQUE INDEX registered_emoji_server_guildID_uindex
+CREATE UNIQUE INDEX registered_emoji_server_guildid_uindex
   ON registered_emoji_server (guildid);
 
 CREATE UNIQUE INDEX registered_emoji_server_title_uindex
@@ -66,17 +66,14 @@ CREATE UNIQUE INDEX registered_emoji_server_title_uindex
 
 CREATE TABLE active_emoji_guilds
 (
-  guildid         BIGINT NOT NULL,
-  emoji_guildID BIGINT NOT NULL,
-  CONSTRAINT active_emoji_guilds_pkey
-  PRIMARY KEY (guildid),
+  guildid       BIGINT NOT NULL,
+  emoji_guildid BIGINT NOT NULL,
+  CONSTRAINT active_emoji_guilds_guildid_emoji_guildid_pk
+  PRIMARY KEY (guildid, emoji_guildid),
   CONSTRAINT active_emoji_guilds_guilds_guildid_guildid_fk
   FOREIGN KEY (guildid) REFERENCES guilds,
   CONSTRAINT active_emoji_guilds_registered_emoji_server_guildid_fk
-  FOREIGN KEY (emoji_guildID) REFERENCES registered_emoji_server
+  FOREIGN KEY (emoji_guildid) REFERENCES registered_emoji_server
 );
-
-CREATE UNIQUE INDEX active_emoji_guilds_guildID_uindex
-  ON active_emoji_guilds (guildid);
 
 

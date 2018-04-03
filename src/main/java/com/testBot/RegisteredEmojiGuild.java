@@ -14,9 +14,17 @@ public class RegisteredEmojiGuild extends EmojiGuild {
         return title;
     }
 
+    @Override
+    public String removeGuild(List<EmojiGuild> guilds, String title, ResourceBundle output) {
+        if(title!=this.title)
+            return super.removeGuild(guilds, title, output);
+        else
+            return output.getString("error-emoji-remove-yourself");
+    }
+
     public void demoteGuild(List<EmojiGuild> guilds)
     {
-        EmojiGuild demoted = new EmojiGuild(conn,guildId,prefix,activeGuilds,maxguilds);
+        EmojiGuild demoted = new EmojiGuild(conn,guildId,prefix,activeGuilds,maxguilds-1);
         guilds.remove(this);
         guilds.add(demoted);
     }
@@ -76,6 +84,7 @@ public class RegisteredEmojiGuild extends EmojiGuild {
     RegisteredEmojiGuild(Connection conn, long guildId, String prefix,List<RegisteredEmojiGuild> activeguilds,int maxguilds,String title){
         super(conn,guildId,prefix,activeguilds,maxguilds);
         this.title=title;
+        this.maxguilds++;
     }
 
     RegisteredEmojiGuild(long guild, Connection actconn){
@@ -86,6 +95,7 @@ public class RegisteredEmojiGuild extends EmojiGuild {
             if(rs.next())
             {
                 this.title = rs.getString(1);
+                this.maxguilds++;
             }
             rs.close();
             stmt.close();
