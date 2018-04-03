@@ -12,9 +12,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import net.dv8tion.jda.core.entities.Game;
-import net.dv8tion.jda.core.exceptions.RateLimitedException;
-
-import javax.security.auth.login.LoginException;
 
 public class Reconnector {
     public static void reconnect(){

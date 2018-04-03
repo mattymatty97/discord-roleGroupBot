@@ -19,6 +19,7 @@ public class BotGuild {
     private String prefix;          /**prefix for trig a reaction**/
     private List<Long> modRolesById;/**list of roles (stored by id) that are allowed to run mod commands**/
     private List<RoleGroup> roleGroups;
+    private EmojiGuild emojiGuild;
     private Locale locale;
     public  boolean isNew = true;
 
@@ -64,6 +65,10 @@ public class BotGuild {
         if(!isOpen)
             return null;
         return roleGroups;
+    }
+
+    public EmojiGuild getEmojiGuild() {
+        return emojiGuild;
     }
 
     /**
@@ -232,6 +237,16 @@ public class BotGuild {
         return this;
     }
 
+    public void updateEmojiGuild(List<EmojiGuild> emojiGuilds)
+    {
+        for (EmojiGuild emojiGuild : emojiGuilds)
+        {
+            if(guildId.equals(emojiGuild.guildId)) {
+                this.emojiGuild = emojiGuild;
+                break;
+            }
+        }
+    }
 
     /**
      * constructor of object
@@ -241,7 +256,7 @@ public class BotGuild {
      * @param guild the guild class of api
      * @param actconn the db connection
      */
-    BotGuild(Guild guild, Connection actconn)
+    BotGuild(Guild guild, Connection actconn,List<EmojiGuild> emojiGuilds)
     {
         String guildName = guild.getName();
         Long guildId = guild.getIdLong();
@@ -286,12 +301,18 @@ public class BotGuild {
                 rs.close();
                 stmt.execute("UPDATE guilds SET guildname='"+ guildName +"' WHERE guildid=" + guildId);
                 stmt.execute("COMMIT");
+                updateEmojiGuild(emojiGuilds);
             } else {
                 rs.close();
                 this.modRolesById.clear();
                 this.prefix = System.getenv("DEFAULT_PREFIX");
-                stmt.execute("INSERT INTO guilds(guildid,prefix,guildname) VALUES (" + guildId + ",'" + prefix + "','"+guildName+"')");
+                String emoji_prefix = System.getenv("DEFAULT_EMOJI_PREFIX");
+                int max_emoji = Integer.parseInt(System.getenv("DEFAULT_MAX_EMOJI"));
+                stmt.execute("INSERT INTO guilds(guildid,prefix,guildname,emoji_prefix,max_emoji) VALUES (" + this.guildId + ",'" + this.prefix + "','"+ guildName +"','"+ emoji_prefix +"',"+max_emoji+")");
                 stmt.execute("COMMIT");
+                EmojiGuild actual = new EmojiGuild(conn,guildId,emoji_prefix,max_emoji);
+                emojiGuilds.add(actual);
+                this.emojiGuild = actual;
                 autoModRole(guild);
             }
             stmt.close();
