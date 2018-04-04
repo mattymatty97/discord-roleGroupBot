@@ -587,6 +587,7 @@ public class MyListener extends ListenerAdapter {
                     }
                     EmbedBuilder eb = new EmbedBuilder();
                     eb.setDescription(ret.toString());
+                    eb.addBlankField(false);
                     eb.setFooter(member.getEffectiveName(),member.getUser().getAvatarUrl());
                     channel.sendMessage(eb.build()).queue();
                     return;
