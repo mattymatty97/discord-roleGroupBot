@@ -533,9 +533,6 @@ public class MyListener extends ListenerAdapter {
                                 channel.sendMessage(output.getString("error-user-permission")).queue();
                                 System.out.println("rolegroup cc - denied in guild: '" + guildname + "'");
                             }
-                        } else {
-                            channel.sendMessage(output.getString("error-unknown-command")).queue();
-                            System.out.println("not a command");
                         }
                     }
                 }
