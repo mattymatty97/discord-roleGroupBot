@@ -585,11 +585,12 @@ public class MyListener extends ListenerAdapter {
                     if(PermissionUtil.checkPermission(event.getGuild().getTextChannelById(channel.getId()),event.getGuild().getSelfMember(),Permission.MESSAGE_MANAGE)) {
                         message.delete().queue();
                     }
-                    EmbedBuilder eb = new EmbedBuilder();
+                    EmbedBuilder eb = new EmbedBuilder();/*
                     eb.setDescription(ret.toString());
-                    eb.addBlankField(false);
+                    eb.addBlankField(false);*/
                     eb.setFooter(member.getEffectiveName(),member.getUser().getAvatarUrl());
                     channel.sendMessage(eb.build()).queue();
+                    channel.sendMessage(ret.toString()).queue();
                     return;
                 }
 
