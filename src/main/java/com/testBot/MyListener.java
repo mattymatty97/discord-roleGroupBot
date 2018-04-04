@@ -548,7 +548,7 @@ public class MyListener extends ListenerAdapter {
             return;
 //-------ALL---------------------------EMOJI-DIRECT--------------------------------
             } else {
-                String args[] = message.getRawContent().split("\\"+emojiGuild.getPrefix());
+                String args[] = message.getRawContent().split((emojiGuild.getPrefix()));
                 StringBuilder ret = new StringBuilder(args[0]);
                 boolean found=false;
                 boolean last=false;
@@ -588,6 +588,7 @@ public class MyListener extends ListenerAdapter {
                     EmbedBuilder eb = new EmbedBuilder();/*
                     eb.setDescription(ret.toString());
                     eb.addBlankField(false);*/
+                    eb.setColor(member.getColor());
                     eb.setFooter(member.getEffectiveName(),member.getUser().getAvatarUrl());
                     channel.sendMessage(eb.build()).queue();
                     channel.sendMessage(ret.toString()).queue();
