@@ -585,8 +585,10 @@ public class MyListener extends ListenerAdapter {
                     if(PermissionUtil.checkPermission(event.getGuild().getTextChannelById(channel.getId()),event.getGuild().getSelfMember(),Permission.MESSAGE_MANAGE)) {
                         message.delete().queue();
                     }
-                    channel.sendMessage("<@"+member.getUser().getId()+">:").queue();
-                    channel.sendMessage(ret.toString()).queue();
+                    EmbedBuilder eb = new EmbedBuilder();
+                    eb.setDescription(ret.toString());
+                    eb.setFooter(member.getEffectiveName(),member.getUser().getAvatarUrl());
+                    channel.sendMessage(eb.build()).queue();
                     return;
                 }
 
