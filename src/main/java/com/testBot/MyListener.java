@@ -547,25 +547,51 @@ public class MyListener extends ListenerAdapter {
                 }
             return;
 //-------ALL---------------------------EMOJI-DIRECT--------------------------------
-
-            } else if(content.length() > guild.getEmojiGuild().getPrefix().length() && content.substring(0, guild.getEmojiGuild().getPrefix().length()).equals(guild.getEmojiGuild().getPrefix())) {
-                String[] args = content.substring(emojiGuild.getPrefix().length()).split("\\.");
-                String emoji;
-                if(args.length==2)
-                for (RegisteredEmojiGuild remoji: emojiGuild.getActiveGuilds()) {
-                    if (remoji.getTitle().equals(args[0])) {
-                        if ((emoji = remoji.getEmoji(args[1], event.getJDA())) != null) {
-                            if(PermissionUtil.checkPermission(event.getGuild().getTextChannelById(channel.getId()),event.getGuild().getSelfMember(),Permission.MESSAGE_MANAGE)) {
-                                message.delete().queue();
-                            }
-                            channel.sendMessage("<@"+member.getUser().getId()+">:").queue();
-                            channel.sendMessage(emoji).queue();
-                            return;
+            } else {
+                String args[] = message.getRawContent().split("\\"+emojiGuild.getPrefix());
+                StringBuilder ret = new StringBuilder(args[0]);
+                boolean found=false;
+                boolean last=false;
+                boolean used=false;
+                if(args.length>1)
+                {
+                    for(int i=1;i<args.length;i++)
+                    {
+                        String arg = args[i];
+                            if (arg.matches("\\w+\\.\\w+")) {
+                                String[] param = arg.split("\\.");
+                                String emoji;
+                                for (RegisteredEmojiGuild remoji: emojiGuild.getActiveGuilds()) {
+                                    if (remoji.getTitle().equals(param[0])) {
+                                        if ((emoji = remoji.getEmoji(param[1], event.getJDA())) != null) {
+                                            ret.append(emoji);
+                                            found=true;
+                                            used=true;
+                                        }
+                                        break;
+                                    }
+                                }
                         }
-                        break;
+                        if(!found) {
+                            if (!last)
+                                ret.append(emojiGuild.getPrefix());
+                            ret.append(arg);
+                        }
+                        last=found;
+                        found=false;
                     }
                 }
+                if(used){
+                    if(PermissionUtil.checkPermission(event.getGuild().getTextChannelById(channel.getId()),event.getGuild().getSelfMember(),Permission.MESSAGE_MANAGE)) {
+                        message.delete().queue();
+                    }
+                    channel.sendMessage("<@"+member.getUser().getId()+">:").queue();
+                    channel.sendMessage(ret.toString()).queue();
+                    return;
+                }
+
             }
+
 //-------ALL---------------------------IGNORED--------------------------------
             //if the message was not directed to the bot
             System.out.println("Ignored");
