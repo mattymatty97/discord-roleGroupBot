@@ -3,14 +3,13 @@ import com.testBot.*;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
+
 import java.sql.*;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.dv8tion.jda.core.entities.Game;
-import net.dv8tion.jda.core.entities.Guild;
-
 public class BOT
 {
     static String url;
@@ -46,6 +45,8 @@ public class BOT
 
         api.addEventListener(new MyListener(conn,savedGuilds));
         api.getPresence().setGame(Game.playing("v2.0.2 - em prj"));
+
+
     }
 
 

@@ -1,6 +1,7 @@
 package com.testBot;
 
 import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.ReadyEvent;
@@ -11,8 +12,14 @@ import net.dv8tion.jda.core.events.role.RoleDeleteEvent;
 import net.dv8tion.jda.core.exceptions.InsufficientPermissionException;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import net.dv8tion.jda.core.utils.PermissionUtil;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import org.json.JSONObject;
 
 import java.awt.*;
+import java.io.IOException;
 import java.sql.*;
 import java.util.*;
 import java.util.List;
@@ -92,6 +99,8 @@ public class MyListener extends ListenerAdapter {
         for (EmojiGuild guild : emojiGuilds){
             guild.readActive(emojiGuilds);
         }
+
+        updateServerCount(event.getJDA());
     }
 
     @Override
@@ -627,6 +636,7 @@ public class MyListener extends ListenerAdapter {
                 }
             }
         }
+        updateServerCount(event.getJDA());
     }
 
     @Override
@@ -667,6 +677,7 @@ public class MyListener extends ListenerAdapter {
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
         }
+        updateServerCount(event.getJDA());
     }
 
     private boolean memberHasRole(Member member, Long roleId) {
@@ -849,4 +860,29 @@ public class MyListener extends ListenerAdapter {
             System.out.println("VendorError: " + ex.getErrorCode());
         }
     }
+
+    private void updateServerCount(JDA api)
+    {
+        String url = "https://discordbots.org/api/bots/"+api.getSelfUser().getId()+"/stats";
+        String discordbots_key = System.getenv("DISCORDBOTS_KEY");
+
+        JSONObject data = new JSONObject();
+        data.put("server_count", api.getGuilds().size());
+
+        RequestBody body = RequestBody.create(MediaType.parse("application/json"), data.toString());
+
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .addHeader("User-Agent", "DiscordBot " + api.getSelfUser().getName())
+                .addHeader("Authorization", discordbots_key)
+                .build();
+
+        try {
+            new OkHttpClient().newCall(request).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
