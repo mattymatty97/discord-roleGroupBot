@@ -185,11 +185,6 @@ public class MyListener extends ListenerAdapter {
                                         System.out.println("no permission in guild: '" + guildname + "'");
                                     }
                                     break;
-                                case "enable":
-                                    break;
-                                case "disable":
-                                    
-                                    bre
                                 default :
 
                                     break;
