@@ -27,7 +27,6 @@ import java.util.List;
 public class MyListener extends ListenerAdapter {
     private Connection conn;
     private List<BotGuild> savedGuilds;
-    private EmojiGuild emojiGuild;
     public static boolean deleted=false;
 
     @Override
@@ -130,68 +129,6 @@ public class MyListener extends ListenerAdapter {
                         System.out.println("Ping executed in guild: '" + guildname + "'");
                         channel.sendMessage(output.getString("pong")).queue(); // Important to call .queue() on the RestAction returned by sendMessage(...)
                         break;
-
-//------MIXED------------------EMOJI--------------------------------------
-                    case "emoji":
-                        if(args.length >= 2)
-                        {
-                            switch (args[1])
-                            {
-                                case "list":
-                                    if(args.length==3) {
-                                        channel.sendMessage(output.getString("emoji-list") + emojiGuild.getEmojiList(args[2],event.getJDA())).queue();
-                                        System.out.println("emoji list shown in guild: '" + guildname + "'");
-                                    }else{
-                                        channel.sendMessage(output.getString("error-emoji-list")).queue();
-                                        System.out.println("error emoji list in guild: '" + guildname + "'");
-                                    }
-                                    break;
-
-                                case "servers":
-                                    String result = emojiGuild.printServers(event.getJDA());
-                                    channel.sendMessage(output.getString("emoji-server-list")+result).queue();
-                                    System.out.println("emoji server list shown in guild: '" + guildname + "'");
-                                    break;
-
-                                case "register":
-                                    if (member.isOwner() || guild.memberIsMod(member)) {
-                                        if(args.length==3){
-                                            if(args[2].length()<=10){
-                                                channel.sendMessage(emojiGuild.registerGuild(guild.getId(),args[2],output)).queue();
-                                            }else{
-                                                System.out.println("emoji register failed in guild: '" + guildname + "'");
-                                                channel.sendMessage(output.getString("error-long-title")).queue();
-                                            }
-                                        }else{
-                                            System.out.println("command syntax in guild: '" + guildname + "'");
-                                            channel.sendMessage(output.getString("error-wrong-syntax")).queue();
-                                        }
-                                    }else {
-                                        channel.sendMessage(output.getString("error-user-permission")).queue();
-                                        System.out.println("no permission in guild: '" + guildname + "'");
-                                    }
-                                    break;
-
-                                case "unregister":
-                                    if (member.isOwner() || guild.memberIsMod(member)) {
-                                        if(args.length==3){
-                                            channel.sendMessage(emojiGuild.unRegisterGuild(guild.getId(),output)).queue();
-                                        }else{
-                                            System.out.println("command syntax in guild: '" + guildname + "'");
-                                            channel.sendMessage(output.getString("error-wrong-syntax")).queue();
-                                        }
-                                    }else {
-                                        channel.sendMessage(output.getString("error-user-permission")).queue();
-                                        System.out.println("no permission in guild: '" + guildname + "'");
-                                    }
-                                    break;
-                                default :
-
-                                    break;
-                            }
-
-                        }
-                    break;
 //------MOD---------------------SET----------------------------------------
 
                     case "prefix":
@@ -262,7 +199,7 @@ public class MyListener extends ListenerAdapter {
                                     case "auto":
                                         guild.autoModrole(event.getGuild());
                                         channel.sendMessage(output.getString("modrole-auto")).queue();
-                                        System.out.println("auto adding moroles to guild: "+guildname);
+                                        System.out.println("auto adding moroles to guild: " + guildname);
                                         //break; //break removed to list new modrole list
                                     case "list":
                                         //list all modroles
@@ -436,54 +373,8 @@ public class MyListener extends ListenerAdapter {
                         }
                     }
                 }
-            return;
-//-------ALL---------------------------EMOJI-DIRECT--------------------------------
-            } else {
-                String args[] = message.getRawContent().split(System.getenv("DEFAULT_EMOJI_PREFIX"));
-                StringBuilder ret = new StringBuilder(args[0]);
-                boolean found=false;
-                boolean last=false;
-                boolean used=false;
-                if(args.length>1)
-                {
-                    for(int i=1;i<args.length;i++)
-                    {
-                        String arg = args[i];
-                        if(!last){
-                            if (arg.matches("\\w+\\.\\w+")) {
-                                String[] param = arg.split("\\.");
-                                String emoji;
-                                emoji=emojiGuild.getEmoji(arg,event.getJDA());
-                                if(emoji!=null){
-                                    ret.append(emoji);
-                                    found=true;
-                                    used=true;
-                                }
-                            }
-                        }
-                        if(!found) {
-                            if (!last)
-                                ret.append(System.getenv("DEFAULT_EMOJI_PREFIX"));
-                            ret.append(arg);
-                        }
-                        last=found;
-                        found=false;
-                    }
-                }
-                if(used){
-                    if(PermissionUtil.checkPermission(event.getGuild().getTextChannelById(channel.getId()),event.getGuild().getSelfMember(),Permission.MESSAGE_MANAGE)) {
-                        message.delete().queue();
-                    }
-                    EmbedBuilder eb = new EmbedBuilder();
-                    eb.setColor(member.getColor());
-                    eb.setFooter(member.getEffectiveName(),member.getUser().getAvatarUrl());
-                    channel.sendMessage(eb.build()).queue();
-                    channel.sendMessage(ret.toString()).queue();
-                    return;
-                }
-
+                return;
             }
-
 //-------ALL---------------------------IGNORED--------------------------------
             //if the message was not directed to the bot
             System.out.println("Ignored");
@@ -575,9 +466,6 @@ public class MyListener extends ListenerAdapter {
                 stmt.execute("DELETE FROM roles WHERE guildid="+event.getGuild().getIdLong());
             }else
                 rs.close();
-            stmt.execute("DELETE FROM active_emoji_guilds WHERE emoji_guildID="+event.getGuild().getIdLong()+" OR guildid="+event.getGuild().getIdLong());
-            stmt.execute("DELETE FROM registered_emoji_server WHERE guildid="+event.getGuild().getIdLong());
-            stmt.execute("DELETE FROM guilds WHERE guildid="+event.getGuild().getIdLong());
             stmt.execute("COMMIT");
             stmt.close();
             System.out.println("guild "+event.getGuild().getName()+" has been removed");
@@ -630,9 +518,6 @@ public class MyListener extends ListenerAdapter {
 
                 helpMsg.addField("rolegroup", output.getString("help-def-rolegroup"), false);
 
-                helpMsg.addField("emoji", output.getString("help-def-emoji-mod"), false);
-            }else{
-                helpMsg.addField("emoji", output.getString("help-def-emoji-user"), false);
             }
             helpMsg.addBlankField(false);
             for(RoleGroup roleGroup : guild.getRoleGroups())
@@ -693,18 +578,6 @@ public class MyListener extends ListenerAdapter {
                     helpMsg.addField(output.getString("help-field-user-example"), output.getString("help-rolegroup-user-example"), false);
                     helpMsg.addField(output.getString("help-field-dyk"), output.getString("help-rolegroup-dyk"), false);
                     break;
-                case "emoji":
-                    helpMsg.setTitle(output.getString("help-emoji-title"));
-                    helpMsg.setDescription(output.getString("help-emoji-description"));
-                    if(member.isOwner() || guild.memberIsMod(member)) {
-                        helpMsg.addField(output.getString("help-field-usage"), output.getString("help-emoji-mod-usage"), false);
-                        helpMsg.addField(output.getString("help-field-example"), output.getString("help-emoji-mod-example"), false);
-                    }else{
-                        helpMsg.addField(output.getString("help-field-usage"), output.getString("help-emoji-user-usage"), false);
-                        helpMsg.addField(output.getString("help-field-example"), output.getString("help-emoji-user-example"), false);
-                    }
-                    helpMsg.addField(output.getString("help-field-dyk"), output.getString("help-emoji-dyk"), false);
-                    break;
                 default :
                     helpMsg.setTitle(output.getString("help-404-title"));
                     helpMsg.setDescription(output.getString("help-404-cmd"));
@@ -731,7 +604,6 @@ public class MyListener extends ListenerAdapter {
     public MyListener(Connection conn, List<BotGuild> savedGuilds) {
         this.conn = conn;
         this.savedGuilds = savedGuilds;
-        this.emojiGuild=new EmojiGuild(conn);
     }
 
     private static void guildDeleteDB(Connection conn,Long guildId)
