@@ -289,9 +289,7 @@ public class BotGuild {
                 rs.close();
                 this.modRolesById.clear();
                 this.prefix = System.getenv("DEFAULT_PREFIX");
-                String emoji_prefix = System.getenv("DEFAULT_EMOJI_PREFIX");
-                int max_emoji = Integer.parseInt(System.getenv("DEFAULT_MAX_EMOJI"));
-                stmt.execute("INSERT INTO guilds(guildid,prefix,guildname,emoji_prefix,max_emoji) VALUES (" + this.guildId + ",'" + this.prefix + "','"+ guildName +"','"+ emoji_prefix +"',"+max_emoji+")");
+                stmt.execute("INSERT INTO guilds(guildid,prefix,guildname) VALUES (" + this.guildId + ",'" + this.prefix + "','"+ guildName +"')");
                 stmt.execute("COMMIT");
                 autoModRole(guild);
             }
