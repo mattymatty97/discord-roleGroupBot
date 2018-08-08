@@ -76,6 +76,33 @@ public class RoleGroup {
                         }
                     }
                     break;
+                case "POOL":
+                    rd = RoleData.find(roles,rolename);
+                    if(rd==null)
+                    {
+                        System.out.print("grouproles custom - wrong syntax");
+                        ret.append(output.getString("error-wrong-syntax"));
+                    }else {
+                        Role role = guild.getRoleById(rd.getRoleId());
+                        if (guild.getSelfMember().getRoles().get(0).getPosition() > role.getPosition()) {
+                                if (memberHasRole(member, rd.getRoleId())) {
+                                    guild.getController().removeRolesFromMember(member, role).queue();
+                                    ret.append(output.getString("cc-role-removed").replace("{role}", role.getName()));
+                                    System.out.print("grouproles custom - role removed");
+                                } else if (guild.getMembers().stream().noneMatch((Member m)->m.getRoles().contains(role))){
+                                    guild.getController().addRolesToMember(member, role).queue();
+                                    ret.append(output.getString("cc-role-added").replace("{role}", role.getName()));
+                                    System.out.print("grouproles custom - role added");
+                                } else {
+                                    ret.append(output.getString("cc-role-pool-used").replace("{role}", role.getName()));
+                                    System.out.print("grouproles custom - pool role yet used");
+                                }
+                        }else{
+                            ret.append(output.getString("error-bot-permission"));
+                            System.out.print("grouproles custom - too low role");
+                        }
+                    }
+                    break;
             }
         }else{
             ret.append(output.getString("error-cc-disabled"));
@@ -198,13 +225,12 @@ public class RoleGroup {
             case "type":
                 if(!isEnabled()) {
                     if (args[1] != null) {
-                        switch (args[1]) {
+                        switch (args[1].toLowerCase()) {
                             case "list":
-                            case "List":
-                            case "LIST":
+                            case "pool":
                                 try {
                                     stmt = conn.createStatement();
-                                    stmt.execute("UPDATE groups SET type WHERE groupid=" + groupId + " VALUE '" + args[1].toUpperCase() + "'");
+                                    stmt.execute("UPDATE groups SET type='" + args[1].toUpperCase() + "' WHERE groupid=" + groupId);
                                     stmt.execute("COMMIT");
                                     this.type = args[1].toUpperCase();
                                     stmt.close();
