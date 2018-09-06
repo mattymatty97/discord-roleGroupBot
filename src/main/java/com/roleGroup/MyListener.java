@@ -29,6 +29,8 @@ public class MyListener extends ListenerAdapter {
     private List<BotGuild> savedGuilds;
     public static boolean deleted = false;
 
+    private static String prefix = System.getenv("BOT_PREFIX");
+
     @Override
     public void onReady(ReadyEvent event) {
         Statement stmt;
@@ -107,7 +109,7 @@ public class MyListener extends ListenerAdapter {
             String content = message.getContent();
             System.out.println("Message from '" + member.getEffectiveName() + "' in guild '" + guildname + "'");
             //if length is enough test if the message starts with right prefix
-            if (content.length() > 4 && content.substring(0, 3).equals("rgb")) {
+            if (content.length() > prefix.length() && content.substring(0, prefix.length()).equals(prefix)) {
                 //split by spaces into args
                 String[] args = content.substring(3).split(" +");
                 //test first argument
