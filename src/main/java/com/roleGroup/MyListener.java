@@ -34,32 +34,33 @@ public class MyListener extends ListenerAdapter {
     @Override
     public void onReady(ReadyEvent event) {
         Statement stmt;
-        try {
-            stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT guildid FROM guilds");
-            List<Long> to_remove = new ArrayList<>();
-            while (rs.next()) {
-                boolean found = false;
-                for (Guild guild : event.getJDA().getSelfUser().getMutualGuilds()) {
-                    if (guild.getIdLong() == rs.getLong(1)) {
-                        found = true;
-                        break;
+        if(!prefix.endsWith("b")) {
+            try {
+                stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery("SELECT guildid FROM guilds");
+                List<Long> to_remove = new ArrayList<>();
+                while (rs.next()) {
+                    boolean found = false;
+                    for (Guild guild : event.getJDA().getSelfUser().getMutualGuilds()) {
+                        if (guild.getIdLong() == rs.getLong(1)) {
+                            found = true;
+                            break;
+                        }
                     }
+                    if (!found)
+                        to_remove.add(rs.getLong(1));
                 }
-                if (!found)
-                    to_remove.add(rs.getLong(1));
+                rs.close();
+                stmt.close();
+                for (Long guildId : to_remove)
+                    guildDeleteDB(conn, guildId);
+            } catch (SQLException ex) {
+                System.out.println("SQLException: " + ex.getMessage());
+                System.out.println("SQLState: " + ex.getSQLState());
+                System.out.println("VendorError: " + ex.getErrorCode());
             }
-            rs.close();
-            stmt.close();
-            for (Long guildId : to_remove)
-                guildDeleteDB(conn, guildId);
-        } catch (SQLException ex) {
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
+            updateServerCount(event.getJDA());
         }
-
-        updateServerCount(event.getJDA());
     }
 
     @Override
