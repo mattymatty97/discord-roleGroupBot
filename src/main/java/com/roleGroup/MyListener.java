@@ -111,7 +111,7 @@ public class MyListener extends ListenerAdapter {
             //if length is enough test if the message starts with right prefix
             if (content.length() > prefix.length() && content.substring(0, prefix.length()).equals(prefix)) {
                 //split by spaces into args
-                String[] args = content.substring(3).split(" +");
+                String[] args = content.substring(prefix.length()+1).split(" +");
                 //test first argument
                 switch (args[0].toCharArray()[0]) {
                     case '!':
