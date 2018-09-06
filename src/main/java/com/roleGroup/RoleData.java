@@ -1,4 +1,4 @@
-package com.testBot;
+package com.roleGroup;
 
 import java.util.List;
 

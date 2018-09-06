@@ -1,4 +1,4 @@
-import com.testBot.*;
+import com.roleGroup.*;
 
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
@@ -44,7 +44,7 @@ public class BOT
         JDA api = new JDABuilder(AccountType.BOT).setToken(System.getenv("BOT_TOKEN")).buildAsync();
 
         api.addEventListener(new MyListener(conn,savedGuilds));
-        api.getPresence().setGame(Game.playing("v1.4.0 tb prj"));
+        api.getPresence().setGame(Game.playing("v1.0 rg prj"));
     }
 
 

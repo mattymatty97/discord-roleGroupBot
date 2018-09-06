@@ -1,4 +1,4 @@
-package com.testBot;
+package com.roleGroup;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +16,7 @@ public class BotGuild {
     private boolean isOpen;         /**bool value to test validity of object**/
     private Connection conn;        /**SQL connection object send by main**/
     private Long guildId;                /**guild id used to identify guild**/
-    private String prefix;          /**prefix for trig a reaction**/
     private List<Long> modRolesById;/**list of roles (stored by id) that are allowed to run mod commands**/
-    private List<RoleGroup> roleGroups;
     private Locale locale;
     public  boolean isNew = true;
 
@@ -40,17 +38,6 @@ public class BotGuild {
     }
 
     /**
-     * getter to prefix attribute
-     * @return guild prefix in String format
-     */
-    public String getPrefix()
-    {
-        if(!isOpen)
-            return null;
-        return prefix;
-    }
-
-    /**
      * getter to modroles attribute
      * @return modroles in format List of Roles
      */
@@ -60,35 +47,6 @@ public class BotGuild {
         return modRolesById;
     }
 
-    public List<RoleGroup> getRoleGroups() {
-        if(!isOpen)
-            return null;
-        return roleGroups;
-    }
-
-    /**
-     * setter to the prefix attribute
-     * it also updates it on the remote db
-     * @param n_prefix new prefix to be set
-     * @return self object, null if on error
-     */
-    public BotGuild setPrefix(String n_prefix)
-    {
-        Statement stmt;
-        try {
-            stmt = conn.createStatement();
-            stmt.execute("UPDATE guilds SET prefix='"+ n_prefix +"' WHERE guildId="+this.guildId);
-            stmt.execute("COMMIT");
-            this.prefix = n_prefix;
-            stmt.close();
-        }catch (SQLException ex) {
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
-            return null;
-        }
-        return this;
-    }
 
     /**
      * test if a member is in the modrole list
@@ -194,44 +152,6 @@ public class BotGuild {
         return this;
     }
 
-    public BotGuild addRoleGroup(Role role,String groupName)
-    {
-        if(RoleGroup.findGroup(this.roleGroups,groupName)==null)
-        {
-            roleGroups.add(new RoleGroup(conn,this,role,groupName));
-        }else
-            return null;
-        return this;
-    }
-
-    public BotGuild removeRoleGroup(String groupName)
-    {
-        RoleGroup role = RoleGroup.findGroup(this.roleGroups,groupName);
-        if(role!=null)
-        {
-            role.delete();
-            roleGroups.remove(role);
-        }else
-            return null;
-        return this;
-    }
-
-    public BotGuild optionRoleGroup(String groupName,String[] args,Message message,MessageChannel channel)
-    {
-        ResourceBundle output = getMessages();
-        RoleGroup role = RoleGroup.findGroup(this.roleGroups,groupName);
-        if(role!=null)
-        {
-            String ret = role.modify(args,message);
-            channel.sendMessage(ret).queue();
-        }else {
-            channel.sendMessage(output.getString("error-rolegroup-not-exist")).queue();
-            System.out.print("rolegroup - not found ");
-            return null;
-        }
-        return this;
-    }
-
     /**
      * constructor of object
      * test the remote database to see if the guild already exist
@@ -246,7 +166,6 @@ public class BotGuild {
         Long guildId = guild.getIdLong();
         this.conn = actconn;
         this.modRolesById = new ArrayList<>();
-        this.roleGroups = new ArrayList<>();
         this.guildId = guildId;
         this.locale = new Locale("en","US");
 
@@ -255,11 +174,10 @@ public class BotGuild {
         List<Long> to_remove = new ArrayList<>();
         try {
             stmt = conn.createStatement();
-            rs = stmt.executeQuery("SELECT guildid,prefix FROM guilds WHERE guildid=" + guildId);
+            rs = stmt.executeQuery("SELECT guildid FROM guilds WHERE guildid=" + guildId);
 
             if (rs.next()) {
                 this.isNew=false;
-                this.prefix = rs.getString(2).intern();
                 rs.close();
                 rs = stmt.executeQuery("SELECT roleid FROM Roles WHERE guildid=" + guildId);
                 this.modRolesById.clear();
@@ -277,19 +195,13 @@ public class BotGuild {
                     stmt.execute("DELETE FROM roles WHERE roleid="+roleId);
                     stmt.execute("COMMIT ");
                 }
-                rs = stmt.executeQuery("SELECT groupid,groupname FROM groups WHERE guildid=" + guildId);
 
-                while (rs.next()) {
-                    this.roleGroups.add(new RoleGroup(conn,guild,this,rs.getLong(1),rs.getString(2)));
-                }
-                rs.close();
                 stmt.execute("UPDATE guilds SET guildname='"+ guildName +"' WHERE guildid=" + guildId);
                 stmt.execute("COMMIT");
             } else {
                 rs.close();
                 this.modRolesById.clear();
-                this.prefix = System.getenv("DEFAULT_PREFIX");
-                stmt.execute("INSERT INTO guilds(guildid,prefix,guildname) VALUES (" + this.guildId + ",'" + this.prefix + "','"+ guildName +"')");
+                stmt.execute("INSERT INTO guilds(guildid,guildname) VALUES (" + this.guildId + ",'"+ guildName +"')");
                 stmt.execute("COMMIT");
                 autoModRole(guild);
             }
@@ -340,21 +252,13 @@ public class BotGuild {
         for (Long roleId : to_remove)
             removeModRole(roleId);
 
-        for (RoleGroup group : roleGroups)
-        {
-            if(group.onRoleDeleted(role))
-                ret = true;
-        }
         return ret;
     }
 
     public void close()
     {
         this.modRolesById.clear();
-        this.roleGroups.clear();
-        this.roleGroups=null;
         this.modRolesById=null;
-        this.prefix=null;
         this.guildId=null;
         this.isOpen=false;
     }
