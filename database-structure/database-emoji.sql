@@ -1,52 +1,46 @@
-CREATE TABLE guilds
+create table guilds
 (
-  guildid      BIGINT                                       NOT NULL,
-  prefix       VARCHAR(10) DEFAULT 'tb!' :: CHARACTER VARYING,
-  guildname    VARCHAR(21845),
-  emoji_prefix VARCHAR(10) DEFAULT ';' :: CHARACTER VARYING NOT NULL,
-  max_emoji    INTEGER DEFAULT 4                            NOT NULL,
-  CONSTRAINT guilds_guildid_pk
-  PRIMARY KEY (guildid)
+  guildid   bigint not null,
+  guildname varchar(21845),
+  constraint guilds_guildid_pk
+  primary key (guildid)
 );
 
-CREATE TABLE roles
+create table groups
 (
-  guildid  BIGINT NOT NULL,
-  roleid   BIGINT NOT NULL,
-  rolename VARCHAR(21845),
-  CONSTRAINT roles_guildid_roleid_pk
-  PRIMARY KEY (guildid, roleid),
-  CONSTRAINT roles_guilds_guildid_fk
-  FOREIGN KEY (guildid) REFERENCES guilds
+  guildid   bigint,
+  groupid   bigserial             not null,
+  roleid    bigint,
+  type      varchar(10),
+  groupname varchar(20),
+  enabled   boolean default false not null,
+  constraint groups_groupid_pk
+  primary key (groupid),
+  constraint groups_guilds_guildid_fk
+  foreign key (guildid) references guilds
 );
 
-CREATE TABLE groups
+create table grouproles
 (
-  guildid   BIGINT,
-  groupid   BIGSERIAL             NOT NULL,
-  roleid    BIGINT,
-  type      VARCHAR(10),
-  groupname VARCHAR(20),
-  enabled   BOOLEAN DEFAULT FALSE NOT NULL,
-  CONSTRAINT groups_groupid_pk
-  PRIMARY KEY (groupid),
-  CONSTRAINT groups_guilds_guildid_fk
-  FOREIGN KEY (guildid) REFERENCES guilds
+  groupid  bigint not null,
+  roleid   bigint not null,
+  rolename varchar(21845),
+  constraint grouproles_groupid_roleid_pk
+  primary key (groupid, roleid),
+  constraint grouproles_groups_groupid_fk
+  foreign key (groupid) references groups
 );
 
-CREATE UNIQUE INDEX groups_groupid_uindex
-  ON groups (groupid);
+create unique index groups_groupid_uindex
+  on groups (groupid);
 
-CREATE TABLE grouproles
+create table roles
 (
-  groupid  BIGINT NOT NULL,
-  roleid   BIGINT NOT NULL,
-  rolename VARCHAR(21845),
-  CONSTRAINT grouproles_groupid_roleid_pk
-  PRIMARY KEY (groupid, roleid),
-  CONSTRAINT grouproles_groups_groupid_fk
-  FOREIGN KEY (groupid) REFERENCES groups
+  guildid  bigint not null,
+  roleid   bigint not null,
+  rolename varchar(21845),
+  constraint roles_guildid_roleid_pk
+  primary key (guildid, roleid),
+  constraint roles_guilds_guildid_fk
+  foreign key (guildid) references guilds
 );
-
-
-
