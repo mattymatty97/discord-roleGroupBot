@@ -108,12 +108,13 @@ public class MyListener extends ListenerAdapter {
             Message message = event.getMessage();
             //get text
             String content = message.getContent();
-            System.out.println("Message from '" + member.getEffectiveName() + "' in guild '" + guildname + "'");
+
             //if length is enough test if the message starts with right prefix
             if (content.length() > prefix.length() && content.substring(0, prefix.length()).equals(prefix)) {
                 //split by spaces into args
                 String[] args = content.substring(prefix.length()).split(" +");
                 //test first argument
+                System.out.println("Message from '" + member.getEffectiveName() + "' in guild '" + guildname + "'");
                 switch (args[0].toCharArray()[0]) {
                     case '!':
                         switch (args[0].substring(1)) {
