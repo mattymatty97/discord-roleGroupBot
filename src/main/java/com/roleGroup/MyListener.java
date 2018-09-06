@@ -307,12 +307,12 @@ public class MyListener extends ListenerAdapter {
 
                                 case "delete":
                                     //if there is an arg
-                                    if (args[2] != null) {
+                                    if (args.length == 2) {
                                         //call the class method
-                                        RoleGroup group = RoleGroup.getRolegroup(event.getGuild(), conn, args[2]);
+                                        RoleGroup group = RoleGroup.getRolegroup(event.getGuild(), conn, args[1]);
                                         if (group != null) {
                                             group.delete();
-                                            System.out.println("deleted rolegroup '" + args[2] + "' in guild: '" + guildname + "'");
+                                            System.out.println("deleted rolegroup '" + args[1] + "' in guild: '" + guildname + "'");
                                             channel.sendMessage(output.getString("rolegroup-deleted")).queue();
                                         } else {
                                             System.out.println("found unexistent rolegroup in guild: '" + guildname + "'");
