@@ -25,6 +25,7 @@ import java.util.*;
 import java.util.List;
 
 public class MyListener extends ListenerAdapter {
+    private static List<String> reservedNames = Arrays.asList("ping", "help", "modrole", "role", "create", "delete", "list");
     private Connection conn;
     private List<BotGuild> savedGuilds;
     public static boolean deleted = false;
@@ -107,7 +108,7 @@ public class MyListener extends ListenerAdapter {
             //get message
             Message message = event.getMessage();
             //get text
-            String content = message.getContent();
+            String content = message.getContent().toLowerCase();
 
             //if length is enough test if the message starts with right prefix
             if (content.length() > prefix.length() && content.substring(0, prefix.length()).equals(prefix)) {
@@ -292,12 +293,17 @@ public class MyListener extends ListenerAdapter {
                                         //if the argument is not the mentioned role
                                         if (!args[1].contains(list.get(0).getName())) {
                                             //call the class method
-                                            if (RoleGroup.createRolegroup(args[1].toLowerCase(), list.get(0), conn) != null) {
-                                                System.out.println("created rolegroup '" + args[1] + "' in guild: '" + guildname + "'");
-                                                channel.sendMessage(output.getString("rolegroup-created")).queue();
-                                            } else {
-                                                System.out.println("found existent rolegroup in guild: '" + guildname + "'");
-                                                channel.sendMessage(output.getString("error-existing-rolegroup")).queue();
+                                            if(nameIsAllowed(args[1].toLowerCase())) {
+                                                if (RoleGroup.createRolegroup(args[1].toLowerCase(), list.get(0), conn) != null) {
+                                                    System.out.println("created rolegroup '" + args[1] + "' in guild: '" + guildname + "'");
+                                                    channel.sendMessage(output.getString("rolegroup-created")).queue();
+                                                } else {
+                                                    System.out.println("found existent rolegroup in guild: '" + guildname + "'");
+                                                    channel.sendMessage(output.getString("error-existing-rolegroup")).queue();
+                                                }
+                                            }else{
+                                                System.out.println("name reserverd in guild: '" + guildname + "'");
+                                                channel.sendMessage(output.getString("error-name-reserved")).queue();
                                             }
                                         } else {
                                             System.out.println("wrong syntax in guild : '" + guildname + "'");
@@ -495,7 +501,7 @@ public class MyListener extends ListenerAdapter {
                 guild.isNew = false;
                 System.out.println("guild " + event.getGuild().getName() + " added");
                 try {
-                    event.getGuild().getDefaultChannel().sendMessage(output.getString("event-join")).queue();
+                    Optional.ofNullable(event.getGuild().getDefaultChannel()).orElse(event.getGuild().getSystemChannel()).sendMessage(output.getString("event-join")).queue();
                 } catch (InsufficientPermissionException ex) {
                     event.getGuild().getOwner().getUser().openPrivateChannel().queue((channel) ->
                     {
@@ -538,6 +544,10 @@ public class MyListener extends ListenerAdapter {
         List<Role> list = member.getRoles();
         Role role = member.getGuild().getRoleById(roleId);
         return role != null && list.contains(role);
+    }
+
+    private boolean nameIsAllowed(String name){
+        return !reservedNames.contains(name);
     }
 
     //need explanation?

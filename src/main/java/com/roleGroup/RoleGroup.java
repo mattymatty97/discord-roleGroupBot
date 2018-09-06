@@ -5,7 +5,6 @@ import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 import net.dv8tion.jda.core.entities.Role;
-import org.apache.commons.collections.list.UnmodifiableList;
 
 import java.sql.*;
 import java.util.*;
@@ -108,6 +107,64 @@ public class RoleGroup {
                                     guild.getController().addRolesToMember(member, role).queue();
                                     ret.append(output.getString("cc-role-added").replace("{role}", role.getAsMention()));
                                     System.out.print("grouproles custom - role added");
+                                } else {
+                                    ret.append(output.getString("cc-role-pool-used").replace("{role}", role.getName()));
+                                    System.out.print("grouproles custom - pool role yet used");
+                                }
+                            } else {
+                                ret.append(output.getString("error-bot-permission"));
+                                System.out.print("grouproles custom - too low role");
+                            }
+                        }
+                        break;
+                    case MONO:
+                        role = roleMap.get(rolename);
+                        if (role == null) {
+                            System.out.print("grouproles custom - wrong syntax");
+                            ret.append(output.getString("error-wrong-syntax"));
+                        } else {
+                            if (guild.getSelfMember().getRoles().get(0).getPosition() > role.getPosition()) {
+                                if (member.getRoles().contains(role)) {
+                                    guild.getController().removeRolesFromMember(member, role).queue();
+                                    ret.append(output.getString("cc-role-removed").replace("{role}", role.getAsMention()));
+                                    System.out.print("grouproles custom - role removed");
+                                } else {
+                                    List<Role> to_remove = new LinkedList<>();
+                                    List<Role> to_add = new LinkedList<>();
+                                    to_add.add(role);
+                                    member.getRoles().stream().filter(r -> roleMap.values().contains(r)).filter(r -> !role.equals(r)).forEach(to_remove::add);
+                                    guild.getController().modifyMemberRoles(member, to_add, to_remove).queue();
+                                    to_remove.forEach(r -> {
+                                        ret.append(output.getString("cc-role-removed").replace("{role}", r.getName())).append("\n");
+                                    });
+                                    ret.append(output.getString("cc-role-added").replace("{role}", role.getName()));
+                                    System.out.print("grouproles custom - role substituted");
+                                }
+                            }
+                        }
+                        break;
+                    case MONOPOOL:
+                        role = roleMap.get(rolename);
+                        if (role == null) {
+                            System.out.print("grouproles custom - wrong syntax");
+                            ret.append(output.getString("error-wrong-syntax"));
+                        } else {
+                            if (guild.getSelfMember().getRoles().get(0).getPosition() > role.getPosition()) {
+                                if (member.getRoles().contains(role)) {
+                                    guild.getController().removeRolesFromMember(member, role).queue();
+                                    ret.append(output.getString("cc-role-removed").replace("{role}", role.getAsMention()));
+                                    System.out.print("grouproles custom - role removed");
+                                } else if (guild.getMembers().stream().noneMatch((Member m) -> m.getRoles().contains(role))) {
+                                    List<Role> to_remove = new LinkedList<>();
+                                    List<Role> to_add = new LinkedList<>();
+                                    to_add.add(role);
+                                    member.getRoles().stream().filter(r -> roleMap.values().contains(r)).filter(r -> !role.equals(r)).forEach(to_remove::add);
+                                    guild.getController().modifyMemberRoles(member, to_add, to_remove).queue();
+                                    to_remove.forEach(r -> {
+                                        ret.append(output.getString("cc-role-removed").replace("{role}", r.getAsMention())).append("\n");
+                                    });
+                                    ret.append(output.getString("cc-role-added").replace("{role}", role.getAsMention()));
+                                    System.out.print("grouproles custom - role substituted");
                                 } else {
                                     ret.append(output.getString("cc-role-pool-used").replace("{role}", role.getName()));
                                     System.out.print("grouproles custom - pool role yet used");
@@ -557,21 +614,22 @@ public class RoleGroup {
 
 
 
-
     public enum Type {
         POOL("POOL"),
-        LIST("LIST");
+        LIST("LIST"),
+        MONO("MONO"),
+        MONOPOOL("MONOPOOL");
 
         private String string;
 
         public boolean isStrict(){
-            boolean result = false;
 
             if ( this.equals(POOL) )
-                result = true;
+                return true;
+            if ( this.equals(MONOPOOL))
+                return true;
 
-
-            return result;
+            return false;
         }
 
         @Override
