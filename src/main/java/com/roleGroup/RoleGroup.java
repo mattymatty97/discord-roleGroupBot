@@ -510,8 +510,7 @@ public class RoleGroup {
             stmt = conn.createStatement();
             rs = stmt.executeQuery("SELECT groupname,enabled FROM groups WHERE guildid="+guild.getId());
             while (rs.next()){
-                ret.add((rs.getBoolean("enabled")?"+":"-"));
-                ret.add(rs.getString("groupname"));
+                ret.add((rs.getBoolean("enabled")?"+":"-") + rs.getString("groupname"));
             }
             rs.close();
             stmt.close();
