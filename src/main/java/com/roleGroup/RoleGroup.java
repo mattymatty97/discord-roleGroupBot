@@ -146,7 +146,6 @@ public class RoleGroup {
                             stmt.setString(3, roleName);
                             stmt.executeUpdate();
                             stmt.close();
-                            conn.commit();
                             this.roleMap.put(roleName, role);
                             retStr.append(output.getString("rolegroup-role-added"));
                             System.out.print("grouproles - role added");
