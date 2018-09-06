@@ -48,32 +48,5 @@ CREATE TABLE grouproles
   FOREIGN KEY (groupid) REFERENCES groups
 );
 
-CREATE TABLE registered_emoji_server
-(
-  guildid BIGINT      NOT NULL,
-  title   VARCHAR(10) NOT NULL,
-  CONSTRAINT registered_emoji_server_pkey
-  PRIMARY KEY (guildid),
-  CONSTRAINT registered_emoji_server_guilds_guildid_fk
-  FOREIGN KEY (guildid) REFERENCES guilds
-);
-
-CREATE UNIQUE INDEX registered_emoji_server_guildid_uindex
-  ON registered_emoji_server (guildid);
-
-CREATE UNIQUE INDEX registered_emoji_server_title_uindex
-  ON registered_emoji_server (title);
-
-CREATE TABLE active_emoji_guilds
-(
-  guildid       BIGINT NOT NULL,
-  emoji_guildid BIGINT NOT NULL,
-  CONSTRAINT active_emoji_guilds_guildid_emoji_guildid_pk
-  PRIMARY KEY (guildid, emoji_guildid),
-  CONSTRAINT active_emoji_guilds_guilds_guildid_guildid_fk
-  FOREIGN KEY (guildid) REFERENCES guilds,
-  CONSTRAINT active_emoji_guilds_registered_emoji_server_guildid_fk
-  FOREIGN KEY (emoji_guildid) REFERENCES registered_emoji_server
-);
 
 

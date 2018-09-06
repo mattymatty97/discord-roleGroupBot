@@ -140,6 +140,9 @@ public class RoleGroup {
                                     ret.append(output.getString("cc-role-added").replace("{role}", role.getName()));
                                     System.out.print("grouproles custom - role substituted");
                                 }
+                            } else {
+                                ret.append(output.getString("error-bot-permission"));
+                                System.out.print("grouproles custom - too low role");
                             }
                         }
                         break;
