@@ -136,9 +136,14 @@ public class MyListener extends ListenerAdapter {
 //----------------------------------CUSTOM COMMANDS-------------------------------
                             default: {
                                 RoleGroup group = RoleGroup.getRolegroup(event.getGuild(), conn, args[0].substring(1).toLowerCase());
+                                String argument;
+                                if(args.length == 2)
+                                    argument=args[1];
+                                else
+                                    argument=null;
                                 if (group != null) {
                                     if (group.memberAllowed(member)) {
-                                        String ret = group.command(event.getGuild(), member, args[1], output);
+                                        String ret = group.command(event.getGuild(), member, argument, output);
                                         channel.sendMessage(ret).queue();
                                         System.out.println(" in guild: '" + guildname + "'");
                                     } else {
