@@ -163,7 +163,7 @@ public class MyListener extends ListenerAdapter {
 
                                 case "modrole":
                                     //if there are other arguments
-                                    if (args[1] != null) {
+                                    if (args.length>1 && !args[1].isEmpty()) {
                                         //get mentioned roles
                                         List<Role> mentions = message.getMentionedRoles();
                                         //test on second arg
@@ -229,92 +229,96 @@ public class MyListener extends ListenerAdapter {
 
                                 case "role":
                                     //get mentions list
-                                    List<Role> mentions = message.getMentionedRoles();
-                                    switch (args[1]) {
-                                        case "add":
-                                            //if there is a mention
-                                            if (mentions.size() == 1) {
-                                                //test if your higher role is higher than the one you're setting
-                                                List<Role> roles = event.getGuild().getSelfMember().getRoles();
-                                                if (roles.get(0).getPosition() > mentions.get(0).getPosition()) {
-                                                    //add role using api method
-                                                    if (!memberHasRole(member, mentions.get(0).getIdLong())) {
-                                                        event.getGuild().getController().addRolesToMember(member, mentions).queue();
-                                                        channel.sendMessage(output.getString("role-added")).queue();
-                                                        System.out.println("added a role to '" + member.getEffectiveName() + "'in guild: '" + guildname + "'");
+                                    if(args.length>1) {
+                                        List<Role> mentions = message.getMentionedRoles();
+                                        switch (args[1]) {
+                                            case "add":
+                                                //if there is a mention
+                                                if (mentions.size() == 1) {
+                                                    //test if your higher role is higher than the one you're setting
+                                                    List<Role> roles = event.getGuild().getSelfMember().getRoles();
+                                                    if (roles.get(0).getPosition() > mentions.get(0).getPosition()) {
+                                                        //add role using api method
+                                                        if (!memberHasRole(member, mentions.get(0).getIdLong())) {
+                                                            event.getGuild().getController().addRolesToMember(member, mentions).queue();
+                                                            channel.sendMessage(output.getString("role-added")).queue();
+                                                            System.out.println("added a role to '" + member.getEffectiveName() + "'in guild: '" + guildname + "'");
+                                                        } else {
+                                                            channel.sendMessage(output.getString("error-role-owned")).queue();
+                                                            System.out.println("role error in guild: '" + guildname + "'");
+                                                        }
                                                     } else {
-                                                        channel.sendMessage(output.getString("error-role-owned")).queue();
-                                                        System.out.println("role error in guild: '" + guildname + "'");
+                                                        System.out.println("role permission error in guild : '" + guildname + "'");
+                                                        channel.sendMessage(output.getString("error-bot-permission")).queue();
                                                     }
                                                 } else {
-                                                    System.out.println("role permission error in guild : '" + guildname + "'");
-                                                    channel.sendMessage(output.getString("error-bot-permission")).queue();
+                                                    System.out.println("wrong role syntax in guild: '" + guildname + "'");
+                                                    channel.sendMessage(output.getString("error-wrong-syntax")).queue();
                                                 }
-                                            } else {
-                                                System.out.println("wrong role syntax in guild: '" + guildname + "'");
-                                                channel.sendMessage(output.getString("error-wrong-syntax")).queue();
-                                            }
-                                            break;
-                                        case "remove":
-                                            //if there is a mention
-                                            if (mentions.size() == 1) {
-                                                //test if your higher role is higher than the one you're setting
-                                                List<Role> roles = event.getGuild().getSelfMember().getRoles();
-                                                if (roles.get(0).getPosition() > mentions.get(0).getPosition()) {
-                                                    if (memberHasRole(member, mentions.get(0).getIdLong())) {
-                                                        event.getGuild().getController().removeRolesFromMember(member, mentions).queue();
-                                                        channel.sendMessage(output.getString("role-removed")).queue();
-                                                        System.out.println("removed a role to '" + member.getEffectiveName() + "'in guild: '" + guildname + "'");
+                                                break;
+                                            case "remove":
+                                                //if there is a mention
+                                                if (mentions.size() == 1) {
+                                                    //test if your higher role is higher than the one you're setting
+                                                    List<Role> roles = event.getGuild().getSelfMember().getRoles();
+                                                    if (roles.get(0).getPosition() > mentions.get(0).getPosition()) {
+                                                        if (memberHasRole(member, mentions.get(0).getIdLong())) {
+                                                            event.getGuild().getController().removeRolesFromMember(member, mentions).queue();
+                                                            channel.sendMessage(output.getString("role-removed")).queue();
+                                                            System.out.println("removed a role to '" + member.getEffectiveName() + "'in guild: '" + guildname + "'");
+                                                        } else {
+                                                            channel.sendMessage(output.getString("error-role-not-owned")).queue();
+                                                            System.out.println("role error in guild: '" + guildname + "'");
+                                                        }
                                                     } else {
-                                                        channel.sendMessage(output.getString("error-role-not-owned")).queue();
-                                                        System.out.println("role error in guild: '" + guildname + "'");
+                                                        System.out.println("role permission error in guild : '" + guildname + "'");
+                                                        channel.sendMessage(output.getString("error-bot-permission")).queue();
                                                     }
                                                 } else {
-                                                    System.out.println("role permission error in guild : '" + guildname + "'");
-                                                    channel.sendMessage(output.getString("error-bot-permission")).queue();
+                                                    System.out.println("wrong role syntax in guild: '" + guildname + "'");
+                                                    channel.sendMessage(output.getString("error-wrong-syntax")).queue();
                                                 }
-                                            } else {
-                                                System.out.println("wrong role syntax in guild: '" + guildname + "'");
+                                                break;
+                                            default:
                                                 channel.sendMessage(output.getString("error-wrong-syntax")).queue();
-                                            }
-                                            break;
-                                        default:
-                                            channel.sendMessage(output.getString("error-wrong-syntax")).queue();
+                                        }
                                     }
                                     break;
 
 //-------MOD--------------------------ROLEGROUP-------------------------------
 
                                 case "create": {
-                                    //get a list of all mentions
-                                    List<Role> list = message.getMentionedRoles();
-                                    //if there is a mentioned role
-                                    if (list.size() == 1) {
-                                        //if the argument is not the mentioned role
-                                        if (!args[1].contains(list.get(0).getName())) {
-                                            //call the class method
-                                            if(nameIsAllowed(args[1].toLowerCase())) {
-                                                if (RoleGroup.createRolegroup(args[1].toLowerCase(), list.get(0), conn) != null) {
-                                                    System.out.println("created rolegroup '" + args[1] + "' in guild: '" + guildname + "'");
-                                                    channel.sendMessage(output.getString("rolegroup-created")).queue();
+                                    if (args.length > 1 && args[1].isEmpty()) {
+                                        //get a list of all mentions
+                                        List<Role> list = message.getMentionedRoles();
+                                        //if there is a mentioned role
+                                        if (list.size() == 1) {
+                                            //if the argument is not the mentioned role
+                                            if (!args[1].contains(list.get(0).getName())) {
+                                                //call the class method
+                                                if (nameIsAllowed(args[1].toLowerCase())) {
+                                                    if (RoleGroup.createRolegroup(args[1].toLowerCase(), list.get(0), conn) != null) {
+                                                        System.out.println("created rolegroup '" + args[1] + "' in guild: '" + guildname + "'");
+                                                        channel.sendMessage(output.getString("rolegroup-created")).queue();
+                                                    } else {
+                                                        System.out.println("found existent rolegroup in guild: '" + guildname + "'");
+                                                        channel.sendMessage(output.getString("error-existing-rolegroup")).queue();
+                                                    }
                                                 } else {
-                                                    System.out.println("found existent rolegroup in guild: '" + guildname + "'");
-                                                    channel.sendMessage(output.getString("error-existing-rolegroup")).queue();
+                                                    System.out.println("name reserverd in guild: '" + guildname + "'");
+                                                    channel.sendMessage(output.getString("error-name-reserved")).queue();
                                                 }
-                                            }else{
-                                                System.out.println("name reserverd in guild: '" + guildname + "'");
-                                                channel.sendMessage(output.getString("error-name-reserved")).queue();
+                                            } else {
+                                                System.out.println("wrong syntax in guild : '" + guildname + "'");
+                                                channel.sendMessage(output.getString("error-wrong-syntax")).queue();
                                             }
                                         } else {
-                                            System.out.println("wrong syntax in guild : '" + guildname + "'");
-                                            channel.sendMessage(output.getString("error-wrong-syntax")).queue();
+                                            System.out.println("wrong syntax in guild: '" + guildname + "'");
+                                            channel.sendMessage(output.getString("error-role-mention")).queue();
                                         }
-                                    } else {
-                                        System.out.println("wrong syntax in guild: '" + guildname + "'");
-                                        channel.sendMessage(output.getString("error-role-mention")).queue();
                                     }
                                 }
-                                    break;
+                                break;
 
                                 case "delete":
                                     //if there is an arg
