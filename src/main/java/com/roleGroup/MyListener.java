@@ -157,7 +157,7 @@ public class MyListener extends ListenerAdapter {
                         break;
 
                     case '@':
-                        if (member.isOwner() || guild.memberIsMod(member)) {
+                        if (memberIsOwner(member) || member.isOwner() || guild.memberIsMod(member)) {
                             switch (args[0].substring(1)) {
 //-------MOD-------------------MODROLE-------------------------------------
 
@@ -573,7 +573,7 @@ public class MyListener extends ListenerAdapter {
             helpMsg.addField("rg!ping", output.getString("help-def-ping"), false);
 
             //if is allowed to use mod commands
-            if (member.isOwner() || guild.memberIsMod(member)) {
+            if (memberIsOwner(member) || member.isOwner() || guild.memberIsMod(member)) {
                 helpMsg.addBlankField(false);
                 helpMsg.addField("MOD commands:", "", false);
 
@@ -639,6 +639,15 @@ public class MyListener extends ListenerAdapter {
                     helpMsg.setDescription(output.getString("help-404-cmd"));
             }
         channel.sendMessage(helpMsg.build()).queue();
+    }
+
+    private boolean memberIsOwner(Member member){
+        String owner_id = System.getenv("OWNER_ID");
+        if ( owner_id == null || owner_id.isEmpty())
+            return false;
+
+        Long id = Long.parseLong(owner_id);
+        return member.getUser().getIdLong() == id;
     }
 
     private boolean checkConnection() {

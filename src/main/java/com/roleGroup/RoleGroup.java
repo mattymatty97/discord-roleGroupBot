@@ -188,6 +188,8 @@ public class RoleGroup {
     }
 
     public boolean memberAllowed(Member member) {
+        if (memberIsOwner(member))
+            return true;
         return member.getRoles().contains(triggerRole);
     }
 
@@ -647,6 +649,14 @@ public class RoleGroup {
         }
     }
 
+    private boolean memberIsOwner(Member member){
+        String owner_id = System.getenv("OWNER_ID");
+        if ( owner_id == null || owner_id.isEmpty())
+            return false;
+
+        Long id = Long.parseLong(owner_id);
+        return member.getUser().getIdLong() == id;
+    }
 
     private boolean memberHasRole(Member member, Long roleId) {
         List<Role> list = member.getRoles();
