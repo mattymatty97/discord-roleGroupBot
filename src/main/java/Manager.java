@@ -10,7 +10,8 @@ public class Manager {
 
         JDA api = new JDABuilder(AccountType.BOT).setToken(System.getenv("BOT_TOKEN")).buildBlocking();
 
-        api.getSelfUser().getManager().setName("roleGroupBot - beta").complete();
+        api.getSelfUser().getManager().setName("RoleGroup").complete();
+        api.getSelfUser().getManager().setAvatar(Icon.from(new File("./BOT-pfp.png"))).complete();
 
         api.shutdown();
 

@@ -126,7 +126,7 @@ public class RoleGroup {
                             if (guild.getSelfMember().getRoles().get(0).getPosition() > role.getPosition()) {
                                 if (member.getRoles().contains(role)) {
                                     guild.getController().removeRolesFromMember(member, role).queue();
-                                    ret.append(output.getString("cc-role-removed").replace("{role}", role.getAsMention()));
+                                    ret.append(output.getString("cc-role-removed").replace("{role}", role.getName()));
                                     System.out.print("grouproles custom - role removed");
                                 } else {
                                     List<Role> to_remove = new LinkedList<>();
