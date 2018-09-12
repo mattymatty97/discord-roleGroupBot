@@ -108,7 +108,7 @@ public class MyListener extends ListenerAdapter {
             //get message
             Message message = event.getMessage();
             //get text
-            String content = message.getContent().toLowerCase();
+            String content = message.getContentRaw().toLowerCase();
 
             //if length is enough test if the message starts with right prefix
             if (content.length() > prefix.length() && content.substring(0, prefix.length()).equals(prefix)) {
