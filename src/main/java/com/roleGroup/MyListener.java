@@ -288,7 +288,7 @@ public class MyListener extends ListenerAdapter {
 //-------MOD--------------------------ROLEGROUP-------------------------------
 
                                 case "create": {
-                                    if (args.length > 1 && args[1].isEmpty()) {
+                                    if (args.length > 1 && !args[1].isEmpty()) {
                                         //get a list of all mentions
                                         List<Role> list = message.getMentionedRoles();
                                         //if there is a mentioned role
