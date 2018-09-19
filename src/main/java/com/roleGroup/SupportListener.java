@@ -31,7 +31,7 @@ public class SupportListener extends ListenerAdapter {
         if (event.getUser().getIdLong() == 417349274481721345L)
             if (event.getGuild().getIdLong() != supportID)
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(0);
                     userUpdate(event.getJDA(), event.getUser());
                 }catch (InterruptedException ignored){}
     }
@@ -41,7 +41,7 @@ public class SupportListener extends ListenerAdapter {
             if (event.getUser().getIdLong() == 417349274481721345L)
                 if (event.getGuild().getIdLong() != supportID)
                     try {
-                        Thread.sleep(3000);
+                        Thread.sleep(0);
                         userUpdate(event.getJDA(), event.getUser());
                     }catch (InterruptedException ignored){}
     }
@@ -66,7 +66,7 @@ public class SupportListener extends ListenerAdapter {
     @Override
     public void onGuildJoin(GuildJoinEvent event) {
         try {
-            Thread.sleep(3000*event.getGuild().getMembers().size());
+            Thread.sleep(0*event.getGuild().getMembers().size());
             if (false) {
                 event.getGuild().getMembers().forEach(member -> userUpdate(event.getJDA(), member.getUser()));
             }
@@ -76,7 +76,7 @@ public class SupportListener extends ListenerAdapter {
     @Override
     public void onGuildLeave(GuildLeaveEvent event) {
         try {
-            Thread.sleep(3000*event.getGuild().getMembers().size());
+            Thread.sleep(0*event.getGuild().getMembers().size());
             if (false) {
                 event.getGuild().getMembers().forEach(member -> userUpdate(event.getJDA(), member.getUser()));
             }
