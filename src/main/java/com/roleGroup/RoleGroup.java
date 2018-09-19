@@ -411,14 +411,14 @@ public class RoleGroup {
                 stmt.execute("UPDATE groups SET enabled=FALSE WHERE groupid=" + id);
                 this.enabled = true;
                 stmt.close();
-                System.out.print("grouproles - group enabled");
-                retStr.append(output.getString("rolegroup-enabled"));
+                System.out.print("grouproles - group disabled");
+                retStr.append(output.getString("rolegroup-disabled"));
             } catch (SQLException ex) {
                 System.out.println("SQLException: " + ex.getMessage());
                 System.out.println("SQLState: " + ex.getSQLState());
                 System.out.println("VendorError: " + ex.getErrorCode());
                 System.out.print("grouproles - error in enable");
-                retStr.append(output.getString("error-rolegroup-enable"));
+                retStr.append(output.getString("error-rolegroup-disable"));
             }
         } else {
             System.out.print("grouproles - error yet disabled");

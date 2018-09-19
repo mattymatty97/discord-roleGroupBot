@@ -44,6 +44,7 @@ public class BOT
         JDA api = new JDABuilder(AccountType.BOT).setToken(System.getenv("BOT_TOKEN")).buildAsync();
 
         api.addEventListener(new MyListener(conn,savedGuilds));
+        api.addEventListener(new SupportListener(491954204106031104L));
         api.getPresence().setGame(Game.playing("v1.0 rg prj"));
     }
 

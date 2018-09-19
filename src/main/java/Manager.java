@@ -11,7 +11,7 @@ public class Manager {
         JDA api = new JDABuilder(AccountType.BOT).setToken(System.getenv("BOT_TOKEN")).buildBlocking();
 
         api.getSelfUser().getManager().setName("RoleGroup").complete();
-        api.getSelfUser().getManager().setAvatar(Icon.from(new File("./BOT-pfp.png"))).complete();
+        api.getSelfUser().getManager().setAvatar(Icon.from(new File("/home/mattymatty/Desktop/pfp/roleGroup.png"))).complete();
 
         api.shutdown();
 

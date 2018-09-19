@@ -134,6 +134,14 @@ public class MyListener extends ListenerAdapter {
                                 System.out.println("Ping executed in guild: '" + guildname + "'");
                                 channel.sendMessage(output.getString("pong")).queue(); // Important to call .queue() on the RestAction returned by sendMessage(...)
                                 break;
+//------USER-------------------SUPPORT---------------------------------------
+                            case "support":
+                                channel.sendMessage(output.getString("support-msg")).queue();
+                                break;
+//------USER-------------------OTHER---------------------------------------
+                            case "other":
+                                channel.sendMessage(output.getString("other-msg")).queue();
+                                break;
 //----------------------------------CUSTOM COMMANDS-------------------------------
                             default: {
                                 RoleGroup group = RoleGroup.getRolegroup(event.getGuild(), conn, args[0].substring(1).toLowerCase());
@@ -576,6 +584,9 @@ public class MyListener extends ListenerAdapter {
             helpMsg.addField("rg!help", output.getString("help-def-help"), false);
             helpMsg.addField("rg!ping", output.getString("help-def-ping"), false);
 
+            helpMsg.addField("rg!support", output.getString("help-def-support"), false);
+            helpMsg.addField("rg!other", output.getString("help-def-other"), false);
+
             //if is allowed to use mod commands
             if (memberIsOwner(member) || member.isOwner() || guild.memberIsMod(member)) {
                 helpMsg.addBlankField(false);
@@ -599,6 +610,8 @@ public class MyListener extends ListenerAdapter {
                     });
 
             helpMsg.addField("CUSTOM COMMANDS:", str.toString(), false);
+
+            helpMsg.addField("", output.getString("help-last"), false);
             helpMsg.setFooter(output.getString("help-footer"), null);
         } else
             switch (args[1]) {
