@@ -48,32 +48,21 @@ public class SupportListener extends ListenerAdapter {
         Member member = api.getGuildById(supportID).getMemberById(user.getIdLong());
         if (member == null)
             return;
-        List<Role> roles = new ArrayList<>(3);
 
+        if(server.getMembers().stream().map(Member::getUser).map(User::getName).anyMatch(name -> name.equals("Accountant")))
+            if(join)
+                return;
 
-        if(server.getMembers().stream().map(Member::getUser).map(User::getName).anyMatch(name -> name.equals("Accountant"))) {
-            if (join) {
-                while (member.getRoles().stream().map(Role::getIdLong).noneMatch(id -> id == 491954111953108992L))
-                    Thread.yield();
-                roles.add(server.getRoleById(491954111953108992L));
-            }
-        }
-
-        if(server.getMembers().stream().map(Member::getUser).map(User::getName).anyMatch(name -> name.equals("Emoji-er"))) {
-            if (join) {
-                while (member.getRoles().stream().map(Role::getIdLong).noneMatch(id -> id == 491954024367652867L))
-                    Thread.yield();
-                roles.add(server.getRoleById(491954024367652867L));
-            }
-        }
+        if(server.getMembers().stream().map(Member::getUser).map(User::getName).anyMatch(name -> name.equals("Emoji-er")))
+            if(join)
+                return;
 
         boolean isUser = api.getMutualGuilds(member.getUser()).stream().anyMatch(guild -> guild.getIdLong() != supportID);
 
         boolean hasrole = member.getRoles().contains(botRole);
 
         if (isUser && !hasrole) {
-            roles.add(botRole);
-            api.getGuildById(supportID).getController().addRolesToMember(member, roles).reason("guild join").complete();
+            api.getGuildById(supportID).getController().addRolesToMember(member, botRole).reason("guild join").complete();
         } else if (hasrole && !isUser) {
             api.getGuildById(supportID).getController().removeRolesFromMember(member, botRole).reason("guild leave").complete();
         }
