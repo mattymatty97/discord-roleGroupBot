@@ -67,7 +67,8 @@ public class SupportListener extends ListenerAdapter {
         try {
             Socket clientSocket = new Socket(System.getenv("SUPPORT_IP"), 23445);
             DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
-            outToServer.writeBytes(action);
+            outToServer.writeBytes(action+'n');
+            clientSocket.close();
             System.out.println("sending: "+ action);
         } catch (Exception ex) {
             ex.printStackTrace();
