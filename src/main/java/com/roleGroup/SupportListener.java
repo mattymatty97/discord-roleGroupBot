@@ -12,6 +12,9 @@ import net.dv8tion.jda.core.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.core.events.guild.member.GuildMemberLeaveEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,56 +36,57 @@ public class SupportListener extends ListenerAdapter {
     public void onGuildMemberJoin(GuildMemberJoinEvent event) {
         if (event.getUser().getIdLong() == 417349274481721345L)
             if (event.getGuild().getIdLong() != supportID)
-                userUpdate(event.getJDA(), event.getUser(),event.getGuild(),true);
+                userUpdate(event.getJDA(), event.getUser());
     }
 
     @Override
     public void onGuildMemberLeave(GuildMemberLeaveEvent event) {
             if (event.getUser().getIdLong() == 417349274481721345L)
                 if (event.getGuild().getIdLong() != supportID)
-                    userUpdate(event.getJDA(), event.getUser(),event.getGuild(),false);
+                    userUpdate(event.getJDA(), event.getUser());
     }
 
 
-    private void userUpdate(JDA api, User user,Guild server,boolean join) {
+    private void userUpdate(JDA api, User user) {
         Member member = api.getGuildById(supportID).getMemberById(user.getIdLong());
         if (member == null)
             return;
-
-        if(server.getMembers().stream().map(Member::getUser).map(User::getName).anyMatch(name -> name.equals("Accountant")))
-            if(join)
-                return;
-
-        if(server.getMembers().stream().map(Member::getUser).map(User::getName).anyMatch(name -> name.equals("Emoji-er")))
-            if(join)
-                return;
 
         boolean isUser = api.getMutualGuilds(member.getUser()).stream().anyMatch(guild -> guild.getIdLong() != supportID);
 
         boolean hasrole = member.getRoles().contains(botRole);
 
         if (isUser && !hasrole) {
-            api.getGuildById(supportID).getController().addRolesToMember(member, botRole).reason("guild join").complete();
+            sendAction(user.getId() + " add rolegroup");
         } else if (hasrole && !isUser) {
-            try {
-                Thread.sleep(20000);
-                member = api.getGuildById(supportID).getMemberById(user.getIdLong());
-                api.getGuildById(supportID).getController().removeRolesFromMember(member, botRole).reason("guild leave").complete();
-            } catch (InterruptedException ignored) { }
+            sendAction(user.getId() + " remove rolegroup");
+        }
+    }
+
+    private void sendAction(String action){
+        try {
+            DatagramSocket clientSocket = new DatagramSocket();
+            InetAddress IPAddress = InetAddress.getByName("79.20.228.137");
+            byte[] sendData = action.getBytes();
+            DatagramPacket sendPacket = new DatagramPacket(sendData, 40 , IPAddress, 23445);
+            clientSocket.send(sendPacket);
+            clientSocket.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
     @Override
     public void onGuildJoin(GuildJoinEvent event) {
             if (false) {
-                event.getGuild().getMembers().forEach(member -> userUpdate(event.getJDA(), member.getUser(),event.getGuild(),true));
+                event.getGuild().getMembers().forEach(member -> userUpdate(event.getJDA(), member.getUser()));
             }
     }
 
     @Override
     public void onGuildLeave(GuildLeaveEvent event) {
             if (false) {
-                event.getGuild().getMembers().forEach(member -> userUpdate(event.getJDA(), member.getUser(), event.getGuild(), false));
+                event.getGuild().getMembers().forEach(member -> userUpdate(event.getJDA(), member.getUser()));
             }
     }
 
