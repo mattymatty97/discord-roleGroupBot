@@ -12,6 +12,9 @@ import net.dv8tion.jda.core.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.core.events.guild.member.GuildMemberLeaveEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SuppressWarnings("Duplicates")
 public class SupportListener extends ListenerAdapter {
     static final long supportID = 428163245753499653L;
@@ -45,23 +48,23 @@ public class SupportListener extends ListenerAdapter {
         Member member = api.getGuildById(supportID).getMemberById(user.getIdLong());
         if (member == null)
             return;
+        List<Role> roles = new ArrayList<>(3);
+
 
         if(server.getMembers().stream().map(Member::getUser).map(User::getName).anyMatch(name -> name.equals("Accountant"))) {
-            if (join)
+            if (join) {
                 while (member.getRoles().stream().map(Role::getIdLong).noneMatch(id -> id == 491954111953108992L))
                     Thread.yield();
-            else
-                while (member.getRoles().stream().map(Role::getIdLong).anyMatch(id -> id == 491954111953108992L))
-                    Thread.yield();
+                roles.add(server.getRoleById(491954111953108992L));
+            }
         }
 
         if(server.getMembers().stream().map(Member::getUser).map(User::getName).anyMatch(name -> name.equals("Emoji-er"))) {
-            if (join)
+            if (join) {
                 while (member.getRoles().stream().map(Role::getIdLong).noneMatch(id -> id == 491954024367652867L))
                     Thread.yield();
-            else
-                while (member.getRoles().stream().map(Role::getIdLong).anyMatch(id -> id == 491954024367652867L))
-                    Thread.yield();
+                roles.add(server.getRoleById(491954024367652867L));
+            }
         }
 
         boolean isUser = api.getMutualGuilds(member.getUser()).stream().anyMatch(guild -> guild.getIdLong() != supportID);
@@ -69,7 +72,8 @@ public class SupportListener extends ListenerAdapter {
         boolean hasrole = member.getRoles().contains(botRole);
 
         if (isUser && !hasrole) {
-            api.getGuildById(supportID).getController().addRolesToMember(member, botRole).reason("guild join").complete();
+            roles.add(botRole);
+            api.getGuildById(supportID).getController().addRolesToMember(member, roles).reason("guild join").complete();
         } else if (hasrole && !isUser) {
             api.getGuildById(supportID).getController().removeRolesFromMember(member, botRole).reason("guild leave").complete();
         }
