@@ -64,7 +64,10 @@ public class SupportListener extends ListenerAdapter {
         if (isUser && !hasrole) {
             api.getGuildById(supportID).getController().addRolesToMember(member, botRole).reason("guild join").complete();
         } else if (hasrole && !isUser) {
-            api.getGuildById(supportID).getController().removeRolesFromMember(member, botRole).reason("guild leave").complete();
+            try {
+                Thread.sleep(20000);
+                api.getGuildById(supportID).getController().removeRolesFromMember(member, botRole).reason("guild leave").complete();
+            } catch (InterruptedException ignored) { }
         }
     }
 
