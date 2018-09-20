@@ -67,7 +67,9 @@ public class SupportListener extends ListenerAdapter {
         try {
             DatagramSocket clientSocket = new DatagramSocket();
             InetAddress IPAddress = InetAddress.getByName("79.20.228.137");
-            byte[] sendData = action.getBytes();
+            byte[] sendData = new byte[40];
+            byte[] bytes = action.getBytes();
+            System.arraycopy(bytes, 0, sendData, 0, bytes.length);
             DatagramPacket sendPacket = new DatagramPacket(sendData, 40 , IPAddress, 23445);
             clientSocket.send(sendPacket);
             clientSocket.close();
