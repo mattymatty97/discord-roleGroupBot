@@ -52,7 +52,6 @@ public class SupportListener extends ListenerAdapter {
         if (member == null)
             return;
 
-        System.out.println("bump");
         boolean isUser = api.getMutualGuilds(member.getUser()).stream().anyMatch(guild -> guild.getIdLong() != supportID);
 
         boolean hasrole = member.getRoles().contains(botRole);
@@ -65,11 +64,10 @@ public class SupportListener extends ListenerAdapter {
     }
 
     private void sendAction(String action){
-        System.out.println("bump");
         try {
             Socket clientSocket = new Socket(System.getenv("SUPPORT_IP"), 23445);
             DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
-            outToServer.writeBytes(action+'n');
+            outToServer.writeBytes(action);
             clientSocket.close();
             System.out.println("sending: "+ action);
         } catch (Exception ex) {
