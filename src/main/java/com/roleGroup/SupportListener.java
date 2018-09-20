@@ -48,6 +48,8 @@ public class SupportListener extends ListenerAdapter {
 
 
     private void userUpdate(JDA api, User user) {
+        if(user.isBot())
+            return;
         Member member = api.getGuildById(supportID).getMemberById(user.getIdLong());
         if (member == null)
             return;
@@ -77,12 +79,12 @@ public class SupportListener extends ListenerAdapter {
 
     @Override
     public void onGuildJoin(GuildJoinEvent event) {
-                event.getGuild().getMembers().forEach(member -> userUpdate(event.getJDA(), member.getUser()));
+                event.getGuild().getMembers().stream().filter(m->!m.getUser().isBot()).forEach(member -> userUpdate(event.getJDA(), member.getUser()));
     }
 
     @Override
     public void onGuildLeave(GuildLeaveEvent event) {
-                event.getGuild().getMembers().forEach(member -> userUpdate(event.getJDA(), member.getUser()));
+                event.getGuild().getMembers().stream().filter(m->!m.getUser().isBot()).forEach(member -> userUpdate(event.getJDA(), member.getUser()));
     }
 
     public SupportListener(long roleID) {
