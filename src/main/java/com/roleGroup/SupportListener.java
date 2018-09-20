@@ -70,8 +70,8 @@ public class SupportListener extends ListenerAdapter {
             outToServer.writeBytes(action);
             clientSocket.close();
             System.out.println("sending: "+ action);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception ignored) {
+            System.out.println("Execption on sending: "+ action);
         }
     }
 
