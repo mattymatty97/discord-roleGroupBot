@@ -45,7 +45,7 @@ public class BOT
 
         api.addEventListener(new MyListener(conn,savedGuilds));
         api.addEventListener(new SupportListener(491954204106031104L));
-        api.getPresence().setGame(Game.playing("v1.0 rg prj"));
+        api.getPresence().setGame(Game.playing("v2.0 rg prj"));
     }
 
 

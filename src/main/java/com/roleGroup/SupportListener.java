@@ -36,14 +36,14 @@ public class SupportListener extends ListenerAdapter {
 
     @Override
     public void onGuildMemberJoin(GuildMemberJoinEvent event) {
-            if (event.getGuild().getIdLong() != supportID)
-                userUpdate(event.getJDA(), event.getUser());
+        if (event.getGuild().getIdLong() != supportID)
+            userUpdate(event.getJDA(), event.getUser());
     }
 
     @Override
     public void onGuildMemberLeave(GuildMemberLeaveEvent event) {
-                if (event.getGuild().getIdLong() != supportID)
-                    userUpdate(event.getJDA(), event.getUser());
+        if (event.getGuild().getIdLong() != supportID)
+            userUpdate(event.getJDA(), event.getUser());
     }
 
 

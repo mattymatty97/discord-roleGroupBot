@@ -1,25 +1,34 @@
 package com.roleGroup;
 
 import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.OnlineStatus;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 import net.dv8tion.jda.core.entities.Role;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import java.sql.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @SuppressWarnings({"WeakerAccess","Duplicates","unused"})
 public class RoleGroup {
 
     private Connection conn;
+    private Guild guild;
 
     private String name;
     private long id;
     private boolean enabled;
 
     private Map<String, Role> roleMap = new HashMap<>();
-    private Role triggerRole;
+
+    private String triggerExpr;
+
+    private Map<Integer,Role> triggerRoles = new HashMap<>();
 
     private Type type = Type.LIST;
 
@@ -40,8 +49,8 @@ public class RoleGroup {
         return new HashMap<>(roleMap);
     }
 
-    public Role getTriggerRole() {
-        return triggerRole;
+    public String getTriggerExpr() {
+        return triggerExpr;
     }
 
     public Type getType() {
@@ -190,7 +199,23 @@ public class RoleGroup {
     public boolean memberAllowed(Member member) {
         if (memberIsOwner(member))
             return true;
-        return member.getRoles().contains(triggerRole);
+
+        Map<Integer,Boolean> valuesMap = triggerRoles.entrySet().stream().collect(Collectors
+                .toMap(Map.Entry::getKey,es -> memberHasRole(member,es.getValue().getIdLong())));
+
+        String sb = triggerExpr.toUpperCase();
+        for (Map.Entry<Integer,Boolean> es : valuesMap.entrySet()){
+                sb = sb.replace("$"+es.getKey(),es.getValue().toString());
+        }
+        sb = sb.replace("AND","&&").replace("OR","||").replace("NOT","!");
+        try{
+            ScriptEngineManager sem = new ScriptEngineManager();
+            ScriptEngine se = sem.getEngineByName("JavaScript");
+            return Boolean.valueOf(String.valueOf(se.eval(sb)));
+        } catch (ScriptException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 
@@ -324,22 +349,116 @@ public class RoleGroup {
         return retStr.toString();
     }
 
-    public String setTriggerRole(Role role, ResourceBundle output) {
+    public String setTriggerExpr(String triggerExpr, ResourceBundle output) {
         PreparedStatement stmt;
         StringBuilder retStr = new StringBuilder();
+
+        String args[] = triggerExpr.replace("("," ( ").replace(")"," ) ").replace("<"," <").replace(">","> ").split(" +");
+        if(args[0].isEmpty())
+            args = Arrays.copyOfRange(args,1,args.length);
+        int open=0;
+        int close=0;
+        ExprFound last = ExprFound.NULL;
+        boolean exeption = false;
+        for (String arg : args) {
+            if (arg.matches("not")) {
+                if(last != ExprFound.NOT && last.needVar()) {
+                    last=ExprFound.NOT;
+                    continue;
+                }
+            }
+            if (arg.matches("and")) {
+                if(last.needOp()){
+                    last=ExprFound.AND;
+                    continue;
+                }
+            }
+            if (arg.matches("or")){
+                if(last.needOp()){
+                    last=ExprFound.OR;
+                    continue;
+                }
+            }
+            if (arg.matches("true")) {
+                if(last.needVar()){
+                    last=ExprFound.CONST;
+                    continue;
+                }
+            }
+            if (arg.matches("false")) {
+                if(last.needVar()){
+                    last=ExprFound.CONST;
+                    continue;
+                }
+            }
+            if (arg.matches("\\(")) {
+                if(last.needVar()){
+                    last=ExprFound.OPEN;
+                    open++;
+                    continue;
+                }
+            }
+            if (arg.matches("\\)")) {
+                if(last.needOp()){
+                    last=ExprFound.CLOSE;
+                    close++;
+                    continue;
+                }
+            }
+            if (arg.matches("<@&\\d+>")) {
+                if (last.needVar()) {
+                    if (guild.getRoleById(arg.substring(3, arg.length() - 1)) != null) {
+                        last = ExprFound.VAR;
+                        continue;
+                    }
+                }
+            }
+            exeption=true;
+            break;
+        }
+        if(open!=close || exeption)
+            return output.getString("error-invalid-expression");
+
+        triggerRoles.clear();
+        StringBuilder expr = new StringBuilder();
+        int ctn=0;
+        for (String arg : args ) {
+            if(arg.matches("<@&\\d+>")){
+                expr.append("$").append(ctn);
+                triggerRoles.put(ctn,guild.getRoleById(arg.substring(3,arg.length()-1)));
+                ctn++;
+            }else{
+                expr.append(arg);
+            }
+            if(!arg.matches("[Nn][Oo][Tt]"))
+                expr.append(" ");
+        }
+
+
+
         try {
-            stmt = conn.prepareStatement("UPDATE groups SET roleid=? WHERE groupid=?");
-            stmt.setLong(1, role.getIdLong());
-            stmt.setLong(2, id);
+            Statement stmt1 = conn.createStatement();
+            stmt1.executeUpdate("DELETE FROM boundroles WHERE groupid="+id);
+            stmt1.close();
+            stmt = conn.prepareStatement("UPDATE groups SET expression=? WHERE groupid="+id);
+            stmt.setString(1, expr.toString());
             stmt.executeUpdate();
-            this.triggerRole = role;
-            retStr.append(output.getString("rolegroup-boundrole-updated"));
+            this.triggerExpr = expr.toString();
+            stmt.close();
+            stmt = conn.prepareStatement("INSERT INTO boundroles(groupid,position,roleId) VALUES ("+id+",?,?)");
+            for (Map.Entry<Integer,Role> es : triggerRoles.entrySet()){
+                stmt.setInt(1, es.getKey());
+                stmt.setLong(2, es.getValue().getIdLong());
+                stmt.executeUpdate();
+            }
+            this.triggerExpr = expr.toString();
+            retStr.append(output.getString("rolegroup-expression-updated"));
             stmt.close();
         } catch (SQLException ex) {
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
-            retStr.append(output.getString("error-rolegroup-boundrole"));
+            retStr.append(output.getString("error-rolegroup-expression"));
         }
         return retStr.toString();
     }
@@ -349,10 +468,15 @@ public class RoleGroup {
 
         ret.setTitle(output.getString("rolegroup-status-title").replace("{group}", name));
         ret.setDescription(output.getString("rolegroup-status-enabled") +" **" + (enabled) + "**\n" );
-        ret.appendDescription(output.getString("rolegroup-status-boundrole"));
+        ret.appendDescription(output.getString("rolegroup-status-expression"));
+        ret.appendDescription(" ");
 
-        if (triggerRole != null) {
-            ret.appendDescription(triggerRole.getAsMention());
+        if (triggerExpr != null) {
+            String sb = triggerExpr.toUpperCase();
+            for (Map.Entry<Integer,Role> es : triggerRoles.entrySet()){
+                sb = sb.replace("$"+es.getKey(),es.getValue().getAsMention());
+            }
+            ret.appendDescription(sb);
         }
         ret.appendDescription("\n");
         ret.appendDescription(output.getString("rolegroup-status-type") +" **"+ type + "**\n");
@@ -370,7 +494,7 @@ public class RoleGroup {
     public String enable(ResourceBundle output) {
         Statement stmt;
         StringBuilder retStr = new StringBuilder();
-        if (triggerRole != null) {
+        if (triggerExpr != null) {
             if (!enabled) {
                 if(roleMap.size()>0) {
                     try {
@@ -396,7 +520,7 @@ public class RoleGroup {
                 retStr.append(output.getString("error-rolegroup-is-enable"));
             }
         } else {
-            System.out.print("grouproles - missing boundrole");
+            System.out.print("grouproles - missing expression");
             retStr.append(output.getString("error-rolegroup-bound"));
         }
         return retStr.toString();
@@ -438,7 +562,7 @@ public class RoleGroup {
             conn=null;
             roleMap=null;
             type=null;
-            triggerRole=null;
+            triggerExpr =null;
             id=0;
             name=null;
             enabled=false;
@@ -450,18 +574,18 @@ public class RoleGroup {
     }
 
 
-    private RoleGroup(String name, Role boundrole, Connection conn) {
+    private RoleGroup(String name, long guildId, Connection conn) {
         this.conn = conn;
 
         this.name = name;
-        this.triggerRole = boundrole;
 
-        Long guildId = boundrole.getGuild().getIdLong();
+        this.triggerExpr = null;
+
         Statement stmt;
         ResultSet rs;
         try {
             stmt = conn.createStatement();
-            stmt.execute("INSERT INTO groups (guildid,groupname,type,roleid) VALUES (" + guildId + ",'" + name + "','LIST'," + boundrole.getIdLong() + ")");
+            stmt.execute("INSERT INTO groups (guildid,groupname,type,roleid) VALUES (" + guildId + ",'" + name + "','LIST',NULL)");
             rs = stmt.executeQuery("SELECT groupid FROM groups WHERE guildid=" + guildId + " AND groupname='" + name + "'");
             if (rs.next())
                 this.id = rs.getLong(1);
@@ -477,22 +601,28 @@ public class RoleGroup {
     private RoleGroup(Guild guild, long groupId, Connection conn) {
         this.conn = conn;
         this.id = groupId;
+        this.guild = guild;
 
         Statement stmt;
         ResultSet rs;
         try {
             stmt = conn.createStatement();
-            rs = stmt.executeQuery("SELECT groupname,type,roleid,enabled FROM groups WHERE groupid=" + groupId);
+            rs = stmt.executeQuery("SELECT groupname,type,expression,enabled FROM groups WHERE groupid=" + groupId);
 
             if (rs.next()) {
                 this.name = rs.getString("groupname");
                 this.type = Type.valueOf(rs.getString("type").toUpperCase());
-                this.triggerRole = guild.getRoleById(rs.getLong("roleid"));
+                this.triggerExpr = rs.getString("expression");
                 this.enabled = rs.getBoolean("enabled");
                 rs.close();
                 rs = stmt.executeQuery("SELECT roleid,rolename FROM grouproles WHERE groupid=" + groupId);
                 while (rs.next()) {
                     this.roleMap.put(rs.getString("rolename"), guild.getRoleById(rs.getLong("roleid")));
+                }
+                rs.close();
+                rs = stmt.executeQuery("SELECT roleid,position FROM boundroles WHERE groupid=" + groupId);
+                while (rs.next()) {
+                    this.triggerRoles.put(rs.getInt("position"), guild.getRoleById(rs.getLong("roleid")));
                 }
                 rs.close();
 
@@ -536,13 +666,13 @@ public class RoleGroup {
         }
     }
 
-    public static RoleGroup createRolegroup(String name, Role boundrole, Connection conn) {
+    public static RoleGroup createRolegroup(Guild guild,String name, Connection conn) {
         RoleGroup ret;
         try {
             PreparedStatement stmt = conn.prepareStatement("SELECT groupid FROM groups WHERE guildid=? AND groupname=?");
             ResultSet rs;
 
-            stmt.setLong(1, boundrole.getGuild().getIdLong());
+            stmt.setLong(1, guild.getIdLong());
             stmt.setString(2, name);
 
             rs = stmt.executeQuery();
@@ -550,7 +680,7 @@ public class RoleGroup {
             if (rs.next())
                 ret = null;
             else
-                ret = new RoleGroup(name, boundrole, conn);
+                ret = new RoleGroup(name,guild.getIdLong(), conn);
 
             rs.close();
             stmt.close();
@@ -666,6 +796,40 @@ public class RoleGroup {
 
     private boolean roleIsUsed(Role role){
         return role.getGuild().getMembers().stream().map(Member::getRoles).flatMap(List::stream).anyMatch(role::equals);
+    }
+
+    private enum ExprFound {
+        NULL,
+        AND,
+        OR,
+        NOT,
+        OPEN,
+        CLOSE,
+        CONST,
+        VAR;
+
+        public boolean needVar(){
+            if(this == NOT)
+                return true;
+            if(this == AND)
+                return true;
+            if(this == OR)
+                return true;
+            if(this == OPEN)
+                return true;
+            if(this == NULL)
+                return true;
+            return false;
+        }
+        public boolean needOp(){
+            if(this == CONST)
+                return true;
+            if(this == VAR)
+                return true;
+            if(this == CLOSE)
+                return true;
+            return false;
+        }
     }
 
 }

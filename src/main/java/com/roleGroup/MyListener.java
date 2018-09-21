@@ -104,6 +104,7 @@ public class MyListener extends ListenerAdapter {
             //get sender member
             Member member = event.getMember();
             //get channel to send
+
             MessageChannel channel = event.getChannel();
             //get message
             Message message = event.getMessage();
@@ -297,15 +298,11 @@ public class MyListener extends ListenerAdapter {
 
                                 case "create": {
                                     if (args.length > 1 && !args[1].isEmpty()) {
-                                        //get a list of all mentions
-                                        List<Role> list = message.getMentionedRoles();
-                                        //if there is a mentioned role
-                                        if (list.size() == 1) {
-                                            //if the argument is not the mentioned role
-                                            if (!args[1].contains(list.get(0).getName())) {
+                                            //if the argument is not a mentioned role
+                                            if (args[1].matches("\\w+")) {
                                                 //call the class method
                                                 if (nameIsAllowed(args[1].toLowerCase())) {
-                                                    if (RoleGroup.createRolegroup(args[1].toLowerCase(), list.get(0), conn) != null) {
+                                                    if (RoleGroup.createRolegroup(event.getGuild(),args[1].toLowerCase(), conn) != null) {
                                                         System.out.println("created rolegroup '" + args[1] + "' in guild: '" + guildname + "'");
                                                         channel.sendMessage(output.getString("rolegroup-created")).queue();
                                                     } else {
@@ -324,7 +321,6 @@ public class MyListener extends ListenerAdapter {
                                             System.out.println("wrong syntax in guild: '" + guildname + "'");
                                             channel.sendMessage(output.getString("error-role-mention")).queue();
                                         }
-                                    }
                                 }
                                 break;
 
@@ -409,11 +405,14 @@ public class MyListener extends ListenerAdapter {
                                                 }
                                                 break;
 
-                                                case "trigger":{
+                                                case "expression":{
                                                     List<Role> list = message.getMentionedRoles();
                                                     //if there is a mentioned role
-                                                    if (list.size() == 1) {
-                                                        String ret = group.setTriggerRole(list.get(0),output);
+                                                    if (list.size() > 0) {
+                                                        StringBuilder sb = new StringBuilder(args[2]);
+                                                        for (int i=3;i<args.length;i++)
+                                                            sb.append(" ").append(args[i]);
+                                                        String ret = group.setTriggerExpr(sb.toString(),output);
                                                         channel.sendMessage(ret).queue();
                                                     }else {
                                                         System.out.print("wrong syntax ");
