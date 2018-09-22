@@ -409,11 +409,12 @@ public class MyListener extends ListenerAdapter {
                                                     List<Role> list = message.getMentionedRoles();
                                                     //if there is a mentioned role
                                                     if (list.size() > 0) {
+                                                        Message msg = channel.sendMessage(output.getString("rolegroup-expression-evaluating")).complete();
                                                         StringBuilder sb = new StringBuilder(args[2]);
                                                         for (int i=3;i<args.length;i++)
                                                             sb.append(" ").append(args[i]);
                                                         String ret = group.setTriggerExpr(sb.toString(),output);
-                                                        channel.sendMessage(ret).queue();
+                                                        msg.editMessage(ret).queue();
                                                     }else {
                                                         System.out.print("wrong syntax ");
                                                         channel.sendMessage(output.getString("error-wrong-syntax")).queue();
@@ -467,7 +468,6 @@ public class MyListener extends ListenerAdapter {
         BotGuild guild;
         //name of sender server
         if (checkConnection()) {
-            RoleGroup.onRoleDeletion(event.getRole(),conn);
             String guildname = event.getGuild().getName();
             //search for existent informations class for server
             guild = findGuild(event.getGuild().getIdLong());

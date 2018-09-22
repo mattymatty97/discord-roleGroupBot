@@ -6,6 +6,7 @@ import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 import net.dv8tion.jda.core.entities.Role;
+import net.dv8tion.jda.core.entities.impl.RoleImpl;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -407,7 +408,8 @@ public class RoleGroup {
             }
             if (arg.matches("<@&\\d+>")) {
                 if (last.needVar()) {
-                    if (guild.getRoleById(arg.substring(3, arg.length() - 1)) != null) {
+                    Role role = guild.getRoleById(arg.substring(3, arg.length() - 1));
+                    if ( role != null && role != guild.getPublicRole()) {
                         last = ExprFound.VAR;
                         continue;
                     }
@@ -474,7 +476,7 @@ public class RoleGroup {
         if (triggerExpr != null) {
             String sb = triggerExpr.toUpperCase();
             for (Map.Entry<Integer,Role> es : triggerRoles.entrySet()){
-                sb = sb.replace("$"+es.getKey(),es.getValue().getAsMention());
+                sb = sb.replace("$"+es.getKey(),Optional.ofNullable(es.getValue()).orElse(new RoleImpl(0,guild)).getAsMention());
             }
             ret.appendDescription(sb);
         }
@@ -494,7 +496,7 @@ public class RoleGroup {
     public String enable(ResourceBundle output) {
         Statement stmt;
         StringBuilder retStr = new StringBuilder();
-        if (triggerExpr != null) {
+        if (triggerExpr != null && !triggerExpr.isEmpty() && !triggerRoles.containsValue(null)) {
             if (!enabled) {
                 if(roleMap.size()>0) {
                     try {
@@ -617,12 +619,20 @@ public class RoleGroup {
                 rs.close();
                 rs = stmt.executeQuery("SELECT roleid,rolename FROM grouproles WHERE groupid=" + groupId);
                 while (rs.next()) {
-                    this.roleMap.put(rs.getString("rolename"), guild.getRoleById(rs.getLong("roleid")));
+                    Role role = guild.getRoleById(rs.getLong("roleid"));
+                    if(role!=null)
+                        this.roleMap.put(rs.getString("rolename"),role);
+                    else
+                        removeRole(rs.getString("rolename"),ResourceBundle.getBundle("messages"));
                 }
                 rs.close();
                 rs = stmt.executeQuery("SELECT roleid,position FROM boundroles WHERE groupid=" + groupId);
                 while (rs.next()) {
-                    this.triggerRoles.put(rs.getInt("position"), guild.getRoleById(rs.getLong("roleid")));
+                    Role role = guild.getRoleById(rs.getLong("roleid"));
+                    this.triggerRoles.put(rs.getInt("position"), role);
+                    if(role==null){
+                        disable(ResourceBundle.getBundle("messages"));
+                    }
                 }
                 rs.close();
 
@@ -714,40 +724,6 @@ public class RoleGroup {
         }
         return ret;
     }
-
-    public static void onRoleDeletion(Role role,Connection conn){
-        PreparedStatement stmt;
-        ResultSet rs;
-        try{
-            stmt = conn.prepareStatement("SELECT groupid from grouproles where roleid=?");
-            stmt.setLong(1,role.getIdLong());
-            rs = stmt.executeQuery();
-            List<Long> ids = new LinkedList<>();
-            while (rs.next()){
-                ids.add(rs.getLong("groupid"));
-            }
-            rs.close();
-            stmt.close();
-            if(ids.size()>0) {
-                stmt = conn.prepareStatement("UPDATE groups SET enabled=FALSE WHERE groupid=?");
-                for (Long id : ids) {
-                    stmt.setLong(1, id);
-                    stmt.executeUpdate();
-                }
-                stmt.close();
-                stmt = conn.prepareStatement("DELETE FROM grouproles where roleid=?");
-                stmt.setLong(1, role.getIdLong());
-                stmt.executeUpdate();
-            }
-        }catch (SQLException ex){
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
-            System.out.print("SQL error on role deletion ");
-        }
-    }
-
-
 
     public enum Type {
         POOL("POOL"),
