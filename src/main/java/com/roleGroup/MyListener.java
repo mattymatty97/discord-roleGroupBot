@@ -410,6 +410,7 @@ public class MyListener extends ListenerAdapter {
                                                     //if there is a mentioned role
                                                     if (list.size() > 0) {
                                                         Message msg = channel.sendMessage(output.getString("rolegroup-expression-evaluating")).complete();
+                                                        Thread.yield();
                                                         StringBuilder sb = new StringBuilder(args[2]);
                                                         for (int i=3;i<args.length;i++)
                                                             sb.append(" ").append(args[i]);
