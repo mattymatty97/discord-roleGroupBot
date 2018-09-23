@@ -535,7 +535,7 @@ public class RoleGroup {
             try {
                 stmt = conn.createStatement();
                 stmt.execute("UPDATE groups SET enabled=FALSE WHERE groupid=" + id);
-                this.enabled = true;
+                this.enabled = false;
                 stmt.close();
                 System.out.print("grouproles - group disabled");
                 retStr.append(output.getString("rolegroup-disabled"));
