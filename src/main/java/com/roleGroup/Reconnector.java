@@ -59,7 +59,7 @@ public class Reconnector {
         }
         try {
             JDA api = new JDABuilder(AccountType.BOT).setToken(System.getenv("BOT_TOKEN")).buildAsync();
-            api.addEventListener(new MyListener(conn, savedGuilds));
+            api.addEventListener(new MyListener(conn));
             api.getPresence().setGame(Game.listening("suggestions :/"));
         }catch (Exception e) {
             e.printStackTrace();
