@@ -6,8 +6,6 @@ import net.dv8tion.jda.core.JDABuilder;
 
 import java.sql.*;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
 
 import net.dv8tion.jda.core.entities.Game;
 public class BOT
@@ -16,8 +14,6 @@ public class BOT
     public static void main(String[] arguments) throws Exception
     {
         Connection conn=null;
-
-        List<BotGuild> savedGuilds=new ArrayList<BotGuild>();
         try {
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
@@ -43,7 +39,7 @@ public class BOT
 
         JDA api = new JDABuilder(AccountType.BOT).setToken(System.getenv("BOT_TOKEN")).buildAsync();
 
-        api.addEventListener(new MyListener(conn,savedGuilds));
+        api.addEventListener(new MyListener(conn));
         api.addEventListener(new SupportListener(491954204106031104L));
         api.getPresence().setGame(Game.playing("v2.0 rg prj"));
     }

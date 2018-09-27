@@ -27,7 +27,6 @@ import java.util.List;
 public class MyListener extends ListenerAdapter {
     private static List<String> reservedNames = Arrays.asList("ping", "help", "modrole", "role", "create", "delete", "list");
     private Connection conn;
-    private List<BotGuild> savedGuilds;
     public static boolean deleted = false;
 
     private static String prefix = System.getenv("BOT_PREFIX");
@@ -81,25 +80,17 @@ public class MyListener extends ListenerAdapter {
             //name of sender server
             String guildname = event.getGuild().getName();
             //search for existent informations class for server
-            guild = findGuild(event.getGuild().getIdLong());
-            if (guild == null) {
-                //create local instance of server informations
-                guild = new BotGuild(event.getGuild(), conn);
-                savedGuilds.add(guild);
-                output = guild.getMessages();
-                if (deleted) {
-                    deleted = false;
-                    System.out.println("role deleted in guild: " + guildname);
-                    event.getGuild().getOwner().getUser().openPrivateChannel().queue((channel) ->
-                    {
+            guild = new BotGuild(event.getGuild(), conn);
+
+            output = guild.getMessages();
+            if (deleted) {
+                deleted = false;
+                System.out.println("role deleted in guild: " + guildname);
+                event.getGuild().getOwner().getUser().openPrivateChannel().queue((channel) ->
+                {
                         channel.sendMessage(output.getString("event-role-deleted")).queue();
                         channel.sendMessage(output.getString("event-role-deleted-2")).queue();
                     });
-                }
-            } else {
-                //set locales to giuld setting
-
-                output = guild.getMessages();
             }
             //get sender member
             Member member = event.getMember();
@@ -471,12 +462,7 @@ public class MyListener extends ListenerAdapter {
         if (checkConnection()) {
             String guildname = event.getGuild().getName();
             //search for existent informations class for server
-            guild = findGuild(event.getGuild().getIdLong());
-            if (guild == null) {
-                //create local instance of server informations
-                guild = new BotGuild(event.getGuild(), conn);
-                savedGuilds.add(guild);
-            }
+            guild = new BotGuild(event.getGuild(), conn);
             //set locales to giuld setting
 
             output = guild.getMessages();
@@ -502,12 +488,8 @@ public class MyListener extends ListenerAdapter {
         BotGuild guild;
         //name of sender server
         String guildname = event.getGuild().getName();
-        //search for existent informations class for server
-        guild = findGuild(event.getGuild().getIdLong());
-        if (guild == null) {
             //create local instance of server informations
             guild = new BotGuild(event.getGuild(), conn);
-            savedGuilds.add(guild);
             output = guild.getMessages();
             if (guild.isNew) {
                 guild.isNew = false;
@@ -521,7 +503,6 @@ public class MyListener extends ListenerAdapter {
                     });
                 }
             }
-        }
         updateServerCount(event.getJDA());
     }
 
@@ -560,15 +541,6 @@ public class MyListener extends ListenerAdapter {
 
     private boolean nameIsAllowed(String name){
         return !reservedNames.contains(name);
-    }
-
-    //need explanation?
-    private BotGuild findGuild(Long guildId) {
-        for (BotGuild guild : savedGuilds) {
-            if (guild.getId().equals(guildId))
-                return guild;
-        }
-        return null;
     }
 
     //prints the help message
@@ -681,9 +653,8 @@ public class MyListener extends ListenerAdapter {
         return false;
     }
 
-    public MyListener(Connection conn, List<BotGuild> savedGuilds) {
+    public MyListener(Connection conn) {
         this.conn = conn;
-        this.savedGuilds = savedGuilds;
     }
 
     private static void guildDeleteDB(Connection conn, Long guildId) {
