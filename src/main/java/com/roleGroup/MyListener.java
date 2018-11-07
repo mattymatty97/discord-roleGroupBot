@@ -433,11 +433,7 @@ public class MyListener extends ListenerAdapter {
                                                     break;
                                             }
                                         }
-                                    } else {
-                                        System.out.println("wrong syntax in guild: '" + guildname + "'");
-                                        channel.sendMessage(output.getString("error-wrong-syntax")).queue();
                                     }
-
                             }
                         } else {
                             channel.sendMessage(output.getString("error-user-permission")).queue();
