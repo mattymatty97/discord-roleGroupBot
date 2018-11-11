@@ -8,11 +8,9 @@ import java.sql.*;
 import java.net.URI;
 
 import net.dv8tion.jda.core.entities.Game;
-
 public class BOT
 {
     static String url;
-
     public static void main(String[] arguments) throws Exception
     {
         Connection conn=null;
