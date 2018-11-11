@@ -61,6 +61,7 @@ public class MyListener extends ListenerAdapter {
             }
             updateServerCount(event.getJDA());
         }
+        System.out.println("Starting Spring");
         SpringBoot.main(new String[]{""});
     }
 
