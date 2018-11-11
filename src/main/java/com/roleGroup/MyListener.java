@@ -139,7 +139,7 @@ public class MyListener extends ListenerAdapter {
                                 RoleGroup group = RoleGroup.getRolegroup(event.getGuild(), conn, args[0].substring(1).toLowerCase());
                                 String argument;
                                 if(args.length == 2)
-                                    argument=args[1];
+                                    argument=args[1].toLowerCase();
                                 else
                                     argument=null;
                                 if (group != null) {
@@ -363,7 +363,7 @@ public class MyListener extends ListenerAdapter {
 
                                                 case "remove":{
                                                     if (args[2]!=null){
-                                                        String ret = group.removeRole(args[2], output);
+                                                        String ret = group.removeRole(args[2].toLowerCase(), output);
                                                         channel.sendMessage(ret).queue();
                                                     } else {
                                                         System.out.print("grouproles - wrong syntax");
@@ -569,7 +569,7 @@ public class MyListener extends ListenerAdapter {
             }
             helpMsg.addBlankField(false);
 
-            RoleGroup.listRoleGroups(jdaGuild,conn).stream().map((String s)->RoleGroup.getRolegroup(jdaGuild,conn,s))
+            RoleGroup.listRoleGroups(jdaGuild,conn).stream().map((String s)->RoleGroup.getRolegroup(jdaGuild,conn,s.substring(1)))
                     .filter(Objects::nonNull).filter(RoleGroup::isEnabled).filter(rg -> rg.memberAllowed(member))
                     .forEach(rg -> {
                         str.append("\nrg!");

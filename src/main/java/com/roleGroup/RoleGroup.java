@@ -354,114 +354,119 @@ public class RoleGroup {
         PreparedStatement stmt;
         StringBuilder retStr = new StringBuilder();
 
-        String args[] = triggerExpr.replace("("," ( ").replace(")"," ) ").replace("<"," <").replace(">","> ").split(" +");
-        if(args[0].isEmpty())
-            args = Arrays.copyOfRange(args,1,args.length);
-        int open=0;
-        int close=0;
-        ExprFound last = ExprFound.NULL;
-        boolean exeption = false;
-        for (String arg : args) {
-            if (arg.matches("not")) {
-                if(last != ExprFound.NOT && last.needVar()) {
-                    last=ExprFound.NOT;
-                    continue;
-                }
-            }
-            if (arg.matches("and")) {
-                if(last.needOp()){
-                    last=ExprFound.AND;
-                    continue;
-                }
-            }
-            if (arg.matches("or")){
-                if(last.needOp()){
-                    last=ExprFound.OR;
-                    continue;
-                }
-            }
-            if (arg.matches("true")) {
-                if(last.needVar()){
-                    last=ExprFound.CONST;
-                    continue;
-                }
-            }
-            if (arg.matches("false")) {
-                if(last.needVar()){
-                    last=ExprFound.CONST;
-                    continue;
-                }
-            }
-            if (arg.matches("\\(")) {
-                if(last.needVar()){
-                    last=ExprFound.OPEN;
-                    open++;
-                    continue;
-                }
-            }
-            if (arg.matches("\\)")) {
-                if(last.needOp()){
-                    last=ExprFound.CLOSE;
-                    close++;
-                    continue;
-                }
-            }
-            if (arg.matches("<@&\\d+>")) {
-                if (last.needVar()) {
-                    Role role = guild.getRoleById(arg.substring(3, arg.length() - 1));
-                    if ( role != null && role != guild.getPublicRole()) {
-                        last = ExprFound.VAR;
+
+        if (!isEnabled()) {
+            String args[] = triggerExpr.replace("(", " ( ").replace(")", " ) ").replace("<", " <").replace(">", "> ").split(" +");
+            if (args[0].isEmpty())
+                args = Arrays.copyOfRange(args, 1, args.length);
+            int open = 0;
+            int close = 0;
+            ExprFound last = ExprFound.NULL;
+            boolean exeption = false;
+            for (String arg : args) {
+                if (arg.matches("not")) {
+                    if (last != ExprFound.NOT && last.needVar()) {
+                        last = ExprFound.NOT;
                         continue;
                     }
                 }
+                if (arg.matches("and")) {
+                    if (last.needOp()) {
+                        last = ExprFound.AND;
+                        continue;
+                    }
+                }
+                if (arg.matches("or")) {
+                    if (last.needOp()) {
+                        last = ExprFound.OR;
+                        continue;
+                    }
+                }
+                if (arg.matches("true")) {
+                    if (last.needVar()) {
+                        last = ExprFound.CONST;
+                        continue;
+                    }
+                }
+                if (arg.matches("false")) {
+                    if (last.needVar()) {
+                        last = ExprFound.CONST;
+                        continue;
+                    }
+                }
+                if (arg.matches("\\(")) {
+                    if (last.needVar()) {
+                        last = ExprFound.OPEN;
+                        open++;
+                        continue;
+                    }
+                }
+                if (arg.matches("\\)")) {
+                    if (last.needOp()) {
+                        last = ExprFound.CLOSE;
+                        close++;
+                        continue;
+                    }
+                }
+                if (arg.matches("<@&\\d+>")) {
+                    if (last.needVar()) {
+                        Role role = guild.getRoleById(arg.substring(3, arg.length() - 1));
+                        if (role != null && role != guild.getPublicRole()) {
+                            last = ExprFound.VAR;
+                            continue;
+                        }
+                    }
+                }
+                exeption = true;
+                break;
             }
-            exeption=true;
-            break;
-        }
-        if(open!=close || exeption)
-            return output.getString("error-invalid-expression");
+            if (open != close || exeption)
+                return output.getString("error-invalid-expression");
 
-        triggerRoles.clear();
-        StringBuilder expr = new StringBuilder();
-        int ctn=0;
-        for (String arg : args ) {
-            if(arg.matches("<@&\\d+>")){
-                expr.append("$").append(ctn);
-                triggerRoles.put(ctn,guild.getRoleById(arg.substring(3,arg.length()-1)));
-                ctn++;
-            }else{
-                expr.append(arg);
+            triggerRoles.clear();
+            StringBuilder expr = new StringBuilder();
+            int ctn = 0;
+            for (String arg : args) {
+                if (arg.matches("<@&\\d+>")) {
+                    expr.append("$").append(ctn);
+                    triggerRoles.put(ctn, guild.getRoleById(arg.substring(3, arg.length() - 1)));
+                    ctn++;
+                } else {
+                    expr.append(arg);
+                }
+                if (!arg.matches("[Nn][Oo][Tt]"))
+                    expr.append(" ");
             }
-            if(!arg.matches("[Nn][Oo][Tt]"))
-                expr.append(" ");
-        }
 
 
-
-        try {
-            Statement stmt1 = conn.createStatement();
-            stmt1.executeUpdate("DELETE FROM boundroles WHERE groupid="+id);
-            stmt1.close();
-            stmt = conn.prepareStatement("UPDATE groups SET expression=? WHERE groupid="+id);
-            stmt.setString(1, expr.toString());
-            stmt.executeUpdate();
-            this.triggerExpr = expr.toString();
-            stmt.close();
-            stmt = conn.prepareStatement("INSERT INTO boundroles(groupid,position,roleId) VALUES ("+id+",?,?)");
-            for (Map.Entry<Integer,Role> es : triggerRoles.entrySet()){
-                stmt.setInt(1, es.getKey());
-                stmt.setLong(2, es.getValue().getIdLong());
+            try {
+                Statement stmt1 = conn.createStatement();
+                stmt1.executeUpdate("DELETE FROM boundroles WHERE groupid=" + id);
+                stmt1.close();
+                stmt = conn.prepareStatement("UPDATE groups SET expression=? WHERE groupid=" + id);
+                stmt.setString(1, expr.toString());
                 stmt.executeUpdate();
+                this.triggerExpr = expr.toString();
+                stmt.close();
+                stmt = conn.prepareStatement("INSERT INTO boundroles(groupid,position,roleId) VALUES (" + id + ",?,?)");
+                for (Map.Entry<Integer, Role> es : triggerRoles.entrySet()) {
+                    stmt.setInt(1, es.getKey());
+                    stmt.setLong(2, es.getValue().getIdLong());
+                    stmt.executeUpdate();
+                }
+                this.triggerExpr = expr.toString();
+                retStr.append(output.getString("rolegroup-expression-updated"));
+                stmt.close();
+            } catch (SQLException ex) {
+                System.out.println("SQLException: " + ex.getMessage());
+                System.out.println("SQLState: " + ex.getSQLState());
+                System.out.println("VendorError: " + ex.getErrorCode());
+                retStr.append(output.getString("error-rolegroup-expression"));
             }
-            this.triggerExpr = expr.toString();
-            retStr.append(output.getString("rolegroup-expression-updated"));
-            stmt.close();
-        } catch (SQLException ex) {
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
-            retStr.append(output.getString("error-rolegroup-expression"));
-        }
+        } else {
+                System.out.print("grouproles - command enabled not modify");
+                retStr.append(output.getString("error-rolegroup-modify"));
+            }
         return retStr.toString();
     }
 
