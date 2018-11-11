@@ -61,6 +61,7 @@ public class MyListener extends ListenerAdapter {
             }
             updateServerCount(event.getJDA());
         }
+        SpringBoot.main(new String[]{""});
     }
 
     @Override
