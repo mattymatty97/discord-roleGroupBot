@@ -45,7 +45,7 @@ public class BOT
 
         while (!MyListener.ready);
 
-        new Thread(new NetworkListener(api,conn)).start();
+        new NetworkListener(api,conn).run();
     }
 
 
