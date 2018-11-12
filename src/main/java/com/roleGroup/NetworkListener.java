@@ -48,7 +48,7 @@ public class NetworkListener implements Runnable {
                     }
                     Thread.yield();
                     if(System.currentTimeMillis() > millis+1000){
-                        inFromServer.read();
+                        outToServer.write(-1);
                         millis=System.currentTimeMillis();
                     }
                 }
