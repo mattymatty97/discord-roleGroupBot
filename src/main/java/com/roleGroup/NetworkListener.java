@@ -47,8 +47,8 @@ public class NetworkListener implements Runnable {
                         millis = System.currentTimeMillis();
                     }
                     if(System.currentTimeMillis() > millis+1000){
-                        if(socket.isClosed())
-                            break;
+                        outToServer.writeUTF("ping");
+                        outToServer.flush();
                         millis=System.currentTimeMillis();
                     }
                 }
