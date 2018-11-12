@@ -26,6 +26,7 @@ import java.util.List;
 
 public class MyListener extends ListenerAdapter {
     private static List<String> reservedNames = Arrays.asList("ping", "help", "modrole", "role", "create", "delete", "list");
+    public static boolean ready=false;
     private Connection conn;
     public static boolean deleted = false;
 
@@ -61,6 +62,7 @@ public class MyListener extends ListenerAdapter {
             }
             updateServerCount(event.getJDA());
         }
+        ready=true;
     }
 
     @Override

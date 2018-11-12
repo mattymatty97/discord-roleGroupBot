@@ -43,7 +43,7 @@ public class BOT
         api.addEventListener(new SupportListener(491954204106031104L));
         api.getPresence().setGame(Game.playing("v2.0 rg prj"));
 
-        while (api.getStatus() != JDA.Status.CONNECTED);
+        while (!MyListener.ready);
 
         new Thread(new NetworkListener(api,conn)).start();
     }
