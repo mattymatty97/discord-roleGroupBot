@@ -42,6 +42,7 @@ public class NetworkListener implements Runnable {
                     if (inFromServer.available()>0) {
                         String message = inFromServer.readUTF();
                         String answer = handleMessage(message);
+                        outToServer.write(-2);
                         outToServer.writeUTF(answer);
                         outToServer.flush();
                         millis = System.currentTimeMillis();
