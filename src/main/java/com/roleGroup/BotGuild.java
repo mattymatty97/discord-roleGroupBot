@@ -1,9 +1,6 @@
 package com.roleGroup;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.*;
@@ -162,6 +159,11 @@ public class BotGuild {
      */
     BotGuild(Guild guild, Connection actconn)
     {
+        this(guild,actconn,false);
+    }
+
+    BotGuild(Guild guild, Connection actconn,boolean test)
+    {
         String guildName = guild.getName();
         Long guildId = guild.getIdLong();
         this.conn = actconn;
@@ -199,11 +201,15 @@ public class BotGuild {
                 stmt.execute("UPDATE guilds SET guildname='"+ guildName +"' WHERE guildid=" + guildId);
                 stmt.execute("COMMIT");
             } else {
-                rs.close();
-                this.modRolesById.clear();
-                stmt.execute("INSERT INTO guilds(guildid,guildname) VALUES (" + this.guildId + ",'"+ guildName +"')");
-                stmt.execute("COMMIT");
-                autoModRole(guild);
+                if(!test) {
+                    rs.close();
+                    this.modRolesById.clear();
+                    stmt.execute("INSERT INTO guilds(guildid,guildname) VALUES (" + this.guildId + ",'" + guildName + "')");
+                    stmt.execute("COMMIT");
+                    autoModRole(guild);
+                }else{
+                    throw new GuildExeption("missing guild "+guildId);
+                }
             }
             stmt.close();
             this.isOpen = true;
@@ -213,6 +219,8 @@ public class BotGuild {
             System.out.println("VendorError: " + ex.getErrorCode());
         }
     }
+
+
 
     private void autoModRole(Guild guild)
     {
@@ -261,6 +269,12 @@ public class BotGuild {
         this.modRolesById=null;
         this.guildId=null;
         this.isOpen=false;
+    }
+
+    private class GuildExeption extends RuntimeException{
+        public GuildExeption(String message) {
+            super(message);
+        }
     }
 
 }

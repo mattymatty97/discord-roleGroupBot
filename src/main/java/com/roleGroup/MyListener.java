@@ -333,7 +333,7 @@ public class MyListener extends ListenerAdapter {
 
                                 case "list": {
                                     StringBuilder str = new StringBuilder("```diff\n").append(output.getString("rolegroup-listing")).append("\n");
-                                    for (String rolegroup : RoleGroup.listRoleGroups(event.getGuild(), conn)) {
+                                    for (String rolegroup : RoleGroup.listRoleGroups(event.getGuild(), conn,true)) {
                                         str.append(rolegroup).append("\n");
                                     }
                                     str.append("```");
@@ -569,7 +569,7 @@ public class MyListener extends ListenerAdapter {
             }
             helpMsg.addBlankField(false);
 
-            RoleGroup.listRoleGroups(jdaGuild,conn).stream().map((String s)->RoleGroup.getRolegroup(jdaGuild,conn,s.substring(1)))
+            RoleGroup.listRoleGroups(jdaGuild,conn,false).stream().map((String s)->RoleGroup.getRolegroup(jdaGuild,conn,s))
                     .filter(Objects::nonNull).filter(RoleGroup::isEnabled).filter(rg -> rg.memberAllowed(member))
                     .forEach(rg -> {
                         str.append("\nrg!");

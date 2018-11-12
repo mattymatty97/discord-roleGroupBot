@@ -1,7 +1,6 @@
 package com.roleGroup;
 
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.OnlineStatus;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.MessageEmbed;
@@ -643,6 +642,7 @@ public class RoleGroup {
 
             } else {
                 System.out.println("error id not found");
+                throw new RoleGroupExeption();
             }
             stmt.close();
         } catch (SQLException ex) {
@@ -681,6 +681,10 @@ public class RoleGroup {
         }
     }
 
+    public static RoleGroup getRolegroup(Guild guild, Connection conn, long groupid) {
+        return new RoleGroup(guild, groupid, conn);
+    }
+
     public static RoleGroup createRolegroup(Guild guild,String name, Connection conn) {
         RoleGroup ret;
         try {
@@ -709,7 +713,7 @@ public class RoleGroup {
         }
     }
 
-    public static List<String> listRoleGroups(Guild guild,Connection conn){
+    public static List<String> listRoleGroups(Guild guild,Connection conn,boolean printable){
         Statement stmt;
         ResultSet rs;
         List<String> ret = new ArrayList<>();
@@ -717,7 +721,10 @@ public class RoleGroup {
             stmt = conn.createStatement();
             rs = stmt.executeQuery("SELECT groupname,enabled FROM groups WHERE guildid="+guild.getId());
             while (rs.next()){
-                ret.add((rs.getBoolean("enabled")?"+":"-") + rs.getString("groupname"));
+                if(printable)
+                    ret.add((rs.getBoolean("enabled")?"+":"-") + rs.getString("groupname"));
+                else
+                    ret.add(rs.getString("groupname"));
             }
             rs.close();
             stmt.close();
@@ -810,6 +817,15 @@ public class RoleGroup {
             if(this == CLOSE)
                 return true;
             return false;
+        }
+    }
+
+    private class RoleGroupExeption extends RuntimeException{
+        public RoleGroupExeption() {
+        }
+
+        public RoleGroupExeption(String message) {
+            super(message);
         }
     }
 
