@@ -67,7 +67,10 @@ public class NetworkListener implements Runnable {
                 case "guild": {
                     if(request.has("GUILD_ID")) {
                         Guild guild = api.getGuildById(request.getLong("GUILD_ID"));
-                        answer = getAnswer(200,"Guild",getGuildInfo(guild));
+                        if(guild!=null)
+                            answer = getAnswer(200,"Guild",getGuildInfo(guild));
+                        else
+                            answer=getBadAnswer();
                     }else{
                         answer = getBadAnswer();
                     }
@@ -83,8 +86,9 @@ public class NetworkListener implements Runnable {
 
 
 
+        JSONObject printRep = new JSONObject().put("ID",answer.get("ID")).put("STATUS",answer.get("STATUS"));
         System.out.println("WEB - Answered:");
-        System.out.println(answer.toString(3));
+        System.out.println(printRep.toString(3));
 
         return answer.toString();
     }
