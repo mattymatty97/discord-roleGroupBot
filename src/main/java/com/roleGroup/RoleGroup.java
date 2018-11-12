@@ -53,9 +53,22 @@ public class RoleGroup {
         return triggerExpr;
     }
 
+    public String getPrintableTriggerExpr() {
+        if (triggerExpr != null) {
+            String sb = triggerExpr.toUpperCase();
+            for (Map.Entry<Integer,Role> es : triggerRoles.entrySet()){
+                sb = sb.replace("$"+es.getKey(),Optional.ofNullable(es.getValue()).orElse(new RoleImpl(0,guild)).getAsMention());
+            }
+            return sb;
+        }
+        return null;
+    }
+
     public Type getType() {
         return type;
     }
+
+    public Guild getGuild(){ return guild; }
 
 
     public String command(Guild guild, Member member, String rolename, ResourceBundle output) {
@@ -824,11 +837,11 @@ public class RoleGroup {
         }
     }
 
-    private class RoleGroupExeption extends RuntimeException{
-        public RoleGroupExeption() {
+    public class RoleGroupExeption extends RuntimeException{
+        private RoleGroupExeption() {
         }
 
-        public RoleGroupExeption(String message) {
+        private RoleGroupExeption(String message) {
             super(message);
         }
     }

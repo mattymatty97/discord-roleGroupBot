@@ -74,18 +74,36 @@ public class NetworkListener implements Runnable {
                         if(guild!=null)
                             answer = getAnswer(200,"Guild",getGuildInfo(guild));
                         else
-                            answer=getBadAnswer();
+                            answer=getBadAnswer(404);
                     }else{
-                        answer = getBadAnswer();
+                        answer = getBadAnswer(400);
                     }
                     break;
                 }
+                case "group":{
+                    if(request.has("GUILD_ID") && request.has("GROUP_ID")) {
+                        Guild guild = api.getGuildById(request.getLong("GUILD_ID"));
+                        if(guild!=null) {
+                            try{
+                                RoleGroup roleGroup = RoleGroup.getRolegroup(guild, conn, request.getLong("GROUP_ID"));
+                                answer = getAnswer(200, "RoleGroup", getGroupInfo(roleGroup));
+                            }catch (RoleGroup.RoleGroupExeption ex){
+                                answer=getBadAnswer(404);
+                            }
+                        }else
+                            answer=getBadAnswer(404);
+                    }else{
+                        answer = getBadAnswer(400);
+                    }
+                    break;
+                }
+
                 default: {
-                    answer = getBadAnswer();
+                    answer = getBadAnswer(400);
                 }
             }
         }else{
-            answer = getBadAnswer();
+            answer = getBadAnswer(400);
         }
 
 
@@ -116,6 +134,26 @@ public class NetworkListener implements Runnable {
         return res;
     }
 
+    private JSONObject getGroupInfo(RoleGroup rg){
+        JSONObject res = new JSONObject();
+        res.put("NAME",rg.getName());
+        res.put("ID",rg.getId());
+        res.put("TYPE",rg.getType().toString());
+        res.put("EXPRESSION",rg.getPrintableTriggerExpr());
+        JSONArray roles = new JSONArray();
+        rg.getRoleMap().entrySet().forEach(e -> {
+            Role role = e.getValue();
+            roles.put(new JSONObject().put("NICK",e.getKey())
+                    .put("ROLE",
+                            new JSONObject()
+                                    .put("NAME",role.getName())
+                                    .put("ID",role.getId())));
+        });
+        res.put("ROLES",roles);
+        res.put("ENABLED",rg.isEnabled());
+
+        return res;
+    }
 
 
 
@@ -130,10 +168,10 @@ public class NetworkListener implements Runnable {
         return answer;
     }
 
-    private JSONObject getBadAnswer(){
+    private JSONObject getBadAnswer(int code){
         JSONObject answer = new JSONObject();
         answer.put("ID","rolegroup");
-        answer.put("STATUS",400);
+        answer.put("STATUS",code);
         return answer;
     }
 }
