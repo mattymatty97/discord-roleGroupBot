@@ -533,6 +533,10 @@ public class RoleGroup {
     }
 
     public String disable(ResourceBundle output) {
+        return disable(output,true);
+    }
+
+    public String disable(ResourceBundle output,boolean printErrors) {
         Statement stmt;
         StringBuilder retStr = new StringBuilder();
         if (enabled) {
@@ -550,7 +554,7 @@ public class RoleGroup {
                 System.out.print("grouproles - error in enable");
                 retStr.append(output.getString("error-rolegroup-disable"));
             }
-        } else {
+        } else if(printErrors){
             System.out.print("grouproles - error yet disabled");
             retStr.append(output.getString("error-rolegroup-is-disable"));
         }
@@ -635,7 +639,7 @@ public class RoleGroup {
                     Role role = guild.getRoleById(rs.getLong("roleid"));
                     this.triggerRoles.put(rs.getInt("position"), role);
                     if(role==null){
-                        disable(ResourceBundle.getBundle("messages"));
+                        disable(ResourceBundle.getBundle("messages"),false);
                     }
                 }
                 rs.close();
