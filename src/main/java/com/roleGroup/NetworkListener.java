@@ -24,6 +24,7 @@ public class NetworkListener implements Runnable {
     @Override
     public void run() {
         try {
+            System.out.println("try to connect");
             while (!Thread.interrupted()) {
                 Socket socket = new Socket("torino.ddns.net", 23446);
                 DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
