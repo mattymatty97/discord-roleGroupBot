@@ -30,11 +30,8 @@ public class NetworkListener implements Runnable {
         try {
             while (!Thread.interrupted()) {
                 Socket socket = new Socket("torino.ddns.net", 23446);
-                Socket alivesocket = new Socket("torino.ddns.net", 23447);
                 DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
-                DataOutputStream outToAliveServer = new DataOutputStream(alivesocket.getOutputStream());
                 DataInputStream inFromServer = new DataInputStream(socket.getInputStream());
-                DataInputStream inFromAliveServer = new DataInputStream(alivesocket.getInputStream());
                 outToServer.writeUTF("rolegroup");
                 outToServer.flush();
                 System.out.println("Rest API started");
@@ -50,7 +47,6 @@ public class NetworkListener implements Runnable {
                     }
                     Thread.yield();
                     if(System.currentTimeMillis() > millis+1000){
-                        inFromAliveServer.read();
                         millis=System.currentTimeMillis();
                     }
                 }
