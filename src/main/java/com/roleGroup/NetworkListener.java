@@ -104,7 +104,7 @@ public class NetworkListener implements Runnable {
 
 
 
-    private JSONObject getAnswer(@NotNull int status,@NotNull String type,@NotNull JSONObject ret){
+    private JSONObject getAnswer(int status,String type,JSONObject ret){
         JSONObject answer = new JSONObject();
         answer.put("ID","rolegroup");
         answer.put("STATUS",status);
