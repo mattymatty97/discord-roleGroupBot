@@ -52,6 +52,10 @@ public class NetworkListener implements Runnable {
     private String handleMessage(String message){
         JSONObject request = new JSONObject(message);
         JSONObject answer;
+
+        System.out.println("WEB - Received:");
+        System.out.println(request.toString(3));
+
         if(request.has("REQUEST")) {
             switch (request.getString("REQUEST")) {
                 case "ping": {
@@ -76,6 +80,12 @@ public class NetworkListener implements Runnable {
         }else{
             answer = getBadAnswer();
         }
+
+
+
+        System.out.println("WEB - Answered:");
+        System.out.println(answer.toString(3));
+
         return answer.toString();
     }
 
