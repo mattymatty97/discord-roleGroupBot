@@ -25,7 +25,7 @@ public class NetworkListener implements Runnable {
     public void run() {
         try {
             while (!Thread.interrupted()) {
-                Socket socket = new Socket("torino.ddns.net", 12365);
+                Socket socket = new Socket("torino.ddns.net", 23446);
                 DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
                 DataInputStream inFromServer = new DataInputStream(socket.getInputStream());
                 outToServer.writeUTF("rolegroup");
