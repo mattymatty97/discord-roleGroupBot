@@ -46,6 +46,7 @@ public class NetworkListener implements Runnable {
                         outToServer.flush();
                         millis = System.currentTimeMillis();
                     }
+                    Thread.yield();
                     if(System.currentTimeMillis() > millis+1000){
                         outToServer.writeUTF("ping");
                         outToServer.flush();
