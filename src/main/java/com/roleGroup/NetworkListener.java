@@ -38,17 +38,10 @@ public class NetworkListener implements Runnable {
                 alive = true;
 
                 while (!socket.isClosed()) {
-                    if (inFromServer.available()>0) {
                         String message = inFromServer.readUTF();
                         String answer = handleMessage(message);
                         outToServer.writeUTF(answer);
                         outToServer.flush();
-                        millis = System.currentTimeMillis();
-                    }
-                    Thread.yield();
-                    if(System.currentTimeMillis() > millis+1000){
-                        millis=System.currentTimeMillis();
-                    }
                 }
                 socket.close();
             }
