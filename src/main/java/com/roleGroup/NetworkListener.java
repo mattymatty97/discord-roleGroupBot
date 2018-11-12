@@ -9,6 +9,8 @@ import org.json.JSONObject;
 import java.io.*;
 import java.net.Socket;
 import java.sql.Connection;
+import java.sql.Time;
+import java.util.concurrent.TimeUnit;
 
 public class NetworkListener implements Runnable {
     private JDA api;
@@ -21,11 +23,14 @@ public class NetworkListener implements Runnable {
 
     static boolean alive=true;
 
+    private long millis=0;
+
     @Override
     public void run() {
         try {
             while (!Thread.interrupted()) {
                 Socket socket = new Socket("torino.ddns.net", 23446);
+                socket.setKeepAlive(true);
                 DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
                 DataInputStream inFromServer = new DataInputStream(socket.getInputStream());
                 outToServer.writeUTF("rolegroup");
@@ -34,10 +39,18 @@ public class NetworkListener implements Runnable {
                 alive = true;
 
                 while (!socket.isClosed()) {
-                    String message = inFromServer.readUTF();
-                    String answer = handleMessage(message);
-                    outToServer.writeUTF(answer);
-                    outToServer.flush();
+                    if (inFromServer.available()>0) {
+                        String message = inFromServer.readUTF();
+                        String answer = handleMessage(message);
+                        outToServer.writeUTF(answer);
+                        outToServer.flush();
+                        millis = System.currentTimeMillis();
+                    }
+                    if(System.currentTimeMillis() > millis+1000){
+                        if(socket.isClosed())
+                            break;
+                        millis=System.currentTimeMillis();
+                    }
                 }
                 socket.close();
             }
