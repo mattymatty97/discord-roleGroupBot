@@ -450,8 +450,8 @@ public class RoleGroup {
                 } else {
                     expr.append(arg);
                 }
-                if (!arg.matches("[Nn][Oo][Tt]"))
-                    expr.append(" ");
+                //space after item
+                expr.append(" ");
             }
 
 
@@ -460,7 +460,7 @@ public class RoleGroup {
                 stmt1.executeUpdate("DELETE FROM boundroles WHERE groupid=" + id);
                 stmt1.close();
                 stmt = conn.prepareStatement("UPDATE groups SET expression=? WHERE groupid=" + id);
-                stmt.setString(1, expr.toString());
+                stmt.setString(1, expr.toString().trim());
                 stmt.executeUpdate();
                 this.triggerExpr = expr.toString();
                 stmt.close();
@@ -553,7 +553,7 @@ public class RoleGroup {
         return disable(output,true);
     }
 
-    public String disable(ResourceBundle output,boolean printErrors) {
+    private String disable(ResourceBundle output, boolean printErrors) {
         Statement stmt;
         StringBuilder retStr = new StringBuilder();
         if (enabled) {
@@ -770,10 +770,8 @@ public class RoleGroup {
 
             if ( this.equals(POOL) )
                 return true;
-            if ( this.equals(MONOPOOL))
-                return true;
+            return this.equals(MONOPOOL);
 
-            return false;
         }
 
         @Override
@@ -826,18 +824,14 @@ public class RoleGroup {
                 return true;
             if(this == OPEN)
                 return true;
-            if(this == NULL)
-                return true;
-            return false;
+            return this == NULL;
         }
         public boolean needOp(){
             if(this == CONST)
                 return true;
             if(this == VAR)
                 return true;
-            if(this == CLOSE)
-                return true;
-            return false;
+            return this == CLOSE;
         }
     }
 

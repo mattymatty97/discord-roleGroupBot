@@ -2,6 +2,7 @@ package com.roleGroup;
 
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Role;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -11,6 +12,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.sql.Connection;
+import java.util.ResourceBundle;
 
 @SuppressWarnings("Duplicates")
 public class NetworkListener implements Runnable {
@@ -124,37 +126,47 @@ public class NetworkListener implements Runnable {
 
     private JSONObject handleAction(JSONObject request){
         JSONObject ret;
-        switch (request.getString("TARGET")){
-            case "guild":{
-                if(request.has("GUILD_ID")) {
-                    Guild guild = api.getGuildById(request.getLong("GUILD_ID"));
-                    if(guild!=null)
-                        ret = guildAction(guild,request.getJSONObject("ACTION"));
-                    else
-                        ret=getBadAnswer(404,"Guild Not Found");
-                }else{
-                    ret = getBadAnswer(400,"Missing GUILD_ID");
-                }
-                break;
+        if (request.has("GUILD_ID")) {
+            Guild guild = api.getGuildById(request.getLong("GUILD_ID"));
+            BotGuild botGuild = new BotGuild(guild, conn);
+            if (guild != null) {
+                if (request.has("USER_ID")) {
+                    Member member = guild.getMemberById(request.getLong("USER_ID"));
+                    if (member != null && (botGuild.memberIsMod(member) || MyListener.memberIsOwner(member))) {
+                        switch (request.getString("TARGET")) {
+                            case "guild": {
+                                ret = guildAction(guild, request.getJSONObject("ACTION"));
+                                break;
+                            }
+                            case "group": {
+                                if (request.has("GROUP_ID")) {
+                                    try {
+                                        RoleGroup roleGroup = RoleGroup.getRolegroup(guild, conn, request.getLong("GROUP_ID"));
+                                        ret = groupAction(guild, roleGroup, request.getJSONObject("ACTION"));
+                                    } catch (RoleGroup.RoleGroupExeption ex) {
+                                        ret = getBadAnswer(404, "RoleGroup Not Found");
+                                    }
+                                } else {
+                                    ret = getBadAnswer(400, "Missing GROUP_ID");
+                                }
+                                break;
+                            }
+                            case "create": {
+                                ret = createAction(guild, request.getJSONObject("ACTION"));
+                                break;
+                            }
+                            default:
+                                ret = getBadAnswer(400, "Unknown TARGET");
+                        }
+                    } else
+                        ret = getBadAnswer(403, "User Not Allowed");
+                } else
+                    ret = getBadAnswer(400, "Missing USER_ID");
+            } else {
+                ret = getBadAnswer(404, "Guild Not Found");
             }
-            case "group":{
-                ret = getBadAnswer(500);
-                break;
-            }
-            case "create": {
-                if (request.has("GUILD_ID")) {
-                    Guild guild = api.getGuildById(request.getLong("GUILD_ID"));
-                    if (guild != null)
-                        ret = createAction(guild, request.getJSONObject("ACTION"));
-                    else
-                        ret = getBadAnswer(404, "Guild Not Found");
-                } else {
-                    ret = getBadAnswer(400, "Missing GUILD_ID");
-                }
-                break;
-            }
-            default:
-                ret = getBadAnswer(400,"Unknown TARGET");
+        } else {
+            ret = getBadAnswer(400, "Missing GUILD_ID");
         }
         return ret;
     }
@@ -231,6 +243,121 @@ public class NetworkListener implements Runnable {
         } else {
             return getBadAnswer(400, "Missing NAME");
         }
+    }
+
+    private JSONObject groupAction(Guild guild, RoleGroup group, JSONObject action) {
+        JSONObject answer;
+        if (action.has("ACTION")) {
+            switch (action.getString("ACTION").toLowerCase()) {
+                case "add role": {
+                    if (action.has("ROLE_ID") && action.has("NICK")) {
+                        Role role = guild.getRoleById(action.getLong("ROLE_ID"));
+                        if (role != null) {
+                            String nick = action.getString("NICK");
+                            ResourceBundle out = new BotGuild(guild, conn).getMessages();
+                            String res = group.addRole(role, nick, out);
+                            if (res.equals(out.getString("rolegroup-role-added")))
+                                answer = getAnswer(200, "ACTION", new JSONObject().put("RESULT", "Role added"));
+                            else
+                                answer = getBadAnswer(400, res);
+                        } else {
+                            answer = getBadAnswer(400, "Role Not Found");
+                        }
+                    } else
+                        answer = getBadAnswer(400, "Missing ROLE_ID");
+                    break;
+                }
+
+                case "remove role": {
+                    if (action.has("NICK")) {
+                        String nick = action.getString("NICK");
+                        BotGuild botGuild = new BotGuild(guild, conn);
+                        String res = group.removeRole(nick, botGuild.getMessages());
+                        if (res.equals(botGuild.getMessages().getString("rolegroup-role-removed")))
+                            answer = getAnswer(200, "ACTION", new JSONObject().put("RESULT", "Role removed"));
+                        else
+                            answer = getBadAnswer(400, res);
+                    } else
+                        answer = getBadAnswer(400, "Missing ROLE_ID");
+                    break;
+                }
+
+                case "reset role": {
+                    BotGuild botGuild = new BotGuild(guild, conn);
+                    String res = group.resetRole(botGuild.getMessages());
+                    if (res.equals(botGuild.getMessages().getString("rolegroup-role-removed")))
+                        answer = getAnswer(200, "ACTION", new JSONObject().put("RESULT", "Reset"));
+                    else
+                        answer = getBadAnswer(500, res);
+                    break;
+                }
+
+                case "type": {
+                    if (action.has("TYPE")) {
+                        try {
+                            String type = action.getString("TYPE");
+                            BotGuild botGuild = new BotGuild(guild, conn);
+                            String res = group.setType(RoleGroup.Type.valueOf(type), botGuild.getMessages());
+                            if (res.equals(botGuild.getMessages().getString("rolegroup-type-updated")))
+                                answer = getAnswer(200, "ACTION", new JSONObject().put("RESULT", "Type set"));
+                            else
+                                answer = getBadAnswer(400, res);
+                        } catch (IllegalArgumentException ex) {
+                            answer = getBadAnswer(400, "Unknown TYPE");
+                        }
+                    } else
+                        answer = getBadAnswer(400, "Missing ROLE_ID");
+                    break;
+                }
+
+                case "expression": {
+                    if (action.has("EXPRESSION")) {
+                        String expression = action.getString("EXPRESSION");
+                        BotGuild botGuild = new BotGuild(guild, conn);
+                        String res = group.setTriggerExpr(expression, botGuild.getMessages());
+                        if (res.equals(botGuild.getMessages().getString("rolegroup-expression-updated")))
+                            answer = getAnswer(200, "ACTION", new JSONObject().put("RESULT", "Expression set"));
+                        else
+                            answer = getBadAnswer(400, res);
+                    } else
+                        answer = getBadAnswer(400, "Missing ROLE_ID");
+                    break;
+                }
+
+                case "enable": {
+                    BotGuild botGuild = new BotGuild(guild, conn);
+                    String res = group.resetRole(botGuild.getMessages());
+                    if (res.equals(botGuild.getMessages().getString("rolegroup-enabled")))
+                        answer = getAnswer(200, "ACTION", new JSONObject().put("RESULT", "Enabled"));
+                    else
+                        answer = getBadAnswer(500, res);
+                    break;
+                }
+
+                case "disable": {
+                    BotGuild botGuild = new BotGuild(guild, conn);
+                    String res = group.disable(botGuild.getMessages());
+                    if (res.equals(botGuild.getMessages().getString("rolegroup-disabled")))
+                        answer = getAnswer(200, "ACTION", new JSONObject().put("RESULT", "Disabled"));
+                    else
+                        answer = getBadAnswer(500, res);
+                    break;
+                }
+                case "delete": {
+                    BotGuild botGuild = new BotGuild(guild, conn);
+                    String res = group.disable(botGuild.getMessages());
+                    if (res.equals(botGuild.getMessages().getString("rolegroup-disabled")))
+                        answer = getAnswer(200, "ACTION", new JSONObject().put("RESULT", "Disabled"));
+                    else
+                        answer = getBadAnswer(500, res);
+                    break;
+                }
+                default:
+                    answer = getBadAnswer(404, "Unknown action");
+            }
+        } else
+            answer = getBadAnswer(400, "Missing ACTION");
+        return answer;
     }
 
 
