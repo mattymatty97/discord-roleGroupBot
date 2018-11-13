@@ -1,13 +1,15 @@
-import com.roleGroup.*;
-
+import com.roleGroup.MyListener;
+import com.roleGroup.NetworkListener;
+import com.roleGroup.SupportListener;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
-
-import java.sql.*;
-import java.net.URI;
-
 import net.dv8tion.jda.core.entities.Game;
+
+import java.net.URI;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 public class BOT
 {
     static String url;
@@ -41,7 +43,7 @@ public class BOT
 
         api.addEventListener(new MyListener(conn));
         api.addEventListener(new SupportListener(491954204106031104L));
-        api.getPresence().setGame(Game.playing("v2.0 rg prj"));
+        api.getPresence().setGame(Game.playing("v3.0 - SNAPSHOT rg prj"));
 
         while (!MyListener.ready);
 

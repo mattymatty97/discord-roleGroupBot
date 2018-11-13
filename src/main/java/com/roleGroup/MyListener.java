@@ -20,12 +20,20 @@ import org.json.JSONObject;
 
 import java.awt.*;
 import java.io.IOException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.*;
 import java.util.List;
 
 public class MyListener extends ListenerAdapter {
     private static List<String> reservedNames = Arrays.asList("ping", "help", "modrole", "role", "create", "delete", "list");
+
+    private static final char commandSeparator = '!';
+    private static final char settingSeparator = '$';
+
+
     public static volatile boolean ready=false;
     private Connection conn;
     public static boolean deleted = false;
@@ -111,7 +119,7 @@ public class MyListener extends ListenerAdapter {
                 //test first argument
                 System.out.println("Message from '" + member.getEffectiveName() + "' in guild '" + guildname + "'");
                 switch (args[0].toCharArray()[0]) {
-                    case '!':
+                    case commandSeparator:
                         switch (args[0].substring(1)) {
 
 //------USER---------------------HELP--------------------------------------
@@ -158,7 +166,7 @@ public class MyListener extends ListenerAdapter {
                         }
                         break;
 
-                    case '@':
+                    case settingSeparator:
                         if (memberIsOwner(member) || member.isOwner() || guild.memberIsMod(member)) {
                             switch (args[0].substring(1)) {
 //-------MOD-------------------MODROLE-------------------------------------
