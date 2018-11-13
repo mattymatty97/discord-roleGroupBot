@@ -786,13 +786,17 @@ public class RoleGroup {
         }
     }
 
-    private boolean memberIsOwner(Member member){
-        String owner_id = System.getenv("OWNER_ID");
-        if ( owner_id == null || owner_id.isEmpty())
+    public static boolean memberIsOwner(Member member) {
+        String[] owners = System.getenv("OWNER_ID").replaceAll("\\[|\\]", "").split(",");
+        if (owners.length == 0)
             return false;
 
-        Long id = Long.parseLong(owner_id);
-        return member.getUser().getIdLong() == id;
+        for (String owner_id : owners) {
+            Long id = Long.parseLong(owner_id);
+            if (member.getUser().getIdLong() == id)
+                return true;
+        }
+        return false;
     }
 
     private boolean memberHasRole(Member member, Long roleId) {

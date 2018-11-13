@@ -131,7 +131,7 @@ public class NetworkListener implements Runnable {
             if (guild != null) {
                 if (request.has("USER_ID")) {
                     Member member = guild.getMemberById(request.getLong("USER_ID"));
-                    if (member != null && (botGuild.memberIsMod(member) || MyListener.memberIsOwner(member))) {
+                    if (member != null && (botGuild.memberIsMod(member) || RoleGroup.memberIsOwner(member))) {
                         switch (request.getString("TARGET")) {
                             case "guild": {
                                 ret = guildAction(guild, request.getJSONObject("ACTION"));
