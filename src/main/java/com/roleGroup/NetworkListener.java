@@ -136,10 +136,13 @@ public class NetworkListener implements Runnable {
                 break;
             }
             case "group":{
+                ret = getBadAnswer(500);
                 break;
             }
+            default:
+                ret = getBadAnswer(400,"Unknown TARGET");
         }
-        return getBadAnswer(400);
+        return ret;
     }
 
 
