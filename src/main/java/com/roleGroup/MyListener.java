@@ -559,20 +559,20 @@ public class MyListener extends ListenerAdapter {
         if (args.length == 1) {
             //help is dynamic (different for every user)
             helpMsg.setTitle(output.getString("help-title"));
-            helpMsg.addField("rg!help", output.getString("help-def-help"), false);
-            helpMsg.addField("rg!ping", output.getString("help-def-ping"), false);
+            helpMsg.addField("rg" + commandSeparator + "help", output.getString("help-def-help"), false);
+            helpMsg.addField("rg" + commandSeparator + "ping", output.getString("help-def-ping"), false);
 
-            helpMsg.addField("rg!support", output.getString("help-def-support"), false);
-            helpMsg.addField("rg!other", output.getString("help-def-other"), false);
+            helpMsg.addField("rg" + commandSeparator + "support", output.getString("help-def-support"), false);
+            helpMsg.addField("rg" + commandSeparator + "other", output.getString("help-def-other"), false);
 
             //if is allowed to use mod commands
             if (memberIsOwner(member) || member.isOwner() || guild.memberIsMod(member)) {
                 helpMsg.addBlankField(false);
                 helpMsg.addField("MOD commands:", "", false);
 
-                helpMsg.addField("rg@modrole", output.getString("help-def-modrole"), false);
+                helpMsg.addField("rg" + settingSeparator + "modrole", output.getString("help-def-modrole"), false);
 
-                helpMsg.addField("rg@role", output.getString("help-def-role"), false);
+                helpMsg.addField("rg" + settingSeparator + "role", output.getString("help-def-role"), false);
 
                 helpMsg.addField("rolegroup", output.getString("help-def-rolegroup"), false);
 

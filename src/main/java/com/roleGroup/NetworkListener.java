@@ -12,11 +12,12 @@ import java.io.IOException;
 import java.net.Socket;
 import java.sql.Connection;
 
+@SuppressWarnings("Duplicates")
 public class NetworkListener implements Runnable {
     private JDA api;
     private Connection conn;
 
-    public NetworkListener(JDA api,Connection conn) {
+    public NetworkListener(JDA api, Connection conn) {
         this.api=api;
         this.conn=conn;
     }
@@ -38,10 +39,10 @@ public class NetworkListener implements Runnable {
                 alive = true;
 
                 while (!socket.isClosed()) {
-                        String message = inFromServer.readUTF();
-                        String answer = handleMessage(message);
-                        outToServer.writeUTF(answer);
-                        outToServer.flush();
+                    String message = inFromServer.readUTF();
+                    String answer = handleMessage(message);
+                    outToServer.writeUTF(answer);
+                    outToServer.flush();
                 }
                 socket.close();
             }
@@ -114,7 +115,6 @@ public class NetworkListener implements Runnable {
         }
 
 
-
         JSONObject printRep = new JSONObject().put("ID",answer.get("ID")).put("STATUS",answer.get("STATUS"));
         System.out.println("WEB - Answered:");
         System.out.println(printRep.toString(3));
@@ -141,13 +141,23 @@ public class NetworkListener implements Runnable {
                 ret = getBadAnswer(500);
                 break;
             }
+            case "create": {
+                if (request.has("GUILD_ID")) {
+                    Guild guild = api.getGuildById(request.getLong("GUILD_ID"));
+                    if (guild != null)
+                        ret = createAction(guild, request.getJSONObject("ACTION"));
+                    else
+                        ret = getBadAnswer(404, "Guild Not Found");
+                } else {
+                    ret = getBadAnswer(400, "Missing GUILD_ID");
+                }
+                break;
+            }
             default:
                 ret = getBadAnswer(400,"Unknown TARGET");
         }
         return ret;
     }
-
-
 
 
     private JSONObject guildAction(Guild guild, JSONObject action){
@@ -210,6 +220,19 @@ public class NetworkListener implements Runnable {
         return answer;
     }
 
+    private JSONObject createAction(Guild guild, JSONObject action) {
+        if (action.has("NAME")) {
+            String name = action.getString("NAME");
+            RoleGroup rg = RoleGroup.createRolegroup(guild, name, conn);
+            if (rg != null)
+                return getAnswer(200, "ACTION", getGroupInfo(rg));
+            else
+                return getBadAnswer(400, "Existing rolegroup");
+        } else {
+            return getBadAnswer(400, "Missing NAME");
+        }
+    }
+
 
     private JSONObject getGuildInfo(Guild guild){
         BotGuild botGuild = new BotGuild(guild,conn);
@@ -252,15 +275,14 @@ public class NetworkListener implements Runnable {
 
         JSONArray roles = new JSONArray();
         rg.getRoleMap().forEach((key, role) -> roles.put(new JSONObject().put("NICK", key)
-                                                    .put("ROLE", new JSONObject()
-                                                                .put("NAME", role.getName())
-                                                                .put("ID", role.getIdLong())
-                                                    )));
+                .put("ROLE", new JSONObject()
+                        .put("NAME", role.getName())
+                        .put("ID", role.getIdLong())
+                )));
         res.put("ROLES",roles);
         res.put("ENABLED",rg.isEnabled());
         return res;
     }
-
 
 
     private JSONObject getAnswer(int status,String type,JSONObject rep){
