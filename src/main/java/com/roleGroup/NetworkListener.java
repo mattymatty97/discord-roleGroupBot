@@ -174,7 +174,7 @@ public class NetworkListener implements Runnable {
                         if(role!=null){
                             BotGuild botGuild = new BotGuild(guild,conn);
                             if(botGuild.removeModRole(role.getIdLong())!=null)
-                                answer = getAnswer(200,"ACTION",new JSONObject().put("RESULT","Role added"));
+                                answer = getAnswer(200,"ACTION",new JSONObject().put("RESULT","Role removed"));
                             else
                                 answer = getBadAnswer(400,"Role Not Modrole");
                         }else {
@@ -215,7 +215,7 @@ public class NetworkListener implements Runnable {
         JSONArray modroles = new JSONArray();
         for(Long id : botGuild.getModRolesById()){
             Role role = guild.getRoleById(id);
-            modroles.put(new JSONObject().put("NAME",role.getName()).put("ID",role.getId()));
+            modroles.put(new JSONObject().put("NAME",role.getName()).put("ID",role.getIdLong()));
         }
         res.put("MODROLES",modroles);
         JSONArray rolegroups = new JSONArray();
@@ -233,12 +233,24 @@ public class NetworkListener implements Runnable {
         res.put("NAME",rg.getName());
         res.put("ID",rg.getId());
         res.put("TYPE",rg.getType().toString());
-        res.put("EXPRESSION",rg.getPrintableTriggerExpr());
+
+        JSONArray triggerroles =new JSONArray();
+        rg.getTriggerRoleMap().forEach((i,r)->triggerroles
+                .put(new JSONObject()
+                        .put("BIND","$"+i)
+                        .put("NAME",r.getName())
+                        .put("ID",r.getIdLong())));
+
+
+        res.put("EXPRESSION",new JSONObject()
+                .put("TEXT",rg.getTriggerExpr())
+                .put("ROLES",triggerroles));
+
         JSONArray roles = new JSONArray();
         rg.getRoleMap().forEach((key, role) -> roles.put(new JSONObject().put("NICK", key)
                                                     .put("ROLE", new JSONObject()
                                                                 .put("NAME", role.getName())
-                                                                .put("ID", role.getId())
+                                                                .put("ID", role.getIdLong())
                                                     )));
         res.put("ROLES",roles);
         res.put("ENABLED",rg.isEnabled());

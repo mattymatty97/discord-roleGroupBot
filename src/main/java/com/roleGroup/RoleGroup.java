@@ -49,6 +49,10 @@ public class RoleGroup {
         return new HashMap<>(roleMap);
     }
 
+    public Map<Integer, Role> getTriggerRoleMap() {
+        return new HashMap<>(triggerRoles);
+    }
+
     public String getTriggerExpr() {
         return triggerExpr;
     }
