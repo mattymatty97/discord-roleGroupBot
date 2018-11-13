@@ -101,10 +101,10 @@ public class NetworkListener implements Runnable {
                     }else{
                         answer = getBadAnswer(400,"Missing TARGET or ACTION");
                     }
+                    break;
                 }
-
                 default: {
-                    answer = getBadAnswer(400,"Unknown request");
+                    answer = getBadAnswer(404,"Unknown request");
                 }
             }
         }else{
