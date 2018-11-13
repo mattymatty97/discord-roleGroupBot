@@ -262,11 +262,12 @@ public class NetworkListener implements Runnable {
         res.put("TYPE",rg.getType().toString());
 
         JSONArray triggerroles =new JSONArray();
-        rg.getTriggerRoleMap().forEach((i,r)->triggerroles
-                .put(new JSONObject()
-                        .put("BIND","$"+i)
-                        .put("NAME",r.getName())
-                        .put("ID",r.getIdLong())));
+        if (rg.getTriggerRoleMap().size() > 0)
+            rg.getTriggerRoleMap().forEach((i, r)->triggerroles
+                    .put(new JSONObject()
+                            .put("BIND","$"+i)
+                            .put("NAME",r.getName())
+                            .put("ID",r.getIdLong())));
 
 
         res.put("EXPRESSION",new JSONObject()
@@ -274,11 +275,12 @@ public class NetworkListener implements Runnable {
                 .put("ROLES",triggerroles));
 
         JSONArray roles = new JSONArray();
-        rg.getRoleMap().forEach((key, role) -> roles.put(new JSONObject().put("NICK", key)
-                .put("ROLE", new JSONObject()
-                        .put("NAME", role.getName())
-                        .put("ID", role.getIdLong())
-                )));
+        if (rg.getRoleMap().size() > 0)
+            rg.getRoleMap().forEach((key, role) -> roles.put(new JSONObject().put("NICK", key)
+                    .put("ROLE", new JSONObject()
+                            .put("NAME", role.getName())
+                            .put("ID", role.getIdLong())
+                    )));
         res.put("ROLES",roles);
         res.put("ENABLED",rg.isEnabled());
         return res;
