@@ -637,7 +637,7 @@ public class MyListener extends ListenerAdapter {
     }
 
     public static boolean memberIsOwner(Member member) {
-        String[] owners = System.getenv("OWNER_ID").replaceAll("\\[(.*)\\]", "$1").split(",");
+        String[] owners = System.getenv("OWNER_ID").replaceAll("\\[|\\]", "").split(",");
         if (owners.length == 0)
             return false;
 
