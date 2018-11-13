@@ -630,7 +630,7 @@ public class RoleGroup {
         ResultSet rs;
         try {
             stmt = conn.createStatement();
-            rs = stmt.executeQuery("SELECT groupname,type,expression,enabled FROM groups WHERE groupid=" + groupId);
+            rs = stmt.executeQuery("SELECT groupname,type,expression,enabled FROM groups WHERE groupid=" + groupId + " AND guildid=" + guild.getId());
 
             if (rs.next()) {
                 this.name = rs.getString("groupname");

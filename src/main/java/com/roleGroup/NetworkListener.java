@@ -9,8 +9,6 @@ import org.json.JSONObject;
 import java.io.*;
 import java.net.Socket;
 import java.sql.Connection;
-import java.sql.Time;
-import java.util.concurrent.TimeUnit;
 
 public class NetworkListener implements Runnable {
     private JDA api;
@@ -74,9 +72,9 @@ public class NetworkListener implements Runnable {
                         if(guild!=null)
                             answer = getAnswer(200,"Guild",getGuildInfo(guild));
                         else
-                            answer=getBadAnswer(404);
+                            answer=getBadAnswer(404,"Guild Not Found");
                     }else{
-                        answer = getBadAnswer(400);
+                        answer = getBadAnswer(400,"missing GUILD_ID");
                     }
                     break;
                 }
@@ -88,18 +86,25 @@ public class NetworkListener implements Runnable {
                                 RoleGroup roleGroup = RoleGroup.getRolegroup(guild, conn, request.getLong("GROUP_ID"));
                                 answer = getAnswer(200, "RoleGroup", getGroupInfo(roleGroup));
                             }catch (RoleGroup.RoleGroupExeption ex){
-                                answer=getBadAnswer(404);
+                                answer=getBadAnswer(404,"RoleGroup Not Found");
                             }
                         }else
-                            answer=getBadAnswer(404);
+                            answer=getBadAnswer(404,"Guild Not Found");
                     }else{
-                        answer = getBadAnswer(400);
+                        answer = getBadAnswer(400,"Missing GUILD_ID or GROUP_ID");
                     }
                     break;
                 }
+                case "action":{
+                    if(request.has("TARGET") && request.has("ACTION")){
+                        answer = handleAction(request);
+                    }else{
+                        answer = getBadAnswer(400,"Missing TARGET or ACTION");
+                    }
+                }
 
                 default: {
-                    answer = getBadAnswer(400);
+                    answer = getBadAnswer(400,"Unknown request");
                 }
             }
         }else{
@@ -114,6 +119,92 @@ public class NetworkListener implements Runnable {
 
         return answer.toString();
     }
+
+    private JSONObject handleAction(JSONObject request){
+        JSONObject ret;
+        switch (request.getString("TARGET")){
+            case "guild":{
+                if(request.has("GUILD_ID")) {
+                    Guild guild = api.getGuildById(request.getLong("GUILD_ID"));
+                    if(guild!=null)
+                        ret = guildAction(guild,request.getJSONObject("ACTION"));
+                    else
+                        ret=getBadAnswer(404,"Guild Not Found");
+                }else{
+                    ret = getBadAnswer(400,"Missing GUILD_ID");
+                }
+                break;
+            }
+            case "group":{
+                break;
+            }
+        }
+        return getBadAnswer(400);
+    }
+
+
+
+
+    private JSONObject guildAction(Guild guild, JSONObject action){
+        JSONObject answer;
+        if(action.has("ACTION")){
+            switch (action.getString("ACTION").toLowerCase()){
+                case "add modrole":{
+                    if(action.has("ROLE_ID")){
+                        Role role = guild.getRoleById(action.getLong("ROLE_ID"));
+                        if(role!=null){
+                            BotGuild botGuild = new BotGuild(guild,conn);
+                            if(botGuild.addModRole(role.getIdLong(),role.getName())!=null)
+                                answer = getAnswer(200,"ACTION",new JSONObject().put("RESULT","Role added"));
+                            else
+                                answer = getBadAnswer(400,"Role Is Modrole");
+                        }else {
+                            answer = getBadAnswer(400,"Role Not Found");
+                        }
+                    }else
+                        answer = getBadAnswer(400,"Missing ROLE_ID");
+                    break;
+                }
+                case "remove modrole":{
+                    if(action.has("ROLE_ID")){
+                        Role role = guild.getRoleById(action.getLong("ROLE_ID"));
+                        if(role!=null){
+                            BotGuild botGuild = new BotGuild(guild,conn);
+                            if(botGuild.removeModRole(role.getIdLong())!=null)
+                                answer = getAnswer(200,"ACTION",new JSONObject().put("RESULT","Role added"));
+                            else
+                                answer = getBadAnswer(400,"Role Not Modrole");
+                        }else {
+                            answer = getBadAnswer(400,"Role Not Found");
+                        }
+                    }else
+                        answer = getBadAnswer(400,"Missing ROLE_ID");
+                    break;
+                }
+                case "clear modrole":{
+                    BotGuild botGuild = new BotGuild(guild,conn);
+                    if(botGuild.clearModrole()!=null)
+                        answer = getAnswer(200,"ACTION",new JSONObject().put("RESULT","Cleared"));
+                    else
+                        answer = getBadAnswer(500,"Execution exception");
+                    break;
+                }
+                case "auto modrole":{
+                    BotGuild botGuild = new BotGuild(guild,conn);
+                    if(botGuild.autoModrole(guild)!=null)
+                        answer = getAnswer(200,"ACTION",new JSONObject().put("RESULT","Roles Added"));
+                    else
+                        answer = getBadAnswer(500,"Execution exception");
+                    break;
+                }
+                default:
+                    answer = getBadAnswer(404,"Unknown action");
+            }
+        }else
+            answer = getBadAnswer(400,"Missing ACTION");
+        return answer;
+    }
+
 
     private JSONObject getGuildInfo(Guild guild){
         BotGuild botGuild = new BotGuild(guild,conn);
@@ -141,17 +232,13 @@ public class NetworkListener implements Runnable {
         res.put("TYPE",rg.getType().toString());
         res.put("EXPRESSION",rg.getPrintableTriggerExpr());
         JSONArray roles = new JSONArray();
-        rg.getRoleMap().entrySet().forEach(e -> {
-            Role role = e.getValue();
-            roles.put(new JSONObject().put("NICK",e.getKey())
-                    .put("ROLE",
-                            new JSONObject()
-                                    .put("NAME",role.getName())
-                                    .put("ID",role.getId())));
-        });
+        rg.getRoleMap().forEach((key, role) -> roles.put(new JSONObject().put("NICK", key)
+                                                    .put("ROLE", new JSONObject()
+                                                                .put("NAME", role.getName())
+                                                                .put("ID", role.getId())
+                                                    )));
         res.put("ROLES",roles);
         res.put("ENABLED",rg.isEnabled());
-
         return res;
     }
 
@@ -159,12 +246,12 @@ public class NetworkListener implements Runnable {
 
 
 
-    private JSONObject getAnswer(int status,String type,JSONObject ret){
+    private JSONObject getAnswer(int status,String type,JSONObject rep){
         JSONObject answer = new JSONObject();
         answer.put("ID","rolegroup");
         answer.put("STATUS",status);
         answer.put("TYPE",type);
-        answer.put("CONTENT",ret);
+        answer.put("CONTENT",rep);
         return answer;
     }
 
@@ -172,6 +259,14 @@ public class NetworkListener implements Runnable {
         JSONObject answer = new JSONObject();
         answer.put("ID","rolegroup");
         answer.put("STATUS",code);
+        return answer;
+    }
+
+    private JSONObject getBadAnswer(int code,String reason){
+        JSONObject answer = new JSONObject();
+        answer.put("ID","rolegroup");
+        answer.put("STATUS",code);
+        answer.put("REASON",reason);
         return answer;
     }
 }
