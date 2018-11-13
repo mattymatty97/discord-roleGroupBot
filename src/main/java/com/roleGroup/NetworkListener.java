@@ -344,12 +344,8 @@ public class NetworkListener implements Runnable {
                     break;
                 }
                 case "delete": {
-                    BotGuild botGuild = new BotGuild(guild, conn);
-                    String res = group.disable(botGuild.getMessages());
-                    if (res.equals(botGuild.getMessages().getString("rolegroup-disabled")))
-                        answer = getAnswer(200, "ACTION", new JSONObject().put("RESULT", "Disabled"));
-                    else
-                        answer = getBadAnswer(500, res);
+                    group.delete();
+                    answer = getAnswer(200, "ACTION", new JSONObject().put("RESULT", "Deleted"));
                     break;
                 }
                 default:
