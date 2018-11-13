@@ -60,7 +60,7 @@ public class MyListener extends ListenerAdapter {
                 System.out.println("SQLState: " + ex.getSQLState());
                 System.out.println("VendorError: " + ex.getErrorCode());
             }
-            updateServerCount(event.getJDA());
+            //updateServerCount(event.getJDA());
         }
         ready=true;
     }
@@ -501,7 +501,7 @@ public class MyListener extends ListenerAdapter {
                     });
                 }
             }
-        updateServerCount(event.getJDA());
+        //updateServerCount(event.getJDA());
     }
 
     @Override
@@ -528,7 +528,7 @@ public class MyListener extends ListenerAdapter {
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
         }
-        updateServerCount(event.getJDA());
+        //updateServerCount(event.getJDA());
     }
 
     private boolean memberHasRole(Member member, Long roleId) {
