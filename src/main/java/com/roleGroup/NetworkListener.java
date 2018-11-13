@@ -6,7 +6,9 @@ import net.dv8tion.jda.core.entities.Role;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.Socket;
 import java.sql.Connection;
 
@@ -212,6 +214,8 @@ public class NetworkListener implements Runnable {
     private JSONObject getGuildInfo(Guild guild){
         BotGuild botGuild = new BotGuild(guild,conn);
         JSONObject res = new JSONObject();
+        res.put("Name", guild.getName());
+        res.put("ID", guild.getIdLong());
         JSONArray modroles = new JSONArray();
         for(Long id : botGuild.getModRolesById()){
             Role role = guild.getRoleById(id);
@@ -256,8 +260,6 @@ public class NetworkListener implements Runnable {
         res.put("ENABLED",rg.isEnabled());
         return res;
     }
-
-
 
 
 
