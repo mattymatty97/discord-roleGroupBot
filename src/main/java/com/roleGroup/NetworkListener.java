@@ -266,8 +266,8 @@ public class NetworkListener implements Runnable {
             rg.getTriggerRoleMap().forEach((i, r)->triggerroles
                     .put(new JSONObject()
                             .put("BIND","$"+i)
-                            .put("NAME",r.getName())
-                            .put("ID",r.getIdLong())));
+                            .put("NAME", (r != null) ? r.getName() : "deleted")
+                            .put("ID", (r != null) ? r.getIdLong() : 0L)));
 
 
         res.put("EXPRESSION",new JSONObject()
