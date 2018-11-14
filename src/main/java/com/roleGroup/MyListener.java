@@ -553,7 +553,7 @@ public class MyListener extends ListenerAdapter {
         return role != null && list.contains(role);
     }
 
-    private boolean nameIsAllowed(String name){
+    public static boolean nameIsAllowed(String name) {
         return !reservedNames.contains(name);
     }
 

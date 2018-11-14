@@ -215,11 +215,21 @@ public class NetworkListener implements Runnable {
     private JSONObject createAction(Guild guild, JSONObject action) {
         if (action.has("NAME")) {
             String name = action.getString("NAME");
-            RoleGroup rg = RoleGroup.createRolegroup(guild, name, conn);
-            if (rg != null)
-                return getAnswer(200, "ACTION", getGroupInfo(rg));
-            else
-                return getBadAnswer(400, "Existing rolegroup");
+            if (name.matches("\\w+")) {
+                //call the class method
+                if (MyListener.nameIsAllowed(name.toLowerCase())) {
+                    RoleGroup rg = RoleGroup.createRolegroup(guild, name, conn);
+                    if (rg != null) {
+                        return getAnswer(200, "ACTION", getGroupInfo(rg));
+                    } else {
+                        return getBadAnswer(400, "Existing rolegroup");
+                    }
+                } else {
+                    return getBadAnswer(400, "NAME cannot be used");
+                }
+            } else {
+                return getBadAnswer(400, "Bad NAME format");
+            }
         } else {
             return getBadAnswer(400, "Missing NAME");
         }
