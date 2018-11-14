@@ -341,18 +341,18 @@ public class NetworkListener implements Runnable {
         BotGuild botGuild = new BotGuild(guild, conn);
         JSONObject res = new JSONObject();
         res.put("Name", guild.getName());
-        res.put("ID", guild.getIdLong());
+        res.put("ID", guild.getId());
         JSONArray modroles = new JSONArray();
         for (Long id : botGuild.getModRolesById()) {
             Role role = guild.getRoleById(id);
-            modroles.put(new JSONObject().put("NAME", role.getName()).put("ID", role.getIdLong()));
+            modroles.put(new JSONObject().put("NAME", role.getName()).put("ID", role.getId()));
         }
         res.put("MODROLES", modroles);
         JSONArray rolegroups = new JSONArray();
         for (String rgName : RoleGroup.listRoleGroups(guild, conn, false)) {
             RoleGroup roleGroup = RoleGroup.getRolegroup(guild, conn, rgName);
             assert roleGroup != null : "Rolegroup NULL";
-            rolegroups.put(new JSONObject().put("NAME", rgName).put("ENABLED", roleGroup.isEnabled()).put("ID", roleGroup.getId()));
+            rolegroups.put(new JSONObject().put("NAME", rgName).put("ENABLED", roleGroup.isEnabled()).put("ID", Long.toString(roleGroup.getId())));
         }
         res.put("ROLEGROUPS", rolegroups);
         return res;
@@ -361,7 +361,7 @@ public class NetworkListener implements Runnable {
     private JSONObject getGroupInfo(RoleGroup rg) {
         JSONObject res = new JSONObject();
         res.put("NAME", rg.getName());
-        res.put("ID", rg.getId());
+        res.put("ID", Long.toString(rg.getId()));
         res.put("TYPE", rg.getType().toString());
 
         JSONArray triggerroles = new JSONArray();
@@ -370,7 +370,7 @@ public class NetworkListener implements Runnable {
                     .put(new JSONObject()
                             .put("BIND", "$" + i)
                             .put("NAME", (r != null) ? r.getName() : "deleted")
-                            .put("ID", (r != null) ? r.getIdLong() : 0L)));
+                            .put("ID", (r != null) ? r.getId() : "0")));
 
 
         res.put("EXPRESSION", new JSONObject()
@@ -382,7 +382,7 @@ public class NetworkListener implements Runnable {
             rg.getRoleMap().forEach((key, role) -> roles.put(new JSONObject().put("NICK", key)
                     .put("ROLE", new JSONObject()
                             .put("NAME", role.getName())
-                            .put("ID", role.getIdLong())
+                            .put("ID", role.getId())
                     )));
         res.put("ROLES", roles);
         res.put("ENABLED", rg.isEnabled());
