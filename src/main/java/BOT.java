@@ -47,7 +47,9 @@ public class BOT
 
         while (!MyListener.ready);
 
-        new NetworkListener(api,conn).run();
+        NetworkListener listener = new NetworkListener(api, conn);
+        listener.run();
+        Runtime.getRuntime().addShutdownHook(new Thread(NetworkListener::close));
     }
 
 

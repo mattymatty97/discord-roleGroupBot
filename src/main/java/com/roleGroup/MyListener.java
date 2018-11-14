@@ -32,6 +32,7 @@ public class MyListener extends ListenerAdapter {
 
     private static final char commandSeparator = '!';
     private static final char settingSeparator = '$';
+    private static final char ownerSeparator = '^';
 
 
     public static volatile boolean ready=false;
@@ -448,6 +449,13 @@ public class MyListener extends ListenerAdapter {
                         } else {
                             channel.sendMessage(output.getString("error-user-permission")).queue();
                             System.out.println("no permission in guild: '" + guildname + "'");
+                        }
+                    case ownerSeparator:
+                        if (memberIsOwner(member)) {
+                            switch (args[0].substring(1)) {
+                                case "reconnect":
+                                    NetworkListener.close();
+                            }
                         }
                 }
             }

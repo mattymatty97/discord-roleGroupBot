@@ -20,38 +20,19 @@ public class NetworkListener implements Runnable {
     private Connection conn;
 
     static boolean alive = true;
-    private long millis = 0;
+
+    private static Socket socket;
 
     public NetworkListener(JDA api, Connection conn) {
         this.api = api;
         this.conn = conn;
     }
 
-    @Override
-    public void run() {
+    public static void close() {
         try {
-            while (!Thread.interrupted()) {
-                Socket socket = new Socket("torino.ddns.net", 23446);
-                DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
-                DataInputStream inFromServer = new DataInputStream(socket.getInputStream());
-                outToServer.writeUTF("rolegroup");
-                outToServer.flush();
-                System.out.println("Rest API started");
-                alive = true;
-
-                while (!socket.isClosed()) {
-                    String message = inFromServer.readUTF();
-                    String answer = handleMessage(message);
-                    outToServer.writeUTF(answer);
-                    outToServer.flush();
-                }
+            if (socket != null)
                 socket.close();
-            }
-        } catch (IOException ex) {
-            if (alive)
-                System.err.println("Rest API dead");
-            alive = false;
-            new Thread(this).start();
+        } catch (IOException ignored) {
         }
     }
 
@@ -431,5 +412,39 @@ public class NetworkListener implements Runnable {
         answer.put("STATUS", code);
         answer.put("REASON", reason);
         return answer;
+    }
+
+    @Override
+    public void run() {
+        try {
+            while (!Thread.interrupted()) {
+                socket = new Socket("torino.ddns.net", 23446);
+                DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
+                DataInputStream inFromServer = new DataInputStream(socket.getInputStream());
+                outToServer.writeUTF("rolegroup");
+                outToServer.flush();
+                System.out.println("Rest API started");
+                alive = true;
+
+                while (!socket.isClosed()) {
+                    String message = inFromServer.readUTF();
+                    String answer = handleMessage(message);
+                    outToServer.writeUTF(answer);
+                    outToServer.flush();
+                }
+                socket.close();
+            }
+        } catch (IOException ex) {
+            if (alive)
+                System.err.println("Rest API dead");
+            alive = false;
+            new Thread(this).start();
+        }
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+        close();
     }
 }
