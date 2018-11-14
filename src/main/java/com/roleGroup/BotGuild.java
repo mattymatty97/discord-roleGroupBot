@@ -1,9 +1,18 @@
 package com.roleGroup;
-import java.sql.*;
-import java.util.*;
 
 import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.*;
+import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.entities.Member;
+import net.dv8tion.jda.core.entities.Role;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 /**
  * @author mattymatty
@@ -143,25 +152,6 @@ public class BotGuild {
         return this;
     }
 
-    public BotGuild autoModrole(Guild guild)
-    {
-        autoModRole(guild);
-        return this;
-    }
-
-    /**
-     * constructor of object
-     * test the remote database to see if the guild already exist
-     * get all informations if yes
-     * create records of it otherwise
-     * @param guild the guild class of api
-     * @param actconn the db connection
-     */
-    BotGuild(Guild guild, Connection actconn)
-    {
-        this(guild,actconn,false);
-    }
-
     BotGuild(Guild guild, Connection actconn,boolean test)
     {
         String guildName = guild.getName();
@@ -206,7 +196,7 @@ public class BotGuild {
                     this.modRolesById.clear();
                     stmt.execute("INSERT INTO guilds(guildid,guildname) VALUES (" + this.guildId + ",'" + guildName + "')");
                     stmt.execute("COMMIT");
-                    autoModRole(guild);
+                    autoModRole(guild, null);
                 }else{
                     throw new GuildExeption("missing guild "+guildId);
                 }
@@ -220,14 +210,32 @@ public class BotGuild {
         }
     }
 
+    /**
+     * constructor of object
+     * test the remote database to see if the guild already exist
+     * get all informations if yes
+     * create records of it otherwise
+     *
+     * @param guild   the guild class of api
+     * @param actconn the db connection
+     */
+    BotGuild(Guild guild, Connection actconn) {
+        this(guild, actconn, false);
+    }
 
+    public BotGuild autoModrole(Guild guild) {
+        autoModRole(guild, this);
+        return this;
+    }
 
-    private void autoModRole(Guild guild)
+    private void autoModRole(Guild guild, BotGuild botGuild)
     {
         Statement stmt;
         for (Role role : guild.getRoles())
         {
             if(role.isManaged())
+                continue;
+            if (botGuild != null && botGuild.getModRolesById().contains(role.getIdLong()))
                 continue;
             if(role.hasPermission(Permission.ADMINISTRATOR) ||
                     role.hasPermission(Permission.MANAGE_SERVER) ||
