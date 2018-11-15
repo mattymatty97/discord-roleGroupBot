@@ -166,9 +166,9 @@ public class NetworkListener implements Runnable {
 
     private JSONObject handleAuth(JSONObject req) {
         JSONObject act = req.getJSONObject("ACTION");
-        if (act.has("ACTION") && act.has("USER_ID")) {
+        if (act.has("ACTION") && req.has("USER_ID")) {
             if (act.getString("ACTION").equals("server")) {
-                long id = act.getLong("USER_ID");
+                long id = req.getLong("USER_ID");
                 User user = api.getUserById(id);
                 if (user != null) {
                     JSONArray server = new JSONArray();
