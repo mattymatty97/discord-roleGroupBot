@@ -43,7 +43,7 @@ public class BOT
 
         api.addEventListener(new MyListener(conn));
         api.addEventListener(new SupportListener(491954204106031104L));
-        api.getPresence().setGame(Game.playing("v3.0 - SNAPSHOT rg prj"));
+        api.getPresence().setGame(Game.playing("v3.0 rg prj"));
 
         while (!MyListener.ready);
 

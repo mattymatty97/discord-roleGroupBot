@@ -787,13 +787,17 @@ public class RoleGroup {
     }
 
     public static boolean memberIsOwner(Member member) {
+        return userIsOwner(member.getUser().getIdLong());
+    }
+
+    public static boolean userIsOwner(long user_id) {
         String[] owners = System.getenv("OWNER_ID").replaceAll("\\[|\\]", "").split(",");
         if (owners.length == 0)
             return false;
 
         for (String owner_id : owners) {
             Long id = Long.parseLong(owner_id);
-            if (member.getUser().getIdLong() == id)
+            if (user_id == id)
                 return true;
         }
         return false;

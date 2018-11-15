@@ -112,7 +112,9 @@ public class NetworkListener implements Runnable {
             if (guild != null) {
                 if (request.has("USER_ID")) {
                     Member member = guild.getMemberById(request.getLong("USER_ID"));
-                    if (member != null && (botGuild.memberIsMod(member) || RoleGroup.memberIsOwner(member))) {
+                    if (request.getJSONObject("ACTION").getString("ACTION").equals("auth")) {
+                        ret = getAuth(member, request.getLong("USER_ID"), botGuild);
+                    } else if (member != null && (botGuild.memberIsMod(member) || RoleGroup.memberIsOwner(member))) {
                         switch (request.getString("TARGET")) {
                             case "guild": {
                                 ret = guildAction(guild, request.getJSONObject("ACTION"));
@@ -147,6 +149,31 @@ public class NetworkListener implements Runnable {
             }
         } else {
             ret = getBadAnswer(400, "Missing GUILD_ID");
+        }
+        return ret;
+    }
+
+    private JSONObject getAuth(Member member, long id, BotGuild botGuild) {
+        JSONObject ret;
+        JSONObject answer = new JSONObject();
+        answer.put("MEMBER", member != null);
+        boolean owner = RoleGroup.userIsOwner(id);
+        if (member != null) {
+            boolean mod = botGuild.memberIsMod(member);
+            answer.put("ALLOWED", owner || mod);
+            answer.put("MOD", mod);
+            answer.put("OWNER", owner);
+            answer.put("NAME", member.getEffectiveName());
+            ret = getAnswer(200, "auth", answer);
+        } else {
+            if (owner) {
+                answer.put("ALLOWED", true);
+                answer.put("MOD", false);
+                answer.put("OWNER", true);
+                answer.put("NAME", "");
+                ret = getAnswer(200, "auth", answer);
+            } else
+                ret = getBadAnswer(403, "User Not Allowed");
         }
         return ret;
     }
