@@ -173,7 +173,11 @@ public class NetworkListener implements Runnable {
                 answer.put("NAME", "");
                 ret = getAnswer(200, "auth", answer);
             } else
-                ret = getBadAnswer(403, "User Not Allowed");
+                answer.put("ALLOWED", false);
+            answer.put("MOD", false);
+            answer.put("OWNER", false);
+            answer.put("NAME", "");
+            ret = getAnswer(200, "auth", answer);
         }
         return ret;
     }
