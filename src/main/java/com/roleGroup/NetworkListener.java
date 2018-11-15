@@ -40,7 +40,7 @@ public class NetworkListener implements Runnable {
         JSONObject request = new JSONObject(message);
         JSONObject answer;
 
-        System.out.println("WEB - Received:");
+        System.out.println("\nWEB - Received:");
         System.out.println(request.toString(3));
 
         if (request.has("REQUEST")) {
