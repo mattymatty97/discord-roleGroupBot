@@ -22,6 +22,7 @@ public class NetworkListener implements Runnable {
     static boolean alive = true;
 
     private static Socket socket;
+    private static Thread thread;
 
     public NetworkListener(JDA api, Connection conn) {
         this.api = api;
@@ -30,6 +31,8 @@ public class NetworkListener implements Runnable {
 
     public static void close() {
         try {
+            if (thread != null)
+                thread.interrupt();
             if (socket != null)
                 socket.close();
         } catch (IOException ignored) {
@@ -112,7 +115,7 @@ public class NetworkListener implements Runnable {
             if (guild != null) {
                 if (request.has("USER_ID")) {
                     Member member = guild.getMemberById(request.getLong("USER_ID"));
-                    if (request.getJSONObject("ACTION").getString("ACTION").equals("auth")) {
+                    if (request.getJSONObject("ACTION").getString("ACTION").equals("user")) {
                         ret = getAuth(member, request.getLong("USER_ID"), botGuild);
                     } else if (member != null && (botGuild.memberIsMod(member) || RoleGroup.memberIsOwner(member))) {
                         switch (request.getString("TARGET")) {
@@ -164,20 +167,20 @@ public class NetworkListener implements Runnable {
             answer.put("MOD", mod);
             answer.put("OWNER", owner);
             answer.put("NAME", member.getEffectiveName());
-            ret = getAnswer(200, "auth", answer);
+            ret = getAnswer(200, "user", answer);
         } else {
             if (owner) {
                 answer.put("ALLOWED", true);
                 answer.put("MOD", false);
                 answer.put("OWNER", true);
                 answer.put("NAME", "");
-                ret = getAnswer(200, "auth", answer);
+                ret = getAnswer(200, "user", answer);
             } else
                 answer.put("ALLOWED", false);
             answer.put("MOD", false);
             answer.put("OWNER", false);
             answer.put("NAME", "");
-            ret = getAnswer(200, "auth", answer);
+            ret = getAnswer(200, "user", answer);
         }
         return ret;
     }
@@ -386,7 +389,7 @@ public class NetworkListener implements Runnable {
         JSONArray modroles = new JSONArray();
         for (Long id : botGuild.getModRolesById()) {
             Role role = guild.getRoleById(id);
-            modroles.put(new JSONObject().put("NAME", role.getName()).put("ID", role.getId()));
+            modroles.put(roleToJSON(role));
         }
         res.put("MODROLES", modroles);
         JSONArray rolegroups = new JSONArray();
@@ -396,6 +399,11 @@ public class NetworkListener implements Runnable {
             rolegroups.put(new JSONObject().put("NAME", rgName).put("ENABLED", roleGroup.isEnabled()).put("ID", Long.toString(roleGroup.getId())));
         }
         res.put("ROLEGROUPS", rolegroups);
+        JSONArray roles = new JSONArray();
+        for (Role role : guild.getRoles()) {
+            roles.put(roleToJSON(role));
+        }
+        res.put("ROLES", roles);
         return res;
     }
 
@@ -421,10 +429,7 @@ public class NetworkListener implements Runnable {
         JSONArray roles = new JSONArray();
         if (rg.getRoleMap().size() > 0)
             rg.getRoleMap().forEach((key, role) -> roles.put(new JSONObject().put("NICK", key)
-                    .put("ROLE", new JSONObject()
-                            .put("NAME", role.getName())
-                            .put("ID", role.getId())
-                    )));
+                    .put("ROLE", roleToJSON(role))));
         res.put("ROLES", roles);
         res.put("ENABLED", rg.isEnabled());
         return res;
@@ -455,32 +460,44 @@ public class NetworkListener implements Runnable {
         return answer;
     }
 
+    private JSONObject roleToJSON(Role role) {
+        return new JSONObject()
+                .put("ID", role.getId())
+                .put("NAME", role.getName())
+                .put("COLOR", role.getColorRaw())
+                .put("MANAGED", role.isManaged())
+                .put("MENTIONABLE", role.isMentionable())
+                .put("EVERYONE", role.isPublicRole());
+    }
+
+
     @Override
     public void run() {
-        try {
-            while (!Thread.interrupted()) {
-                socket = new Socket("torino.ddns.net", 23446);
-                DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
-                DataInputStream inFromServer = new DataInputStream(socket.getInputStream());
-                outToServer.writeUTF("rolegroup");
-                outToServer.flush();
-                System.out.println("Rest API started");
-                alive = true;
-
-                while (!socket.isClosed()) {
-                    String message = inFromServer.readUTF();
-                    String answer = handleMessage(message);
-                    outToServer.writeUTF(answer);
+        thread = Thread.currentThread();
+        while (!thread.isInterrupted())
+            try {
+                while (!thread.isInterrupted()) {
+                    socket = new Socket("torino.ddns.net", 23446);
+                    DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
+                    DataInputStream inFromServer = new DataInputStream(socket.getInputStream());
+                    outToServer.writeUTF("rolegroup");
                     outToServer.flush();
+                    System.out.println("Rest API started");
+                    alive = true;
+
+                    while (!socket.isClosed()) {
+                        String message = inFromServer.readUTF();
+                        String answer = handleMessage(message);
+                        outToServer.writeUTF(answer);
+                        outToServer.flush();
+                    }
+                    socket.close();
                 }
-                socket.close();
+            } catch (IOException ex) {
+                if (alive)
+                    System.err.println("Rest API dead");
+                alive = false;
             }
-        } catch (IOException ex) {
-            if (alive)
-                System.err.println("Rest API dead");
-            alive = false;
-            new Thread(this).start();
-        }
     }
 
     @Override
