@@ -4,6 +4,7 @@ import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Role;
+import net.dv8tion.jda.core.entities.User;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -91,6 +92,13 @@ public class NetworkListener implements Runnable {
                     }
                     break;
                 }
+                case "auth": {
+                    if (request.has("ACTION"))
+                        answer = handleAuth(request);
+                    else
+                        answer = getBadAnswer(400, "Missing ACTION");
+                }
+                break;
                 default: {
                     answer = getBadAnswer(404, "Unknown request");
                 }
@@ -154,6 +162,29 @@ public class NetworkListener implements Runnable {
             ret = getBadAnswer(400, "Missing GUILD_ID");
         }
         return ret;
+    }
+
+    private JSONObject handleAuth(JSONObject req) {
+        JSONObject act = req.getJSONObject("ACTION");
+        if (act.has("ACTION") && act.has("USER_ID")) {
+            if (act.getString("ACTION").equals("server")) {
+                long id = act.getLong("USER_ID");
+                User user = api.getUserById(id);
+                if (user != null) {
+                    JSONArray server = new JSONArray();
+                    for (Guild guild : api.getMutualGuilds(user)) {
+                        server.put(guildToJSON(guild));
+                    }
+                    return getAnswer(200, "auth", new JSONObject().put("SERVERS", server));
+                } else {
+                    return getBadAnswer(400, "User Not FOund");
+                }
+            } else {
+                return getBadAnswer(400, "ACTION not found");
+            }
+        } else {
+            return getBadAnswer(400, "Missing ACTION or USER_ID");
+        }
     }
 
     private JSONObject getAuth(Member member, long id, BotGuild botGuild) {
@@ -468,6 +499,13 @@ public class NetworkListener implements Runnable {
                 .put("MANAGED", role.isManaged())
                 .put("MENTIONABLE", role.isMentionable())
                 .put("EVERYONE", role.isPublicRole());
+    }
+
+    private JSONObject guildToJSON(Guild guild) {
+        return new JSONObject()
+                .put("ID", guild.getId())
+                .put("NAME", guild.getName())
+                .put("ICON", guild.getIconUrl());
     }
 
 
