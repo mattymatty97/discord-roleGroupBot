@@ -517,7 +517,7 @@ public class NetworkListener implements Runnable {
         System.out.println("WEB - Answered:");
         System.out.println(printRep.toString(3));
 
-        answer.put("ReqID", request.getString("ReqID"));
+        answer.put("ReqID", request.getInt("ReqID"));
         return answer.toString();
     }
 
