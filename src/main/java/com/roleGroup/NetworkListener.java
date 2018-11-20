@@ -442,13 +442,17 @@ public class NetworkListener implements Runnable {
                 .put("ICON", guild.getIconUrl());
     }
 
+    private DataOutputStream outToServer;
+    private DataInputStream inFromServer;
+
     private String handleMessage(String message) {
         JSONObject request = new JSONObject(message);
         JSONObject answer;
 
         Thread.currentThread().setName("Handle message<" + request.getInt("ReqID") + ">");
 
-        System.out.println("\nWEB - Received:");
+        System.out.print("\n" + Thread.currentThread().getName() + " | ");
+        System.out.println("WEB - Received:");
         System.out.println(request.toString(3));
 
         if (request.has("REQUEST")) {
@@ -513,15 +517,13 @@ public class NetworkListener implements Runnable {
 
 
         JSONObject printRep = new JSONObject().put("ID", answer.get("ID")).put("STATUS", answer.get("STATUS"));
+        System.out.print("\n" + Thread.currentThread().getName() + " | ");
         System.out.println("WEB - Answered:");
         System.out.println(printRep.toString(3));
 
         answer.put("ReqID", request.getInt("ReqID"));
         return answer.toString();
     }
-
-    DataOutputStream outToServer;
-    DataInputStream inFromServer;
     @Override
     public void run() {
         thread = Thread.currentThread();
@@ -557,7 +559,6 @@ public class NetworkListener implements Runnable {
     }
 
     public void send(String message) {
-        System.out.println("Sending something");
         try {
             outToServer.writeUTF(message);
             outToServer.flush();
