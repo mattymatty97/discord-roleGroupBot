@@ -563,6 +563,7 @@ public class NetworkListener implements Runnable {
 
     public void send(DataOutputStream outToServer) {
         Thread.currentThread().setName("Sender");
+        System.out.println("Sender Started");
         try {
             while (!socket.isClosed()) {
                 sem.acquire();
