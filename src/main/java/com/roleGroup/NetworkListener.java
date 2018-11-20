@@ -525,10 +525,11 @@ public class NetworkListener implements Runnable {
     public void run() {
         thread = Thread.currentThread();
         thread.setName("Receiver");
+        thread.setPriority(Thread.NORM_PRIORITY + 1);
         while (!thread.isInterrupted())
             try {
                 while (!thread.isInterrupted()) {
-                    socket = new Socket("torino.ddns.net", 23446);
+                    socket = new Socket("localhost", 23446);
                     DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
                     DataInputStream inFromServer = new DataInputStream(socket.getInputStream());
                     outToServer.writeUTF("rolegroup");
@@ -536,7 +537,9 @@ public class NetworkListener implements Runnable {
                     System.out.println("Rest API started");
                     alive = true;
 
-                    new Thread(() -> send(outToServer), "Sender").start();
+                    Thread t = new Thread(() -> send(outToServer), "Sender");
+                    t.setPriority(Thread.NORM_PRIORITY + 2);
+                    t.start();
 
                     receive(inFromServer);
 
@@ -556,6 +559,7 @@ public class NetworkListener implements Runnable {
                 queue.add(handleMessage(message));
                 sem.release();
             });
+            Thread.yield();
         }
     }
 
