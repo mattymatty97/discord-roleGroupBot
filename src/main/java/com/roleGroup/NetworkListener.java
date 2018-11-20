@@ -537,9 +537,7 @@ public class NetworkListener implements Runnable {
                     System.out.println("Rest API started");
                     alive = true;
 
-                    Thread t = new Thread(() -> send(outToServer), "Sender");
-                    t.setPriority(Thread.NORM_PRIORITY + 2);
-                    t.start();
+                    handler.execute(() -> send(outToServer));
 
                     receive(inFromServer);
 
@@ -564,6 +562,7 @@ public class NetworkListener implements Runnable {
     }
 
     public void send(DataOutputStream outToServer) {
+        Thread.currentThread().setName("Sender");
         try {
             while (!socket.isClosed()) {
                 sem.acquire();
