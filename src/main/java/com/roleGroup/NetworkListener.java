@@ -555,9 +555,7 @@ public class NetworkListener implements Runnable {
             String message = inFromServer.readUTF();
             handler.execute(() -> {
                 queue.add(handleMessage(message));
-                sem.release();
             });
-            Thread.yield();
         }
     }
 
@@ -566,14 +564,14 @@ public class NetworkListener implements Runnable {
         System.out.println("Sender Started");
         try {
             while (!socket.isClosed()) {
-                sem.acquire();
+                while (queue.size() == 0) ;
                 String rep = queue.peek();
                 assert rep != null;
                 outToServer.writeUTF(rep);
                 outToServer.flush();
             }
-        } catch (InterruptedException ignored) {
-        } catch (IOException ex) {
+        }// catch (InterruptedException ignored) {}
+        catch (IOException ex) {
             if (alive)
                 System.err.println("Rest API dead");
             alive = false;
