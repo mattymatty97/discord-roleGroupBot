@@ -13,7 +13,12 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.sql.Connection;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Semaphore;
 
 @SuppressWarnings("Duplicates")
 public class NetworkListener implements Runnable {
@@ -40,80 +45,7 @@ public class NetworkListener implements Runnable {
         }
     }
 
-    private String handleMessage(String message) {
-        JSONObject request = new JSONObject(message);
-        JSONObject answer;
-
-        System.out.println("\nWEB - Received:");
-        System.out.println(request.toString(3));
-
-        if (request.has("REQUEST")) {
-            switch (request.getString("REQUEST")) {
-                case "ping": {
-                    JSONObject ret = new JSONObject();
-                    ret.put("VALUE", "pong");
-                    answer = getAnswer(200, "String", ret);
-                    break;
-                }
-                case "guild": {
-                    if (request.has("GUILD_ID")) {
-                        Guild guild = api.getGuildById(request.getLong("GUILD_ID"));
-                        if (guild != null)
-                            answer = getAnswer(200, "Guild", getGuildInfo(guild));
-                        else
-                            answer = getBadAnswer(404, "Guild Not Found");
-                    } else {
-                        answer = getBadAnswer(400, "missing GUILD_ID");
-                    }
-                    break;
-                }
-                case "group": {
-                    if (request.has("GUILD_ID") && request.has("GROUP_ID")) {
-                        Guild guild = api.getGuildById(request.getLong("GUILD_ID"));
-                        if (guild != null) {
-                            try {
-                                RoleGroup roleGroup = RoleGroup.getRolegroup(guild, conn, request.getLong("GROUP_ID"));
-                                answer = getAnswer(200, "RoleGroup", getGroupInfo(roleGroup));
-                            } catch (RoleGroup.RoleGroupExeption ex) {
-                                answer = getBadAnswer(404, "RoleGroup Not Found");
-                            }
-                        } else
-                            answer = getBadAnswer(404, "Guild Not Found");
-                    } else {
-                        answer = getBadAnswer(400, "Missing GUILD_ID or GROUP_ID");
-                    }
-                    break;
-                }
-                case "action": {
-                    if (request.has("TARGET") && request.has("ACTION")) {
-                        answer = handleAction(request);
-                    } else {
-                        answer = getBadAnswer(400, "Missing TARGET or ACTION");
-                    }
-                    break;
-                }
-                case "auth": {
-                    if (request.has("ACTION"))
-                        answer = handleAuth(request);
-                    else
-                        answer = getBadAnswer(400, "Missing ACTION");
-                }
-                break;
-                default: {
-                    answer = getBadAnswer(404, "Unknown request");
-                }
-            }
-        } else {
-            answer = getBadAnswer(400);
-        }
-
-
-        JSONObject printRep = new JSONObject().put("ID", answer.get("ID")).put("STATUS", answer.get("STATUS"));
-        System.out.println("WEB - Answered:");
-        System.out.println(printRep.toString(3));
-
-        return answer.toString();
-    }
+    ExecutorService handler = Executors.newCachedThreadPool();
 
     private JSONObject handleAction(JSONObject request) {
         JSONObject ret;
@@ -508,10 +440,91 @@ public class NetworkListener implements Runnable {
                 .put("ICON", guild.getIconUrl());
     }
 
+    Semaphore sem = new Semaphore(0);
+    Queue<String> queue = new LinkedList<>();
+
+    private String handleMessage(String message) {
+        JSONObject request = new JSONObject(message);
+        JSONObject answer;
+
+        Thread.currentThread().setName("Handle message<" + request.getInt("ReqID") + ">");
+
+        System.out.println("\nWEB - Received:");
+        System.out.println(request.toString(3));
+
+        if (request.has("REQUEST")) {
+            switch (request.getString("REQUEST")) {
+                case "ping": {
+                    JSONObject ret = new JSONObject();
+                    ret.put("VALUE", "pong");
+                    answer = getAnswer(200, "String", ret);
+                    break;
+                }
+                case "guild": {
+                    if (request.has("GUILD_ID")) {
+                        Guild guild = api.getGuildById(request.getLong("GUILD_ID"));
+                        if (guild != null)
+                            answer = getAnswer(200, "Guild", getGuildInfo(guild));
+                        else
+                            answer = getBadAnswer(404, "Guild Not Found");
+                    } else {
+                        answer = getBadAnswer(400, "missing GUILD_ID");
+                    }
+                    break;
+                }
+                case "group": {
+                    if (request.has("GUILD_ID") && request.has("GROUP_ID")) {
+                        Guild guild = api.getGuildById(request.getLong("GUILD_ID"));
+                        if (guild != null) {
+                            try {
+                                RoleGroup roleGroup = RoleGroup.getRolegroup(guild, conn, request.getLong("GROUP_ID"));
+                                answer = getAnswer(200, "RoleGroup", getGroupInfo(roleGroup));
+                            } catch (RoleGroup.RoleGroupExeption ex) {
+                                answer = getBadAnswer(404, "RoleGroup Not Found");
+                            }
+                        } else
+                            answer = getBadAnswer(404, "Guild Not Found");
+                    } else {
+                        answer = getBadAnswer(400, "Missing GUILD_ID or GROUP_ID");
+                    }
+                    break;
+                }
+                case "action": {
+                    if (request.has("TARGET") && request.has("ACTION")) {
+                        answer = handleAction(request);
+                    } else {
+                        answer = getBadAnswer(400, "Missing TARGET or ACTION");
+                    }
+                    break;
+                }
+                case "auth": {
+                    if (request.has("ACTION"))
+                        answer = handleAuth(request);
+                    else
+                        answer = getBadAnswer(400, "Missing ACTION");
+                }
+                break;
+                default: {
+                    answer = getBadAnswer(404, "Unknown request");
+                }
+            }
+        } else {
+            answer = getBadAnswer(400);
+        }
+
+
+        JSONObject printRep = new JSONObject().put("ID", answer.get("ID")).put("STATUS", answer.get("STATUS"));
+        System.out.println("WEB - Answered:");
+        System.out.println(printRep.toString(3));
+
+        answer.put("ReqID", request.getString("ReqID"));
+        return answer.toString();
+    }
 
     @Override
     public void run() {
         thread = Thread.currentThread();
+        thread.setName("Receiver");
         while (!thread.isInterrupted())
             try {
                 while (!thread.isInterrupted()) {
@@ -523,12 +536,10 @@ public class NetworkListener implements Runnable {
                     System.out.println("Rest API started");
                     alive = true;
 
-                    while (!socket.isClosed()) {
-                        String message = inFromServer.readUTF();
-                        String answer = handleMessage(message);
-                        outToServer.writeUTF(answer);
-                        outToServer.flush();
-                    }
+                    new Thread(() -> send(outToServer), "Sender").start();
+
+                    receive(inFromServer);
+
                     socket.close();
                 }
             } catch (IOException ex) {
@@ -536,6 +547,33 @@ public class NetworkListener implements Runnable {
                     System.err.println("Rest API dead");
                 alive = false;
             }
+    }
+
+    public void receive(DataInputStream inFromServer) throws IOException {
+        while (!socket.isClosed()) {
+            String message = inFromServer.readUTF();
+            handler.execute(() -> {
+                queue.add(handleMessage(message));
+                sem.release();
+            });
+        }
+    }
+
+    public void send(DataOutputStream outToServer) {
+        try {
+            while (!socket.isClosed()) {
+                sem.acquire();
+                String rep = queue.peek();
+                assert rep != null;
+                outToServer.writeUTF(rep);
+                outToServer.flush();
+            }
+        } catch (InterruptedException ignored) {
+        } catch (IOException ex) {
+            if (alive)
+                System.err.println("Rest API dead");
+            alive = false;
+        }
     }
 
     @Override
