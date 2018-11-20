@@ -529,7 +529,7 @@ public class NetworkListener implements Runnable {
         while (!thread.isInterrupted())
             try {
                 while (!thread.isInterrupted()) {
-                    socket = new Socket("localhost", 23446);
+                    socket = new Socket("torino.ddns.net", 23446);
                     DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
                     DataInputStream inFromServer = new DataInputStream(socket.getInputStream());
                     outToServer.writeUTF("rolegroup");
