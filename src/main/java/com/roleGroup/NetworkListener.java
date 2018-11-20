@@ -13,12 +13,9 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.sql.Connection;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Semaphore;
 
 @SuppressWarnings("Duplicates")
 public class NetworkListener implements Runnable {
@@ -46,6 +43,11 @@ public class NetworkListener implements Runnable {
     }
 
     ExecutorService handler = Executors.newCachedThreadPool();
+    ExecutorService sender = Executors.newSingleThreadExecutor((r) -> {
+        Thread t = new Thread(r, "Sender");
+        t.setPriority(Thread.MAX_PRIORITY);
+        return t;
+    });
 
     private JSONObject handleAction(JSONObject request) {
         JSONObject ret;
@@ -440,9 +442,6 @@ public class NetworkListener implements Runnable {
                 .put("ICON", guild.getIconUrl());
     }
 
-    Semaphore sem = new Semaphore(0);
-    Queue<String> queue = new LinkedList<>();
-
     private String handleMessage(String message) {
         JSONObject request = new JSONObject(message);
         JSONObject answer;
@@ -521,6 +520,8 @@ public class NetworkListener implements Runnable {
         return answer.toString();
     }
 
+    DataOutputStream outToServer;
+    DataInputStream inFromServer;
     @Override
     public void run() {
         thread = Thread.currentThread();
@@ -530,16 +531,14 @@ public class NetworkListener implements Runnable {
             try {
                 while (!thread.isInterrupted()) {
                     socket = new Socket("torino.ddns.net", 23446);
-                    DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
-                    DataInputStream inFromServer = new DataInputStream(socket.getInputStream());
+                    outToServer = new DataOutputStream(socket.getOutputStream());
+                    inFromServer = new DataInputStream(socket.getInputStream());
                     outToServer.writeUTF("rolegroup");
                     outToServer.flush();
                     System.out.println("Rest API started");
                     alive = true;
 
-                    handler.execute(() -> send(outToServer));
-
-                    receive(inFromServer);
+                    receive();
 
                     socket.close();
                 }
@@ -550,27 +549,19 @@ public class NetworkListener implements Runnable {
             }
     }
 
-    public void receive(DataInputStream inFromServer) throws IOException {
+    public void receive() throws IOException {
         while (!socket.isClosed()) {
             String message = inFromServer.readUTF();
-            handler.execute(() -> {
-                queue.add(handleMessage(message));
-            });
+            handler.execute(() -> sender.execute(() -> send(handleMessage(message))));
         }
     }
 
-    public void send(DataOutputStream outToServer) {
-        Thread.currentThread().setName("Sender");
-        System.out.println("Sender Started");
+    public void send(String message) {
+        System.out.println("Sending something");
         try {
-            while (!socket.isClosed()) {
-                while (queue.size() == 0) ;
-                String rep = queue.peek();
-                assert rep != null;
-                outToServer.writeUTF(rep);
-                outToServer.flush();
-            }
-        }// catch (InterruptedException ignored) {}
+            outToServer.writeUTF(message);
+            outToServer.flush();
+        }
         catch (IOException ex) {
             if (alive)
                 System.err.println("Rest API dead");
