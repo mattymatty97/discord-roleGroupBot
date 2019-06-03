@@ -39,7 +39,7 @@ public class BOT
             System.exit(-1);
         }
 
-        JDA api = new JDABuilder(AccountType.BOT).setToken(System.getenv("BOT_TOKEN")).buildAsync();
+        JDA api = new JDABuilder(AccountType.BOT).setToken(System.getenv("BOT_TOKEN")).build();
 
         api.addEventListener(new MyListener(conn));
         api.addEventListener(new SupportListener(491954204106031104L));

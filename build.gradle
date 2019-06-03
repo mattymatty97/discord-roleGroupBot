@@ -11,7 +11,7 @@ version '1.0'
 
 mainClassName = 'BOT'
 
-def jdaVersion = '3.6.0_376'
+def jdaVersion = '3.8.3_463'
 
 sourceCompatibility = 1.8
 
