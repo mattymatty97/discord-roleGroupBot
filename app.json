@@ -17,5 +17,6 @@
     {
       "url": "heroku/gradle"
     }
-  ]
+  ],
+  "stack": "heroku-20"
 }
