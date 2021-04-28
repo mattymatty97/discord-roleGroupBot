@@ -1,9 +1,9 @@
 package com.roleGroup;
 
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.Role;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Role;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -19,17 +19,28 @@ import java.util.ResourceBundle;
  * local class for storing per guild informations.
  */
 public class BotGuild {
-    private boolean isOpen;         /**bool value to test validity of object**/
-    private Connection conn;        /**SQL connection object send by main**/
-    private Long guildId;                /**guild id used to identify guild**/
-    private List<Long> modRolesById;/**list of roles (stored by id) that are allowed to run mod commands**/
-    private Locale locale;
-    public  boolean isNew = true;
+    private boolean isOpen;
+    /**
+     * bool value to test validity of object
+     **/
+    private final Connection conn;
+    /**
+     * list of roles (stored by id) that are allowed to run mod commands
+     **/
+    private final Locale locale;
+    /**
+     * guild id used to identify guild
+     **/
+    private List<Long> modRolesById;
+    /**
+     * SQL connection object send by main
+     **/
+    private Long guildId;
+    public boolean isNew = true;
 
 
-    public ResourceBundle getMessages()
-    {
-        return ResourceBundle.getBundle("messages",locale);
+    public ResourceBundle getMessages() {
+        return ResourceBundle.getBundle("messages", locale);
     }
 
     /**

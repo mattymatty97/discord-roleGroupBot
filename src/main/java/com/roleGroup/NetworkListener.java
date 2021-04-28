@@ -1,10 +1,10 @@
 package com.roleGroup;
 
-import net.dv8tion.jda.core.JDA;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.Role;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Role;
+import net.dv8tion.jda.api.entities.User;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -19,8 +19,8 @@ import java.util.concurrent.Executors;
 
 @SuppressWarnings("Duplicates")
 public class NetworkListener implements Runnable {
-    private JDA api;
-    private Connection conn;
+    private final JDA api;
+    private final Connection conn;
 
     static boolean alive = true;
 

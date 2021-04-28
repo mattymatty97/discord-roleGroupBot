@@ -11,7 +11,7 @@ version '1.0'
 
 mainClassName = 'BOT'
 
-def jdaVersion = '3.8.3_463'
+def jdaVersion = '4.2.1_253'
 
 sourceCompatibility = 1.8
 
@@ -19,14 +19,19 @@ sourceCompatibility = 1.8
 repositories {
     jcenter()
     mavenCentral()
+    maven {
+        name 'm2-dv8tion'
+        url 'https://m2.dv8tion.net/releases'
+    }
 }
 
 dependencies {
-    compile "net.dv8tion:JDA:$jdaVersion"
+    implementation "net.dv8tion:JDA:$jdaVersion"
     compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.6'
     compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
     testCompile group: 'junit', name: 'junit', version: '4.+'
     compile 'postgresql:postgresql:9.1-901-1.jdbc4'
+    implementation group: 'org.json', name: 'json', version: '20210307'
 }
 
 compileJava.options.encoding = 'UTF-8'

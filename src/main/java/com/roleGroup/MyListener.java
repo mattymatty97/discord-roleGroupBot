@@ -1,17 +1,17 @@
 package com.roleGroup;
 
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.JDA;
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.*;
-import net.dv8tion.jda.core.events.ReadyEvent;
-import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
-import net.dv8tion.jda.core.events.guild.GuildLeaveEvent;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.core.events.role.RoleDeleteEvent;
-import net.dv8tion.jda.core.exceptions.InsufficientPermissionException;
-import net.dv8tion.jda.core.hooks.ListenerAdapter;
-import net.dv8tion.jda.core.utils.PermissionUtil;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.events.ReadyEvent;
+import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
+import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.role.RoleDeleteEvent;
+import net.dv8tion.jda.api.exceptions.InsufficientPermissionException;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.internal.utils.PermissionUtil;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -24,22 +24,21 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
 public class MyListener extends ListenerAdapter {
-    private static List<String> reservedNames = Arrays.asList("ping", "help", "modrole", "role", "create", "delete", "list");
+    private static final List<String> reservedNames = Arrays.asList("ping", "help", "modrole", "role", "create", "delete", "list");
 
     private static final char commandSeparator = '!';
     private static final char settingSeparator = '$';
     private static final char ownerSeparator = '^';
 
 
-    public static volatile boolean ready=false;
-    private Connection conn;
+    public static volatile boolean ready = false;
+    private static final String prefix = System.getenv("BOT_PREFIX");
     public static boolean deleted = false;
-
-    private static String prefix = System.getenv("BOT_PREFIX");
+    private final Connection conn;
 
     @Override
     public void onReady(ReadyEvent event) {
@@ -114,7 +113,7 @@ public class MyListener extends ListenerAdapter {
             String content = message.getContentRaw().toLowerCase();
 
             //if length is enough test if the message starts with right prefix
-            if (content.length() > prefix.length() && content.substring(0, prefix.length()).equals(prefix)) {
+            if (content.length() > prefix.length() && content.startsWith(prefix)) {
                 //split by spaces into args
                 String[] args = content.substring(prefix.length()).split(" +");
                 //test first argument
@@ -251,7 +250,7 @@ public class MyListener extends ListenerAdapter {
                                                     if (roles.get(0).getPosition() > mentions.get(0).getPosition()) {
                                                         //add role using api method
                                                         if (!memberHasRole(member, mentions.get(0).getIdLong())) {
-                                                            event.getGuild().getController().addRolesToMember(member, mentions).queue();
+                                                            event.getGuild().modifyMemberRoles(member, mentions, null).queue();
                                                             channel.sendMessage(output.getString("role-added")).queue();
                                                             System.out.println("added a role to '" + member.getEffectiveName() + "'in guild: '" + guildname + "'");
                                                         } else {
@@ -274,7 +273,7 @@ public class MyListener extends ListenerAdapter {
                                                     List<Role> roles = event.getGuild().getSelfMember().getRoles();
                                                     if (roles.get(0).getPosition() > mentions.get(0).getPosition()) {
                                                         if (memberHasRole(member, mentions.get(0).getIdLong())) {
-                                                            event.getGuild().getController().removeRolesFromMember(member, mentions).queue();
+                                                            event.getGuild().modifyMemberRoles(member, null, mentions).queue();
                                                             channel.sendMessage(output.getString("role-removed")).queue();
                                                             System.out.println("removed a role to '" + member.getEffectiveName() + "'in guild: '" + guildname + "'");
                                                         } else {

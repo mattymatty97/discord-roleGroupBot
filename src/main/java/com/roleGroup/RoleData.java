@@ -3,8 +3,8 @@ package com.roleGroup;
 import java.util.List;
 
 public class RoleData {
-    private String roleName;
-    private Long roleId;
+    private final String roleName;
+    private final Long roleId;
 
     public String getRoleName() {
         return roleName;

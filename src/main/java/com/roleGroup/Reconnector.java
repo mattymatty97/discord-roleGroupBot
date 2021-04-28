@@ -1,9 +1,8 @@
 package com.roleGroup;
 
-import net.dv8tion.jda.core.AccountType;
-import net.dv8tion.jda.core.JDA;
-import net.dv8tion.jda.core.JDABuilder;
-import net.dv8tion.jda.core.entities.Game;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.entities.Activity;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -59,9 +58,9 @@ public class Reconnector {
             }
         }
         try {
-            JDA api = new JDABuilder(AccountType.BOT).setToken(System.getenv("BOT_TOKEN")).build();
+            JDA api = JDABuilder.createLight(System.getenv("BOT_TOKEN")).build();
             api.addEventListener(new MyListener(conn));
-            api.getPresence().setGame(Game.listening("suggestions :/"));
+            api.getPresence().setPresence(Activity.listening("suggestions :/"), false);
         }catch (Exception e) {
             e.printStackTrace();
         }

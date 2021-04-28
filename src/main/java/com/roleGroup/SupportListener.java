@@ -1,24 +1,19 @@
 package com.roleGroup;
 
-import net.dv8tion.jda.core.JDA;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.Role;
-import net.dv8tion.jda.core.entities.User;
-import net.dv8tion.jda.core.events.ReadyEvent;
-import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
-import net.dv8tion.jda.core.events.guild.GuildLeaveEvent;
-import net.dv8tion.jda.core.events.guild.member.GuildMemberJoinEvent;
-import net.dv8tion.jda.core.events.guild.member.GuildMemberLeaveEvent;
-import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Role;
+import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.events.ReadyEvent;
+import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
+import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
+import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
+import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import java.io.DataOutputStream;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
 
 @SuppressWarnings("Duplicates")
 public class SupportListener extends ListenerAdapter {
@@ -26,7 +21,7 @@ public class SupportListener extends ListenerAdapter {
     
     private Role botRole;
 
-    private long roleID;
+    private final long roleID;
 
     @Override
     public void onReady(ReadyEvent event) {
@@ -41,7 +36,7 @@ public class SupportListener extends ListenerAdapter {
     }
 
     @Override
-    public void onGuildMemberLeave(GuildMemberLeaveEvent event) {
+    public void onGuildMemberRemove(GuildMemberRemoveEvent event) {
         if (event.getGuild().getIdLong() != supportID)
             userUpdate(event.getJDA(), event.getUser());
     }

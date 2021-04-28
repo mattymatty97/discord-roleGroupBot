@@ -1,11 +1,11 @@
 package com.roleGroup;
 
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.MessageEmbed;
-import net.dv8tion.jda.core.entities.Role;
-import net.dv8tion.jda.core.entities.impl.RoleImpl;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.Role;
+import net.dv8tion.jda.internal.entities.RoleImpl;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -28,7 +28,7 @@ public class RoleGroup {
 
     private String triggerExpr;
 
-    private Map<Integer,Role> triggerRoles = new HashMap<>();
+    private final Map<Integer, Role> triggerRoles = new HashMap<>();
 
     private Type type = Type.LIST;
 
@@ -104,11 +104,11 @@ public class RoleGroup {
                         } else {
                             if (guild.getSelfMember().getRoles().get(0).getPosition() > role.getPosition()) {
                                 if (member.getRoles().contains(role)) {
-                                    guild.getController().removeRolesFromMember(member, role).queue();
+                                    guild.removeRoleFromMember(member, role).queue();
                                     ret.append(output.getString("cc-role-removed").replace("{role}", role.getName()));
                                     System.out.print("grouproles custom - role removed");
                                 } else {
-                                    guild.getController().addRolesToMember(member, role).queue();
+                                    guild.addRoleToMember(member, role).queue();
                                     ret.append(output.getString("cc-role-added").replace("{role}", role.getName()));
                                     System.out.print("grouproles custom - role added");
                                 }
@@ -126,11 +126,11 @@ public class RoleGroup {
                         } else {
                             if (guild.getSelfMember().getRoles().get(0).getPosition() > role.getPosition()) {
                                 if (member.getRoles().contains(role)) {
-                                    guild.getController().removeRolesFromMember(member, role).queue();
+                                    guild.removeRoleFromMember(member, role).queue();
                                     ret.append(output.getString("cc-role-removed").replace("{role}", role.getAsMention()));
                                     System.out.print("grouproles custom - role removed");
                                 } else if (guild.getMembers().stream().noneMatch((Member m) -> m.getRoles().contains(role))) {
-                                    guild.getController().addRolesToMember(member, role).queue();
+                                    guild.addRoleToMember(member, role).queue();
                                     ret.append(output.getString("cc-role-added").replace("{role}", role.getAsMention()));
                                     System.out.print("grouproles custom - role added");
                                 } else {
@@ -151,15 +151,15 @@ public class RoleGroup {
                         } else {
                             if (guild.getSelfMember().getRoles().get(0).getPosition() > role.getPosition()) {
                                 if (member.getRoles().contains(role)) {
-                                    guild.getController().removeRolesFromMember(member, role).queue();
+                                    guild.removeRoleFromMember(member, role).queue();
                                     ret.append(output.getString("cc-role-removed").replace("{role}", role.getName()));
                                     System.out.print("grouproles custom - role removed");
                                 } else {
                                     List<Role> to_remove = new LinkedList<>();
                                     List<Role> to_add = new LinkedList<>();
                                     to_add.add(role);
-                                    member.getRoles().stream().filter(r -> roleMap.values().contains(r)).filter(r -> !role.equals(r)).forEach(to_remove::add);
-                                    guild.getController().modifyMemberRoles(member, to_add, to_remove).queue();
+                                    member.getRoles().stream().filter(r -> roleMap.containsValue(r)).filter(r -> !role.equals(r)).forEach(to_remove::add);
+                                    guild.modifyMemberRoles(member, to_add, to_remove).queue();
                                     to_remove.forEach(r -> {
                                         ret.append(output.getString("cc-role-removed").replace("{role}", r.getName())).append("\n");
                                     });
@@ -180,15 +180,15 @@ public class RoleGroup {
                         } else {
                             if (guild.getSelfMember().getRoles().get(0).getPosition() > role.getPosition()) {
                                 if (member.getRoles().contains(role)) {
-                                    guild.getController().removeRolesFromMember(member, role).queue();
+                                    guild.removeRoleFromMember(member, role).queue();
                                     ret.append(output.getString("cc-role-removed").replace("{role}", role.getAsMention()));
                                     System.out.print("grouproles custom - role removed");
                                 } else if (guild.getMembers().stream().noneMatch((Member m) -> m.getRoles().contains(role))) {
                                     List<Role> to_remove = new LinkedList<>();
                                     List<Role> to_add = new LinkedList<>();
                                     to_add.add(role);
-                                    member.getRoles().stream().filter(r -> roleMap.values().contains(r)).filter(r -> !role.equals(r)).forEach(to_remove::add);
-                                    guild.getController().modifyMemberRoles(member, to_add, to_remove).queue();
+                                    member.getRoles().stream().filter(r -> roleMap.containsValue(r)).filter(r -> !role.equals(r)).forEach(to_remove::add);
+                                    guild.modifyMemberRoles(member, to_add, to_remove).queue();
                                     to_remove.forEach(r -> {
                                         ret.append(output.getString("cc-role-removed").replace("{role}", r.getAsMention())).append("\n");
                                     });
@@ -372,7 +372,7 @@ public class RoleGroup {
 
 
         if (!isEnabled()) {
-            String args[] = triggerExpr.replace("(", " ( ").replace(")", " ) ").replace("<", " <").replace(">", "> ").split(" +");
+            String[] args = triggerExpr.replace("(", " ( ").replace(")", " ) ").replace("<", " <").replace(">", "> ").split(" +");
             if (args[0].isEmpty())
                 args = Arrays.copyOfRange(args, 1, args.length);
             int open = 0;
@@ -764,7 +764,7 @@ public class RoleGroup {
         MONO("MONO"),
         MONOPOOL("MONOPOOL");
 
-        private String string;
+        private final String string;
 
         public boolean isStrict(){
 

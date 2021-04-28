@@ -1,10 +1,9 @@
 import com.roleGroup.MyListener;
 import com.roleGroup.NetworkListener;
 import com.roleGroup.SupportListener;
-import net.dv8tion.jda.core.AccountType;
-import net.dv8tion.jda.core.JDA;
-import net.dv8tion.jda.core.JDABuilder;
-import net.dv8tion.jda.core.entities.Game;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.entities.Activity;
 
 import java.net.URI;
 import java.sql.Connection;
@@ -39,11 +38,11 @@ public class BOT
             System.exit(-1);
         }
 
-        JDA api = new JDABuilder(AccountType.BOT).setToken(System.getenv("BOT_TOKEN")).build();
+        JDA api = JDABuilder.createLight(System.getenv("BOT_TOKEN")).build();
 
         api.addEventListener(new MyListener(conn));
         api.addEventListener(new SupportListener(491954204106031104L));
-        api.getPresence().setGame(Game.playing("v3.0 rg prj"));
+        api.getPresence().setPresence(Activity.playing("v3.0 rg prj"), false);
 
         while (!MyListener.ready);
 
